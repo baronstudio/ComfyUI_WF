@@ -1,0 +1,4142 @@
+{
+ "last_node_id": 140,
+ "last_link_id": 121,
+ "nodes": [
+  {
+   "id": 2,
+   "type": "CLIPLoader",
+   "pos": [
+    -1960,
+    0
+   ],
+   "size": [
+    340,
+    106
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      8,
+      10,
+      39,
+      41,
+      59,
+      75,
+      94,
+      110
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader"
+   },
+   "widgets_values": [
+    "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+    "qwen_image",
+    "default"
+   ],
+   "title": "Text encoder (commun)"
+  },
+  {
+   "id": 3,
+   "type": "VAELoader",
+   "pos": [
+    -1960,
+    140
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      16,
+      19,
+      40,
+      42,
+      47,
+      53,
+      58,
+      60,
+      69,
+      74,
+      76,
+      85,
+      93,
+      95,
+      104,
+      109,
+      111,
+      120
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "qwen_image_vae.safetensors"
+   ],
+   "title": "VAE (commun)"
+  },
+  {
+   "id": 7,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    -1960,
+    240
+   ],
+   "size": [
+    340,
+    260
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      5
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "a bright open-plan Scandinavian kitchen that opens onto a cozy living room, light oak wood cabinets and open wooden shelves, warm cream and off-white walls, light oak wooden floor, white countertops, a kitchen island with wooden bar stools, black pendant lamps, green potted plants, a beige fabric sofa, a low wooden coffee table and a woven rug in the living area, large windows with soft warm morning daylight, warm neutral color palette, cozy natural atmosphere"
+   ],
+   "title": "✏️ DESCRIPTION (couleurs + matières + lumière + pièces)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 30,
+   "type": "UNETLoader",
+   "pos": [
+    -1080,
+    0
+   ],
+   "size": [
+    360,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "qwen_image_2512_fp8_e4m3fn.safetensors",
+    "default"
+   ],
+   "title": "Qwen-Image-2512",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 31,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    -1080,
+    120
+   ],
+   "size": [
+    360,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      2
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors",
+    1.0
+   ],
+   "title": "LoRA Lightning 2512 4 steps"
+  },
+  {
+   "id": 32,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    -1080,
+    240
+   ],
+   "size": [
+    360,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      3
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "qwen-360-diffusion-2512-int8-bf16-v2.safetensors",
+    1.0
+   ],
+   "title": "LoRA qwen-360-diffusion 2512 v2",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 33,
+   "type": "ModelSamplingAuraFlow",
+   "pos": [
+    -1080,
+    360
+   ],
+   "size": [
+    360,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 3
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      11
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ModelSamplingAuraFlow"
+   },
+   "widgets_values": [
+    3.1
+   ]
+  },
+  {
+   "id": 38,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    -1080,
+    460
+   ],
+   "size": [
+    360,
+    80
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      4
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "equirectangular 360 degree panorama with equirectangular projection, photograph of"
+   ],
+   "title": "Trigger 360 (ne pas modifier)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 39,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    -1080,
+    570
+   ],
+   "size": [
+    360,
+    170
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      7
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "Photorealistic finished interior, fully furnished and decorated, realistic materials, textures and lighting on every surface. Full spherical view captured from human eye level, straight horizon in the exact middle, seamless left and right edges, continuous ceiling at the top, continuous floor at the bottom, consistent architecture, materials and lighting all around. No people, no text."
+   ],
+   "title": "Consignes 360"
+  },
+  {
+   "id": 40,
+   "type": "StringConcatenate",
+   "pos": [
+    -1080,
+    770
+   ],
+   "size": [
+    300,
+    110
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "string_a",
+     "type": "STRING",
+     "link": 4,
+     "widget": {
+      "name": "string_a"
+     }
+    },
+    {
+     "name": "string_b",
+     "type": "STRING",
+     "link": 5,
+     "widget": {
+      "name": "string_b"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      6
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    "\n\n"
+   ],
+   "title": "Concat trigger + description"
+  },
+  {
+   "id": 41,
+   "type": "StringConcatenate",
+   "pos": [
+    -1080,
+    910
+   ],
+   "size": [
+    300,
+    110
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "string_a",
+     "type": "STRING",
+     "link": 6,
+     "widget": {
+      "name": "string_a"
+     }
+    },
+    {
+     "name": "string_b",
+     "type": "STRING",
+     "link": 7,
+     "widget": {
+      "name": "string_b"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      9
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    "\n\n"
+   ],
+   "title": "Concat + consignes"
+  },
+  {
+   "id": 42,
+   "type": "CLIPTextEncode",
+   "pos": [
+    -680,
+    0
+   ],
+   "size": [
+    400,
+    110
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 8
+    },
+    {
+     "name": "text",
+     "type": "STRING",
+     "link": 9,
+     "widget": {
+      "name": "text"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      12
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "title": "PROMPT 1 — Panorama 360",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 43,
+   "type": "CLIPTextEncode",
+   "pos": [
+    -680,
+    140
+   ],
+   "size": [
+    400,
+    80
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 10
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      13
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "title": "Négatif (vide)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 44,
+   "type": "VAEEncode",
+   "pos": [
+    -680,
+    250
+   ],
+   "size": [
+    300,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 15
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 16
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      17
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": [],
+   "title": "Encode le blockout"
+  },
+  {
+   "id": 80,
+   "type": "LoadImage",
+   "pos": [
+    -1500,
+    -40
+   ],
+   "size": [
+    380,
+    300
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      14
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "blockout_equirect_2048x1024.png",
+    "image"
+   ],
+   "title": "🧱 BLOCKOUT Blender (équirectangulaire 2:1)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 81,
+   "type": "ImageScale",
+   "pos": [
+    -1500,
+    290
+   ],
+   "size": [
+    380,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 14
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      15
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScale"
+   },
+   "widgets_values": [
+    "lanczos",
+    2048,
+    1024,
+    "disabled"
+   ],
+   "title": "Blockout → 2048×1024"
+  },
+  {
+   "id": 45,
+   "type": "KSampler",
+   "pos": [
+    -680,
+    330
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 11
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 12
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 13
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 17
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      18
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    1001,
+    "fixed",
+    8,
+    1.0,
+    "euler",
+    "simple",
+    0.75
+   ],
+   "title": "KSampler — Étape 1 habillage du blockout (denoise 0.75)"
+  },
+  {
+   "id": 46,
+   "type": "VAEDecode",
+   "pos": [
+    -250,
+    0
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 18
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 19
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      20,
+      43,
+      46
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 47,
+   "type": "SaveImage",
+   "pos": [
+    -250,
+    80
+   ],
+   "size": [
+    560,
+    320
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 20
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement_blockout/etape1_pano360_brut"
+   ],
+   "title": "Save — 360° brut (structure de la pièce)"
+  },
+  {
+   "id": 60,
+   "type": "PrimitiveInt",
+   "pos": [
+    -1080,
+    1030
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      22,
+      23,
+      26,
+      27,
+      30,
+      31
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    1024
+   ],
+   "title": "📐 Taille des références (px, carré)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 10,
+   "type": "LoadImage",
+   "pos": [
+    -1080,
+    1150
+   ],
+   "size": [
+    320,
+    340
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      21
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "env_moodboard_1.png",
+    "image"
+   ],
+   "title": "Moodboard 1 — architecture / formes",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 61,
+   "type": "ImageScale",
+   "pos": [
+    -730,
+    1150
+   ],
+   "size": [
+    320,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 21
+    },
+    {
+     "name": "width",
+     "type": "INT",
+     "link": 22,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "link": 23,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      24,
+      44,
+      62,
+      78,
+      97,
+      113
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScale"
+   },
+   "widgets_values": [
+    "lanczos",
+    1024,
+    1024,
+    "center"
+   ],
+   "title": "Prépa moodboard 1 — resize + crop centre",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 62,
+   "type": "PreviewImage",
+   "pos": [
+    -730,
+    1300
+   ],
+   "size": [
+    320,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 24
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage"
+   },
+   "widgets_values": [],
+   "title": "Contrôle cadrage 1"
+  },
+  {
+   "id": 11,
+   "type": "LoadImage",
+   "pos": [
+    -1080,
+    1530
+   ],
+   "size": [
+    320,
+    340
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      25
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "env_moodboard_2.png",
+    "image"
+   ],
+   "title": "Moodboard 2 — matières / mobilier",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 63,
+   "type": "ImageScale",
+   "pos": [
+    -730,
+    1530
+   ],
+   "size": [
+    320,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 25
+    },
+    {
+     "name": "width",
+     "type": "INT",
+     "link": 26,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "link": 27,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      28,
+      33
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScale"
+   },
+   "widgets_values": [
+    "lanczos",
+    1024,
+    1024,
+    "center"
+   ],
+   "title": "Prépa moodboard 2 — resize + crop centre",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 64,
+   "type": "PreviewImage",
+   "pos": [
+    -730,
+    1680
+   ],
+   "size": [
+    320,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 28
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage"
+   },
+   "widgets_values": [],
+   "title": "Contrôle cadrage 2"
+  },
+  {
+   "id": 12,
+   "type": "LoadImage",
+   "pos": [
+    -1080,
+    1910
+   ],
+   "size": [
+    320,
+    340
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      29
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "env_moodboard_3.png",
+    "image"
+   ],
+   "title": "Moodboard 3 — palette / lumière",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 65,
+   "type": "ImageScale",
+   "pos": [
+    -730,
+    1910
+   ],
+   "size": [
+    320,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 29
+    },
+    {
+     "name": "width",
+     "type": "INT",
+     "link": 30,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "link": 31,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      32,
+      34
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScale"
+   },
+   "widgets_values": [
+    "lanczos",
+    1024,
+    1024,
+    "center"
+   ],
+   "title": "Prépa moodboard 3 — resize + crop centre",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 66,
+   "type": "PreviewImage",
+   "pos": [
+    -730,
+    2060
+   ],
+   "size": [
+    320,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 32
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage"
+   },
+   "widgets_values": [],
+   "title": "Contrôle cadrage 3"
+  },
+  {
+   "id": 67,
+   "type": "ImageStitch",
+   "pos": [
+    -380,
+    1530
+   ],
+   "size": [
+    320,
+    150
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 33
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": 34
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      35,
+      45,
+      63,
+      79,
+      98,
+      114
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageStitch"
+   },
+   "widgets_values": [
+    "right",
+    true,
+    0,
+    "white"
+   ],
+   "title": "Moodboards 2 | 3 côte à côte (= Picture 3)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 68,
+   "type": "PreviewImage",
+   "pos": [
+    -380,
+    1710
+   ],
+   "size": [
+    320,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 35
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage"
+   },
+   "widgets_values": [],
+   "title": "Contrôle Picture 3"
+  },
+  {
+   "id": 1,
+   "type": "UNETLoader",
+   "pos": [
+    900,
+    0
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      36
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "qwen_image_edit_2511_fp8mixed.safetensors",
+    "default"
+   ],
+   "title": "Qwen-Image-EDIT-2511 (étapes 2 et 3)"
+  },
+  {
+   "id": 4,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    900,
+    120
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 36
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      37
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+    1.0
+   ],
+   "title": "LoRA Lightning Edit 4 steps"
+  },
+  {
+   "id": 5,
+   "type": "ModelSamplingAuraFlow",
+   "pos": [
+    900,
+    240
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 37
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      38
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ModelSamplingAuraFlow"
+   },
+   "widgets_values": [
+    3.1
+   ]
+  },
+  {
+   "id": 6,
+   "type": "CFGNorm",
+   "pos": [
+    900,
+    330
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 38
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      48,
+      64,
+      80,
+      99,
+      115
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CFGNorm"
+   },
+   "widgets_values": [
+    1.0
+   ],
+   "title": "MODÈLE EDIT"
+  },
+  {
+   "id": 21,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    900,
+    430
+   ],
+   "size": [
+    460,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 39
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 40
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      50,
+      66,
+      82,
+      101,
+      117
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "title": "Négatif Edit (vide)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 50,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    1300,
+    0
+   ],
+   "size": [
+    460,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 41
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 42
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 43
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": 44
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": 45
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      49
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Restyle Picture 1 with the design language of the moodboard: architecture and shapes from Picture 2, materials, furniture and textures from the left half of Picture 3, color palette and lighting mood from the right half of Picture 3.\nKeep exactly the same layout, room geometry, camera, projection and horizon of Picture 1: it is a 360 degree equirectangular panorama, keep its curved lines and keep the left and right edges continuous. Only change materials, colors, furniture style and lighting."
+   ],
+   "title": "PROMPT 2 — Restyle du 360° (moodboards)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 51,
+   "type": "VAEEncode",
+   "pos": [
+    1300,
+    240
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 46
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 47
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      51
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 52,
+   "type": "KSampler",
+   "pos": [
+    1800,
+    0
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 48
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 49
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 50
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 51
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      52
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    2001,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    0.4
+   ],
+   "title": "KSampler — Étape 2 restyle 360° (denoise 0.40)"
+  },
+  {
+   "id": 53,
+   "type": "VAEDecode",
+   "pos": [
+    2130,
+    0
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 52
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 53
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      54,
+      55,
+      71,
+      87,
+      88,
+      106
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 54,
+   "type": "SaveImage",
+   "pos": [
+    2130,
+    80
+   ],
+   "size": [
+    560,
+    320
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 54
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement_blockout/etape2_pano360_final"
+   ],
+   "title": "Save — 360° final (LDR) → World Blender"
+  },
+  {
+   "id": 100,
+   "type": "ImageCrop",
+   "pos": [
+    900,
+    720
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 55
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      56
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageCrop"
+   },
+   "widgets_values": [
+    512,
+    288,
+    768,
+    368
+   ],
+   "title": "Crop Vue A — HÉROS (axe caméra Blender) — x=768",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 101,
+   "type": "ImageScale",
+   "pos": [
+    900,
+    880
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 56
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      57,
+      61
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScale"
+   },
+   "widgets_values": [
+    "lanczos",
+    1664,
+    928,
+    "disabled"
+   ],
+   "title": "→ 1664×928"
+  },
+  {
+   "id": 102,
+   "type": "VAEEncode",
+   "pos": [
+    1230,
+    720
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 57
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 58
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      67
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 103,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    1230,
+    800
+   ],
+   "size": [
+    460,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 59
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 60
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 61
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": 62
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": 63
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      65
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
+   ],
+   "title": "PROMPT 3 — Vue A — HÉROS (axe caméra Blender)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 104,
+   "type": "KSampler",
+   "pos": [
+    1720,
+    720
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 64
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 65
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 66
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 67
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      68
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    3001,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    0.55
+   ],
+   "title": "KSampler — Vue A — HÉROS (axe caméra Blender) (denoise 0.55)"
+  },
+  {
+   "id": 105,
+   "type": "VAEDecode",
+   "pos": [
+    2050,
+    720
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 68
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 69
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      70
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 106,
+   "type": "SaveImage",
+   "pos": [
+    2050,
+    800
+   ],
+   "size": [
+    440,
+    280
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 70
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement_blockout/etape3_vue_A_hero"
+   ],
+   "title": "Save — Vue A — HÉROS (axe caméra Blender)"
+  },
+  {
+   "id": 110,
+   "type": "ImageCrop",
+   "pos": [
+    900,
+    1240
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 71
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      72
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageCrop"
+   },
+   "widgets_values": [
+    512,
+    288,
+    1280,
+    368
+   ],
+   "title": "Crop Vue B (droite) — x=1280",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 111,
+   "type": "ImageScale",
+   "pos": [
+    900,
+    1400
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 72
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      73,
+      77
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScale"
+   },
+   "widgets_values": [
+    "lanczos",
+    1664,
+    928,
+    "disabled"
+   ],
+   "title": "→ 1664×928"
+  },
+  {
+   "id": 112,
+   "type": "VAEEncode",
+   "pos": [
+    1230,
+    1240
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 73
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 74
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      83
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 113,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    1230,
+    1320
+   ],
+   "size": [
+    460,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 75
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 76
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 77
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": 78
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": 79
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      81
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
+   ],
+   "title": "PROMPT 3 — Vue B (droite)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 114,
+   "type": "KSampler",
+   "pos": [
+    1720,
+    1240
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 80
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 81
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 82
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 83
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      84
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    3002,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    0.55
+   ],
+   "title": "KSampler — Vue B (droite) (denoise 0.55)"
+  },
+  {
+   "id": 115,
+   "type": "VAEDecode",
+   "pos": [
+    2050,
+    1240
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 84
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 85
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      86
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 116,
+   "type": "SaveImage",
+   "pos": [
+    2050,
+    1320
+   ],
+   "size": [
+    440,
+    280
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 86
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement_blockout/etape3_vue_B"
+   ],
+   "title": "Save — Vue B (droite)"
+  },
+  {
+   "id": 120,
+   "type": "ImageCrop",
+   "pos": [
+    560,
+    1760
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 87
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      89
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageCrop"
+   },
+   "widgets_values": [
+    256,
+    288,
+    1792,
+    368
+   ],
+   "title": "Crop C1 — bord droit x=1792",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 140,
+   "type": "ImageCrop",
+   "pos": [
+    560,
+    1920
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 88
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      90
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageCrop"
+   },
+   "widgets_values": [
+    256,
+    288,
+    0,
+    368
+   ],
+   "title": "Crop C2 — bord gauche x=0",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 141,
+   "type": "ImageStitch",
+   "pos": [
+    560,
+    2080
+   ],
+   "size": [
+    300,
+    150
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 89
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": 90
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      91
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageStitch"
+   },
+   "widgets_values": [
+    "right",
+    false,
+    0,
+    "white"
+   ],
+   "title": "Recolle C1 | C2",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 121,
+   "type": "ImageScale",
+   "pos": [
+    900,
+    1920
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 91
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      92,
+      96
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScale"
+   },
+   "widgets_values": [
+    "lanczos",
+    1664,
+    928,
+    "disabled"
+   ],
+   "title": "→ 1664×928"
+  },
+  {
+   "id": 122,
+   "type": "VAEEncode",
+   "pos": [
+    1230,
+    1760
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 92
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 93
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      102
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 123,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    1230,
+    1840
+   ],
+   "size": [
+    460,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 94
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 95
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 96
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": 97
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": 98
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      100
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
+   ],
+   "title": "PROMPT 3 — Vue C (arrière, à cheval sur la couture)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 124,
+   "type": "KSampler",
+   "pos": [
+    1720,
+    1760
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 99
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 100
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 101
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 102
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      103
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    3003,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    0.55
+   ],
+   "title": "KSampler — Vue C (arrière, à cheval sur la couture) (denoise 0.55)"
+  },
+  {
+   "id": 125,
+   "type": "VAEDecode",
+   "pos": [
+    2050,
+    1760
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 103
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 104
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      105
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 126,
+   "type": "SaveImage",
+   "pos": [
+    2050,
+    1840
+   ],
+   "size": [
+    440,
+    280
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 105
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement_blockout/etape3_vue_C"
+   ],
+   "title": "Save — Vue C (arrière, à cheval sur la couture)"
+  },
+  {
+   "id": 130,
+   "type": "ImageCrop",
+   "pos": [
+    900,
+    2280
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 106
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      107
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageCrop"
+   },
+   "widgets_values": [
+    512,
+    288,
+    256,
+    368
+   ],
+   "title": "Crop Vue D (gauche) — x=256",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 131,
+   "type": "ImageScale",
+   "pos": [
+    900,
+    2440
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 107
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      108,
+      112
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScale"
+   },
+   "widgets_values": [
+    "lanczos",
+    1664,
+    928,
+    "disabled"
+   ],
+   "title": "→ 1664×928"
+  },
+  {
+   "id": 132,
+   "type": "VAEEncode",
+   "pos": [
+    1230,
+    2280
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 108
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 109
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      118
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 133,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    1230,
+    2360
+   ],
+   "size": [
+    460,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 110
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 111
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 112
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": 113
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": 114
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      116
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
+   ],
+   "title": "PROMPT 3 — Vue D (gauche)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 134,
+   "type": "KSampler",
+   "pos": [
+    1720,
+    2280
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 115
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 116
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 117
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 118
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      119
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    3004,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    0.55
+   ],
+   "title": "KSampler — Vue D (gauche) (denoise 0.55)"
+  },
+  {
+   "id": 135,
+   "type": "VAEDecode",
+   "pos": [
+    2050,
+    2280
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 119
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 120
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      121
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 136,
+   "type": "SaveImage",
+   "pos": [
+    2050,
+    2360
+   ],
+   "size": [
+    440,
+    280
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 121
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement_blockout/etape3_vue_D"
+   ],
+   "title": "Save — Vue D (gauche)"
+  },
+  {
+   "id": 99,
+   "type": "Note",
+   "pos": [
+    -1960,
+    540
+   ],
+   "size": [
+    400,
+    700
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "Note"
+   },
+   "widgets_values": [
+    "ENVIRONNEMENT — DÉPART BLOCKOUT 3D\n\nBLENDER (export du blockout)\n• Murs, îlot, canapé, table… en volumes simples, aux cotes réelles.\n• Matériaux en aplats proches des couleurs visées (bois beige, plans blancs,\n  sol chêne) : le gris neutre tire le résultat vers le gris.\n• Caméra : Type Panoramic > Equirectangular (Cycles), hauteur 1,60 m,\n  rotation X 90°. Son axe avant = centre de l'image = Vue A (héros).\n• Rendu 2048×1024, peu de samples + denoise. PNG.\n\nÉTAPE 1 : le blockout est habillé (img2img, 8 steps, denoise 0.75).\n  Formes encore « cubiques » : 0.80-0.85. Architecture qui dérive : 0.65.\n  La DESCRIPTION doit correspondre au blockout (mêmes zones, même mobilier).\nÉTAPE 2 : restyle moodboards (denoise 0.40 ; 0.30 si la géométrie bouge).\nÉTAPE 3 : 4 vues. A = axe caméra ; C est recollée à cheval sur la couture.\n\nHDRI : sortie LDR. Blender : World = 360° final (force 1-2) + Sun lamp."
+   ],
+   "title": "Mode d'emploi"
+  }
+ ],
+ "links": [
+  [
+   1,
+   30,
+   0,
+   31,
+   0,
+   "MODEL"
+  ],
+  [
+   2,
+   31,
+   0,
+   32,
+   0,
+   "MODEL"
+  ],
+  [
+   3,
+   32,
+   0,
+   33,
+   0,
+   "MODEL"
+  ],
+  [
+   4,
+   38,
+   0,
+   40,
+   0,
+   "STRING"
+  ],
+  [
+   5,
+   7,
+   0,
+   40,
+   1,
+   "STRING"
+  ],
+  [
+   6,
+   40,
+   0,
+   41,
+   0,
+   "STRING"
+  ],
+  [
+   7,
+   39,
+   0,
+   41,
+   1,
+   "STRING"
+  ],
+  [
+   8,
+   2,
+   0,
+   42,
+   0,
+   "CLIP"
+  ],
+  [
+   9,
+   41,
+   0,
+   42,
+   1,
+   "STRING"
+  ],
+  [
+   10,
+   2,
+   0,
+   43,
+   0,
+   "CLIP"
+  ],
+  [
+   11,
+   33,
+   0,
+   45,
+   0,
+   "MODEL"
+  ],
+  [
+   12,
+   42,
+   0,
+   45,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   13,
+   43,
+   0,
+   45,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   14,
+   80,
+   0,
+   81,
+   0,
+   "IMAGE"
+  ],
+  [
+   15,
+   81,
+   0,
+   44,
+   0,
+   "IMAGE"
+  ],
+  [
+   16,
+   3,
+   0,
+   44,
+   1,
+   "VAE"
+  ],
+  [
+   17,
+   44,
+   0,
+   45,
+   3,
+   "LATENT"
+  ],
+  [
+   18,
+   45,
+   0,
+   46,
+   0,
+   "LATENT"
+  ],
+  [
+   19,
+   3,
+   0,
+   46,
+   1,
+   "VAE"
+  ],
+  [
+   20,
+   46,
+   0,
+   47,
+   0,
+   "IMAGE"
+  ],
+  [
+   21,
+   10,
+   0,
+   61,
+   0,
+   "IMAGE"
+  ],
+  [
+   22,
+   60,
+   0,
+   61,
+   1,
+   "INT"
+  ],
+  [
+   23,
+   60,
+   0,
+   61,
+   2,
+   "INT"
+  ],
+  [
+   24,
+   61,
+   0,
+   62,
+   0,
+   "IMAGE"
+  ],
+  [
+   25,
+   11,
+   0,
+   63,
+   0,
+   "IMAGE"
+  ],
+  [
+   26,
+   60,
+   0,
+   63,
+   1,
+   "INT"
+  ],
+  [
+   27,
+   60,
+   0,
+   63,
+   2,
+   "INT"
+  ],
+  [
+   28,
+   63,
+   0,
+   64,
+   0,
+   "IMAGE"
+  ],
+  [
+   29,
+   12,
+   0,
+   65,
+   0,
+   "IMAGE"
+  ],
+  [
+   30,
+   60,
+   0,
+   65,
+   1,
+   "INT"
+  ],
+  [
+   31,
+   60,
+   0,
+   65,
+   2,
+   "INT"
+  ],
+  [
+   32,
+   65,
+   0,
+   66,
+   0,
+   "IMAGE"
+  ],
+  [
+   33,
+   63,
+   0,
+   67,
+   0,
+   "IMAGE"
+  ],
+  [
+   34,
+   65,
+   0,
+   67,
+   1,
+   "IMAGE"
+  ],
+  [
+   35,
+   67,
+   0,
+   68,
+   0,
+   "IMAGE"
+  ],
+  [
+   36,
+   1,
+   0,
+   4,
+   0,
+   "MODEL"
+  ],
+  [
+   37,
+   4,
+   0,
+   5,
+   0,
+   "MODEL"
+  ],
+  [
+   38,
+   5,
+   0,
+   6,
+   0,
+   "MODEL"
+  ],
+  [
+   39,
+   2,
+   0,
+   21,
+   0,
+   "CLIP"
+  ],
+  [
+   40,
+   3,
+   0,
+   21,
+   1,
+   "VAE"
+  ],
+  [
+   41,
+   2,
+   0,
+   50,
+   0,
+   "CLIP"
+  ],
+  [
+   42,
+   3,
+   0,
+   50,
+   1,
+   "VAE"
+  ],
+  [
+   43,
+   46,
+   0,
+   50,
+   2,
+   "IMAGE"
+  ],
+  [
+   44,
+   61,
+   0,
+   50,
+   3,
+   "IMAGE"
+  ],
+  [
+   45,
+   67,
+   0,
+   50,
+   4,
+   "IMAGE"
+  ],
+  [
+   46,
+   46,
+   0,
+   51,
+   0,
+   "IMAGE"
+  ],
+  [
+   47,
+   3,
+   0,
+   51,
+   1,
+   "VAE"
+  ],
+  [
+   48,
+   6,
+   0,
+   52,
+   0,
+   "MODEL"
+  ],
+  [
+   49,
+   50,
+   0,
+   52,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   50,
+   21,
+   0,
+   52,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   51,
+   51,
+   0,
+   52,
+   3,
+   "LATENT"
+  ],
+  [
+   52,
+   52,
+   0,
+   53,
+   0,
+   "LATENT"
+  ],
+  [
+   53,
+   3,
+   0,
+   53,
+   1,
+   "VAE"
+  ],
+  [
+   54,
+   53,
+   0,
+   54,
+   0,
+   "IMAGE"
+  ],
+  [
+   55,
+   53,
+   0,
+   100,
+   0,
+   "IMAGE"
+  ],
+  [
+   56,
+   100,
+   0,
+   101,
+   0,
+   "IMAGE"
+  ],
+  [
+   57,
+   101,
+   0,
+   102,
+   0,
+   "IMAGE"
+  ],
+  [
+   58,
+   3,
+   0,
+   102,
+   1,
+   "VAE"
+  ],
+  [
+   59,
+   2,
+   0,
+   103,
+   0,
+   "CLIP"
+  ],
+  [
+   60,
+   3,
+   0,
+   103,
+   1,
+   "VAE"
+  ],
+  [
+   61,
+   101,
+   0,
+   103,
+   2,
+   "IMAGE"
+  ],
+  [
+   62,
+   61,
+   0,
+   103,
+   3,
+   "IMAGE"
+  ],
+  [
+   63,
+   67,
+   0,
+   103,
+   4,
+   "IMAGE"
+  ],
+  [
+   64,
+   6,
+   0,
+   104,
+   0,
+   "MODEL"
+  ],
+  [
+   65,
+   103,
+   0,
+   104,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   66,
+   21,
+   0,
+   104,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   67,
+   102,
+   0,
+   104,
+   3,
+   "LATENT"
+  ],
+  [
+   68,
+   104,
+   0,
+   105,
+   0,
+   "LATENT"
+  ],
+  [
+   69,
+   3,
+   0,
+   105,
+   1,
+   "VAE"
+  ],
+  [
+   70,
+   105,
+   0,
+   106,
+   0,
+   "IMAGE"
+  ],
+  [
+   71,
+   53,
+   0,
+   110,
+   0,
+   "IMAGE"
+  ],
+  [
+   72,
+   110,
+   0,
+   111,
+   0,
+   "IMAGE"
+  ],
+  [
+   73,
+   111,
+   0,
+   112,
+   0,
+   "IMAGE"
+  ],
+  [
+   74,
+   3,
+   0,
+   112,
+   1,
+   "VAE"
+  ],
+  [
+   75,
+   2,
+   0,
+   113,
+   0,
+   "CLIP"
+  ],
+  [
+   76,
+   3,
+   0,
+   113,
+   1,
+   "VAE"
+  ],
+  [
+   77,
+   111,
+   0,
+   113,
+   2,
+   "IMAGE"
+  ],
+  [
+   78,
+   61,
+   0,
+   113,
+   3,
+   "IMAGE"
+  ],
+  [
+   79,
+   67,
+   0,
+   113,
+   4,
+   "IMAGE"
+  ],
+  [
+   80,
+   6,
+   0,
+   114,
+   0,
+   "MODEL"
+  ],
+  [
+   81,
+   113,
+   0,
+   114,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   82,
+   21,
+   0,
+   114,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   83,
+   112,
+   0,
+   114,
+   3,
+   "LATENT"
+  ],
+  [
+   84,
+   114,
+   0,
+   115,
+   0,
+   "LATENT"
+  ],
+  [
+   85,
+   3,
+   0,
+   115,
+   1,
+   "VAE"
+  ],
+  [
+   86,
+   115,
+   0,
+   116,
+   0,
+   "IMAGE"
+  ],
+  [
+   87,
+   53,
+   0,
+   120,
+   0,
+   "IMAGE"
+  ],
+  [
+   88,
+   53,
+   0,
+   140,
+   0,
+   "IMAGE"
+  ],
+  [
+   89,
+   120,
+   0,
+   141,
+   0,
+   "IMAGE"
+  ],
+  [
+   90,
+   140,
+   0,
+   141,
+   1,
+   "IMAGE"
+  ],
+  [
+   91,
+   141,
+   0,
+   121,
+   0,
+   "IMAGE"
+  ],
+  [
+   92,
+   121,
+   0,
+   122,
+   0,
+   "IMAGE"
+  ],
+  [
+   93,
+   3,
+   0,
+   122,
+   1,
+   "VAE"
+  ],
+  [
+   94,
+   2,
+   0,
+   123,
+   0,
+   "CLIP"
+  ],
+  [
+   95,
+   3,
+   0,
+   123,
+   1,
+   "VAE"
+  ],
+  [
+   96,
+   121,
+   0,
+   123,
+   2,
+   "IMAGE"
+  ],
+  [
+   97,
+   61,
+   0,
+   123,
+   3,
+   "IMAGE"
+  ],
+  [
+   98,
+   67,
+   0,
+   123,
+   4,
+   "IMAGE"
+  ],
+  [
+   99,
+   6,
+   0,
+   124,
+   0,
+   "MODEL"
+  ],
+  [
+   100,
+   123,
+   0,
+   124,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   101,
+   21,
+   0,
+   124,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   102,
+   122,
+   0,
+   124,
+   3,
+   "LATENT"
+  ],
+  [
+   103,
+   124,
+   0,
+   125,
+   0,
+   "LATENT"
+  ],
+  [
+   104,
+   3,
+   0,
+   125,
+   1,
+   "VAE"
+  ],
+  [
+   105,
+   125,
+   0,
+   126,
+   0,
+   "IMAGE"
+  ],
+  [
+   106,
+   53,
+   0,
+   130,
+   0,
+   "IMAGE"
+  ],
+  [
+   107,
+   130,
+   0,
+   131,
+   0,
+   "IMAGE"
+  ],
+  [
+   108,
+   131,
+   0,
+   132,
+   0,
+   "IMAGE"
+  ],
+  [
+   109,
+   3,
+   0,
+   132,
+   1,
+   "VAE"
+  ],
+  [
+   110,
+   2,
+   0,
+   133,
+   0,
+   "CLIP"
+  ],
+  [
+   111,
+   3,
+   0,
+   133,
+   1,
+   "VAE"
+  ],
+  [
+   112,
+   131,
+   0,
+   133,
+   2,
+   "IMAGE"
+  ],
+  [
+   113,
+   61,
+   0,
+   133,
+   3,
+   "IMAGE"
+  ],
+  [
+   114,
+   67,
+   0,
+   133,
+   4,
+   "IMAGE"
+  ],
+  [
+   115,
+   6,
+   0,
+   134,
+   0,
+   "MODEL"
+  ],
+  [
+   116,
+   133,
+   0,
+   134,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   117,
+   21,
+   0,
+   134,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   118,
+   132,
+   0,
+   134,
+   3,
+   "LATENT"
+  ],
+  [
+   119,
+   134,
+   0,
+   135,
+   0,
+   "LATENT"
+  ],
+  [
+   120,
+   3,
+   0,
+   135,
+   1,
+   "VAE"
+  ],
+  [
+   121,
+   135,
+   0,
+   136,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "groups": [
+  {
+   "title": "ÉTAPE 1 — Blockout + description → 360° habillé",
+   "bounding": [
+    -1520,
+    -100,
+    2300,
+    1140
+   ],
+   "color": "#335"
+  },
+  {
+   "title": "MOODBOARDS + préparation",
+   "bounding": [
+    -1100,
+    990,
+    1760,
+    1400
+   ],
+   "color": "#3f789e"
+  },
+  {
+   "title": "ÉTAPE 2 — Restyle du 360° avec les moodboards",
+   "bounding": [
+    1280,
+    -60,
+    1440,
+    480
+   ],
+   "color": "#3f6"
+  },
+  {
+   "title": "ÉTAPE 3 — 4 vues découpées + redressées (A = héros)",
+   "bounding": [
+    880,
+    660,
+    1640,
+    2160
+   ],
+   "color": "#a1883f"
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.45,
+   "offset": [
+    1600,
+    150
+   ]
+  }
+ },
+ "version": 0.4
+}

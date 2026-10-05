@@ -1,0 +1,3626 @@
+{
+  "id": "c2bd6d82-d5b7-464a-8f03-dbf57526dcf4",
+  "revision": 0,
+  "last_node_id": 124,
+  "last_link_id": 91,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        -1300,
+        0
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "qwen_image_edit_2511_fp8mixed.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "qwen_image_edit_2511_fp8mixed.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        -1300,
+        120
+      ],
+      "size": [
+        340,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            4,
+            9,
+            21,
+            88
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "type": "qwen_image",
+        "device": "default"
+      }
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        -1300,
+        260
+      ],
+      "size": [
+        340,
+        58
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            5,
+            10,
+            16,
+            20,
+            22,
+            33,
+            89
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "qwen_image_vae.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "qwen_image_vae.safetensors"
+      }
+    },
+    {
+      "id": 4,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -1300,
+        350
+      ],
+      "size": [
+        359.5333312988281,
+        82
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "title": "LoRA Lightning 4 steps (PAS de LoRA angles ici)",
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+        1
+      ],
+      "widgets_values_named": {
+        "lora_name": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+        "strength_model": 1
+      }
+    },
+    {
+      "id": 5,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        -1300,
+        470
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow"
+      },
+      "widgets_values": [
+        3.1,
+        "flow"
+      ],
+      "widgets_values_named": {
+        "shift": 3.1,
+        "sampling": "flow"
+      }
+    },
+    {
+      "id": 6,
+      "type": "CFGNorm",
+      "pos": [
+        -1300,
+        560
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "patched_model",
+          "type": "MODEL",
+          "links": [
+            11,
+            28
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CFGNorm"
+      },
+      "widgets_values": [
+        1,
+        false
+      ],
+      "widgets_values_named": {
+        "strength": 1,
+        "pre_cfg": false
+      }
+    },
+    {
+      "id": 10,
+      "type": "LoadImage",
+      "pos": [
+        -887.8708081145476,
+        4.665073802097311
+      ],
+      "size": [
+        320,
+        340
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            6
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "title": "Moodboard 1 — formes / silhouette",
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "00715ce6793905ca9bc41735cca8cea1899cc8a817b2f11d04a6a4637b79a982.jpg",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "00715ce6793905ca9bc41735cca8cea1899cc8a817b2f11d04a6a4637b79a982.jpg",
+        "upload": "image"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 11,
+      "type": "LoadImage",
+      "pos": [
+        -900,
+        380
+      ],
+      "size": [
+        320,
+        340
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            7
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "title": "Moodboard 2 — matières / détails",
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "clothing_light_blue_denim_shirt.png",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "clothing_light_blue_denim_shirt.png",
+        "upload": "image"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 12,
+      "type": "LoadImage",
+      "pos": [
+        -900,
+        760
+      ],
+      "size": [
+        320,
+        340
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            8
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "title": "Moodboard 3 — palette / ambiance",
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "1dfd02d4c2555b0fb3bf62fb9d2e09dade1619393bbcee11e02f48d830abbc13.jpeg",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "1dfd02d4c2555b0fb3bf62fb9d2e09dade1619393bbcee11e02f48d830abbc13.jpeg",
+        "upload": "image"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 20,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        -520,
+        0
+      ],
+      "size": [
+        497.96865045935056,
+        584.8489311129658
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 5
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 6
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 7
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "title": "PROMPT 1 — Moodboard + description (édite [DESCRIPTION])",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": [
+        "Character model sheet of one adult man, shown in four views side by side on a single image, in this order from left to right: FRONT view, SIDE view (left profile), BACK view, 3/4 FRONT view. The A-pose is the main instruction of this image and applies to all four views.\n\nLAYOUT: the four views stand on the same invisible ground line, at exactly the same height and the same scale, perfectly aligned horizontally, evenly spaced, with no overlap. Full body visible from head to shoes in every view, generous margins, plain white background. Each view shows the exact same character with the exact same proportions, volumes, colors, clothing and details.\n\nA-POSE: the A-pose is the standard neutral reference pose used for 3D character modeling and rigging. Seen from the front, the body is perfectly symmetrical along the vertical center line, and the silhouette forms the shape of a capital letter \"A\": the arms and legs spread slightly outward from the body like the two sides of the letter. It is not a T-pose (arms are not horizontal) and not a relaxed standing pose (arms do not touch the body).\n\nA-POSE RULES, all mandatory:\n- Arms: both arms fully extended downward, elbows straight, each arm angled exactly 30 degrees away from the torso, measured from the vertical body axis. In the front and back views, a clear empty gap of white background is visible between each arm and the body, from armpit to wrist.\n- Hands: open and relaxed, palms facing the thighs, fingers slightly apart, aligned with the arms. The hands never touch each other or the body.\n- Legs: both legs straight, knees unbent, each leg angled exactly 5 degrees outward from the vertical axis. Feet slightly apart, flat on the ground, toes pointing forward. A narrow gap is visible between the legs.\n- Body: standing straight, weight evenly distributed on both legs, hips and shoulders level, left side mirroring the right side.\n- Head: straight, looking directly ahead in the direction the body faces, calm neutral expression with a light closed-mouth smile.\n\nCHARACTER: slim athletic adult man in his early thirties, average height, light skin, oval face with a defined jawline, straight nose, thick dark eyebrows, brown eyes, very light stubble. Short dark brown hair, faded short on the sides and back, longer and voluminous on top, swept up and back with a natural texture.\n\nOUTFIT:\n- Plain white crew-neck t-shirt, short sleeves ending mid-upper arm, regular fit, slightly loose, worn untucked, hem falling just below the belt line. No print, no logo.\n- Light-wash blue denim jeans, slim straight-leg cut, five-pocket style with two back patch pockets, faded whiskering at the hips and thighs, slight wear on the thighs, fabric bunched and stacked at the ankles.\n- White low-top leather sneakers, white laces, white flat rubber soles, minimal design, no logo.\n- Accessories: silver wristwatch with a round silver face and a silver metal bracelet on the LEFT wrist.\n- Distinctive mark: small black-ink geometric tattoo on the inner forearm of the RIGHT arm, a downward-pointing triangle with thin lines inside. The watch and the tattoo stay on the same arm in every view.\n\nSTYLE: flat 2D vector illustration, clean sharp outlines, flat saturated colors. No shadows, no drop shadows, no gradients, no complex lighting, no reflections. No text, no labels, no captions, no title, no watermark.\n\nREMINDER: four aligned views (front, left side, back, 3/4) of the same character, same height, same scale, symmetrical A-pose, arms 30 degrees from the body, legs 5 degrees apart, hands open and separated from the body, plain white background."
+      ],
+      "widgets_values_named": {
+        "prompt": "Character model sheet of one adult man, shown in four views side by side on a single image, in this order from left to right: FRONT view, SIDE view (left profile), BACK view, 3/4 FRONT view. The A-pose is the main instruction of this image and applies to all four views.\n\nLAYOUT: the four views stand on the same invisible ground line, at exactly the same height and the same scale, perfectly aligned horizontally, evenly spaced, with no overlap. Full body visible from head to shoes in every view, generous margins, plain white background. Each view shows the exact same character with the exact same proportions, volumes, colors, clothing and details.\n\nA-POSE: the A-pose is the standard neutral reference pose used for 3D character modeling and rigging. Seen from the front, the body is perfectly symmetrical along the vertical center line, and the silhouette forms the shape of a capital letter \"A\": the arms and legs spread slightly outward from the body like the two sides of the letter. It is not a T-pose (arms are not horizontal) and not a relaxed standing pose (arms do not touch the body).\n\nA-POSE RULES, all mandatory:\n- Arms: both arms fully extended downward, elbows straight, each arm angled exactly 30 degrees away from the torso, measured from the vertical body axis. In the front and back views, a clear empty gap of white background is visible between each arm and the body, from armpit to wrist.\n- Hands: open and relaxed, palms facing the thighs, fingers slightly apart, aligned with the arms. The hands never touch each other or the body.\n- Legs: both legs straight, knees unbent, each leg angled exactly 5 degrees outward from the vertical axis. Feet slightly apart, flat on the ground, toes pointing forward. A narrow gap is visible between the legs.\n- Body: standing straight, weight evenly distributed on both legs, hips and shoulders level, left side mirroring the right side.\n- Head: straight, looking directly ahead in the direction the body faces, calm neutral expression with a light closed-mouth smile.\n\nCHARACTER: slim athletic adult man in his early thirties, average height, light skin, oval face with a defined jawline, straight nose, thick dark eyebrows, brown eyes, very light stubble. Short dark brown hair, faded short on the sides and back, longer and voluminous on top, swept up and back with a natural texture.\n\nOUTFIT:\n- Plain white crew-neck t-shirt, short sleeves ending mid-upper arm, regular fit, slightly loose, worn untucked, hem falling just below the belt line. No print, no logo.\n- Light-wash blue denim jeans, slim straight-leg cut, five-pocket style with two back patch pockets, faded whiskering at the hips and thighs, slight wear on the thighs, fabric bunched and stacked at the ankles.\n- White low-top leather sneakers, white laces, white flat rubber soles, minimal design, no logo.\n- Accessories: silver wristwatch with a round silver face and a silver metal bracelet on the LEFT wrist.\n- Distinctive mark: small black-ink geometric tattoo on the inner forearm of the RIGHT arm, a downward-pointing triangle with thin lines inside. The watch and the tattoo stay on the same arm in every view.\n\nSTYLE: flat 2D vector illustration, clean sharp outlines, flat saturated colors. No shadows, no drop shadows, no gradients, no complex lighting, no reflections. No text, no labels, no captions, no title, no watermark.\n\nREMINDER: four aligned views (front, left side, back, 3/4) of the same character, same height, same scale, symmetrical A-pose, arms 30 degrees from the body, legs 5 degrees apart, hands open and separated from the body, plain white background."
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 21,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        -515.8947350541544,
+        690.0001698553358
+      ],
+      "size": [
+        460,
+        240
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 9
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 10
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "title": "Négatif (vide, CFG 1)",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": [
+        "T-pose, arms touching the body, hands in pockets, crossed arms, relaxed pose, contrapose, bent knees, shadows, gradient, realistic photo, 3D render, text, letters, watermark, inconsistent clothing between views, different scale between views, cropped feet, cropped head, extra limbs"
+      ],
+      "widgets_values_named": {
+        "prompt": "T-pose, arms touching the body, hands in pockets, crossed arms, relaxed pose, contrapose, bent knees, shadows, gradient, realistic photo, 3D render, text, letters, watermark, inconsistent clothing between views, different scale between views, cropped feet, cropped head, extra limbs"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 22,
+      "type": "EmptySD3LatentImage",
+      "pos": [
+        -515.8947350541544,
+        990.0001698553358
+      ],
+      "size": [
+        335.6166748046875,
+        106
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "title": "Format portrait 832×1216 (prop : 1024×1024)",
+      "properties": {
+        "Node name for S&R": "EmptySD3LatentImage"
+      },
+      "widgets_values": [
+        832,
+        1216,
+        1
+      ],
+      "widgets_values_named": {
+        "width": 832,
+        "height": 1216,
+        "batch_size": 1
+      }
+    },
+    {
+      "id": 23,
+      "type": "KSampler",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        300,
+        262
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 11
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 12
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 13
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "title": "KSampler — Étape 1 (conception)",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        1001,
+        "fixed",
+        4,
+        1,
+        "euler",
+        "simple",
+        1
+      ],
+      "widgets_values_named": {
+        "seed": 1001,
+        "control_after_generate": "fixed",
+        "steps": 4,
+        "cfg": 1,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 1
+      }
+    },
+    {
+      "id": 24,
+      "type": "VAEDecode",
+      "pos": [
+        330,
+        0
+      ],
+      "size": [
+        200,
+        46
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 15
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            17,
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 25,
+      "type": "SaveImage",
+      "pos": [
+        333.39278094697977,
+        135.80254278422817
+      ],
+      "size": [
+        340,
+        460
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "Save — Étape 1 face brute",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "modelsheet/etape1_face_brute"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "modelsheet/etape1_face_brute"
+      }
+    },
+    {
+      "id": 30,
+      "type": "LoadImage",
+      "pos": [
+        784.4203999999994,
+        -16.105099999999904
+      ],
+      "size": [
+        320,
+        340
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            24
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "title": "Référence de STYLE (rendu uniquement)",
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "00715ce6793905ca9bc41735cca8cea1899cc8a817b2f11d04a6a4637b79a982.jpg",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "00715ce6793905ca9bc41735cca8cea1899cc8a817b2f11d04a6a4637b79a982.jpg",
+        "upload": "image"
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 31,
+      "type": "ImageScaleToTotalPixels",
+      "pos": [
+        784.4203999999994,
+        363.89490000000023
+      ],
+      "size": [
+        320,
+        106
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            19,
+            23,
+            90
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageScaleToTotalPixels"
+      },
+      "widgets_values": [
+        "lanczos",
+        1,
+        1
+      ],
+      "widgets_values_named": {
+        "upscale_method": "lanczos",
+        "megapixels": 1,
+        "resolution_steps": 1
+      }
+    },
+    {
+      "id": 32,
+      "type": "VAEEncode",
+      "pos": [
+        784.4203999999994,
+        483.89490000000023
+      ],
+      "size": [
+        320,
+        46
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 19
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            31
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncode"
+      }
+    },
+    {
+      "id": 33,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        1146.964985710234,
+        -15.256904763254935
+      ],
+      "size": [
+        478.9265530860083,
+        437.67568607718573
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 21
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 22
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 23
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 24
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            29
+          ]
+        }
+      ],
+      "title": "PROMPT 2 — Forçage du style (édite 'Target style')",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": [
+        "Redraw Picture 1 in the exact rendering style of Picture 2. Take ONLY the rendering technique from Picture 2 (line work, shading method, color treatment, level of detail), never its content, characters or objects.\n\nTarget style: flat 2D vector illustration, clean sharp outlines, flat saturated colors, no gradients, no shading, no drop shadow, no lighting effects.\n\nKeep from Picture 1 exactly: the same character design, silhouette, proportions, pose (A-pose, front view), outfit, accessories and color placement. Plain pure white background.\n\nIgnore the poses shown in the reference pictures 2."
+      ],
+      "widgets_values_named": {
+        "prompt": "Redraw Picture 1 in the exact rendering style of Picture 2. Take ONLY the rendering technique from Picture 2 (line work, shading method, color treatment, level of detail), never its content, characters or objects.\n\nTarget style: flat 2D vector illustration, clean sharp outlines, flat saturated colors, no gradients, no shading, no drop shadow, no lighting effects.\n\nKeep from Picture 1 exactly: the same character design, silhouette, proportions, pose (A-pose, front view), outfit, accessories and color placement. Plain pure white background.\n\nIgnore the poses shown in the reference pictures 2."
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 35,
+      "type": "KSampler",
+      "pos": [
+        1644.420399999999,
+        -16.105099999999904
+      ],
+      "size": [
+        300,
+        262
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 28
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 29
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 91
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            32
+          ]
+        }
+      ],
+      "title": "KSampler — Étape 2 (style)",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        2001,
+        "fixed",
+        4,
+        1,
+        "euler",
+        "simple",
+        1
+      ],
+      "widgets_values_named": {
+        "seed": 2001,
+        "control_after_generate": "fixed",
+        "steps": 4,
+        "cfg": 1,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 1
+      }
+    },
+    {
+      "id": 36,
+      "type": "VAEDecode",
+      "pos": [
+        1974.420399999999,
+        -16.105099999999904
+      ],
+      "size": [
+        200,
+        46
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 32
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            34,
+            38
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 37,
+      "type": "SaveImage",
+      "pos": [
+        1974.420399999999,
+        73.89490000000009
+      ],
+      "size": [
+        340,
+        460
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 34
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "Save — Étape 2 face stylisée",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "modelsheet/etape2_face_stylisee"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "modelsheet/etape2_face_stylisee"
+      }
+    },
+    {
+      "id": 40,
+      "type": "UNETLoader",
+      "pos": [
+        787.8072435803222,
+        720.3210614819357
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            35
+          ]
+        }
+      ],
+      "title": "Z-Image Turbo (optionnel)",
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "z_image_turbo_bf16.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "z_image_turbo_bf16.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    {
+      "id": 41,
+      "type": "CLIPLoader",
+      "pos": [
+        784.4203999999995,
+        820
+      ],
+      "size": [
+        340,
+        106
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            36,
+            37
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen_3_4b.safetensors",
+        "lumina2",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen_3_4b.safetensors",
+        "type": "lumina2",
+        "device": "default"
+      }
+    },
+    {
+      "id": 42,
+      "type": "VAELoader",
+      "pos": [
+        784.4203999999995,
+        960
+      ],
+      "size": [
+        340,
+        58
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            39,
+            45
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "ae.safetensors"
+      }
+    },
+    {
+      "id": 43,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        784.4203999999995,
+        1050
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 35
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            40
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow"
+      },
+      "widgets_values": [
+        3,
+        "flow"
+      ],
+      "widgets_values_named": {
+        "shift": 3,
+        "sampling": "flow"
+      }
+    },
+    {
+      "id": 44,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1145.549347860107,
+        725.9658007824734
+      ],
+      "size": [
+        460,
+        200
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 36
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            41
+          ]
+        }
+      ],
+      "title": "PROMPT 3 — Uniformisation Z-Image",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "Flat 2D vector illustration of a character, full body front view, A-pose, clean sharp outlines, flat saturated colors, no shading, no shadows, plain white background."
+      ],
+      "widgets_values_named": {
+        "text": "Flat 2D vector illustration of a character, full body front view, A-pose, clean sharp outlines, flat saturated colors, no shading, no shadows, plain white background."
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 45,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1144.4203999999995,
+        940
+      ],
+      "size": [
+        460,
+        100
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 37
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            42
+          ]
+        }
+      ],
+      "title": "Négatif (vide)",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "widgets_values_named": {
+        "text": ""
+      }
+    },
+    {
+      "id": 46,
+      "type": "VAEEncode",
+      "pos": [
+        1144.4203999999995,
+        1080
+      ],
+      "size": [
+        300,
+        46
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 38
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            43
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncode"
+      }
+    },
+    {
+      "id": 47,
+      "type": "KSampler",
+      "pos": [
+        1644.4203999999995,
+        700
+      ],
+      "size": [
+        300,
+        262
+      ],
+      "flags": {},
+      "order": 39,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 40
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 41
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 42
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 43
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            44
+          ]
+        }
+      ],
+      "title": "KSampler — Étape 3 (denoise 0.30)",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        3001,
+        "fixed",
+        9,
+        1,
+        "euler",
+        "simple",
+        0.3
+      ],
+      "widgets_values_named": {
+        "seed": 3001,
+        "control_after_generate": "fixed",
+        "steps": 9,
+        "cfg": 1,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 0.3
+      }
+    },
+    {
+      "id": 48,
+      "type": "VAEDecode",
+      "pos": [
+        1974.4203999999995,
+        700
+      ],
+      "size": [
+        200,
+        46
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 44
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 45
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            46
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 49,
+      "type": "SaveImage",
+      "pos": [
+        1974.4203999999995,
+        790
+      ],
+      "size": [
+        340,
+        460
+      ],
+      "flags": {},
+      "order": 41,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 46
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            87
+          ]
+        }
+      ],
+      "title": "Save — Étape 3 face finale",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "modelsheet/etape3_face_finale"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "modelsheet/etape3_face_finale"
+      }
+    },
+    {
+      "id": 99,
+      "type": "Note",
+      "pos": [
+        -1512.727365375638,
+        719.5933099688089
+      ],
+      "size": [
+        560,
+        560
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Mode d'emploi",
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "MOODBOARD -> VUE DE FACE -> STYLE\n\nÉTAPE 1 — Conception\n• Charge 3 images de moodboard (formes / matières / palette).\n• Édite [DESCRIPTION] dans le PROMPT 1.\n• Moins de 3 images ? Débranche image2/image3 et retire 'Picture 3' du prompt.\n• PROP : remplace 'character' par l'objet, supprime les lignes A-pose/expression,\n  ajoute 'straight front view, product orthographic framing', format 1024×1024.\n\nÉTAPE 2 — Forçage du style\n• Charge une référence de style (rendu seulement, le contenu est ignoré).\n• Édite 'Target style'. Sans référence : débranche image2 et retire les mentions de Picture 2.\n• Pour itérer sur le style sans relancer l'étape 1 : seed étape 1 en 'fixed' (déjà le cas).\n\nÉTAPE 3 — Optionnelle (désactivée)\n• Uniformisation Z-Image Turbo, denoise 0.25-0.35.\n• Sélectionne les nœuds du bas + Ctrl+M pour les réactiver.\n\nRéglages Qwen : 4 steps / CFG 1.0 / euler / simple / denoise 1.0.\nRésultat raté : change la seed avant de toucher au prompt."
+      ],
+      "widgets_values_named": {
+        "text": "MOODBOARD -> VUE DE FACE -> STYLE\n\nÉTAPE 1 — Conception\n• Charge 3 images de moodboard (formes / matières / palette).\n• Édite [DESCRIPTION] dans le PROMPT 1.\n• Moins de 3 images ? Débranche image2/image3 et retire 'Picture 3' du prompt.\n• PROP : remplace 'character' par l'objet, supprime les lignes A-pose/expression,\n  ajoute 'straight front view, product orthographic framing', format 1024×1024.\n\nÉTAPE 2 — Forçage du style\n• Charge une référence de style (rendu seulement, le contenu est ignoré).\n• Édite 'Target style'. Sans référence : débranche image2 et retire les mentions de Picture 2.\n• Pour itérer sur le style sans relancer l'étape 1 : seed étape 1 en 'fixed' (déjà le cas).\n\nÉTAPE 3 — Optionnelle (désactivée)\n• Uniformisation Z-Image Turbo, denoise 0.25-0.35.\n• Sélectionne les nœuds du bas + Ctrl+M pour les réactiver.\n\nRéglages Qwen : 4 steps / CFG 1.0 / euler / simple / denoise 1.0.\nRésultat raté : change la seed avant de toucher au prompt."
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 100,
+      "type": "SaveImage",
+      "pos": [
+        4345.519485825595,
+        14.3708368261596
+      ],
+      "size": [
+        360,
+        420
+      ],
+      "flags": {},
+      "order": 54,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 47
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "title": "Save — Vue 3/4 avant droite",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "modelsheet/vue_34"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "modelsheet/vue_34"
+      }
+    },
+    {
+      "id": 101,
+      "type": "VAEDecode",
+      "pos": [
+        4115.519485825596,
+        14.3708368261596
+      ],
+      "size": [
+        200,
+        46
+      ],
+      "flags": {},
+      "order": 51,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 48
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 49
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            47
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 102,
+      "type": "KSampler",
+      "pos": [
+        3785.5194858255963,
+        14.3708368261596
+      ],
+      "size": [
+        300,
+        262
+      ],
+      "flags": {},
+      "order": 48,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 50
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 51
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 52
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 53
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            48
+          ]
+        }
+      ],
+      "title": "KSampler — Vue 3/4 avant droite",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        101,
+        "fixed",
+        4,
+        1,
+        "euler",
+        "simple",
+        1
+      ],
+      "widgets_values_named": {
+        "seed": 101,
+        "control_after_generate": "fixed",
+        "steps": 4,
+        "cfg": 1,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 1
+      }
+    },
+    {
+      "id": 103,
+      "type": "KSampler",
+      "pos": [
+        3785.5194858255963,
+        574.3708368261598
+      ],
+      "size": [
+        300,
+        262
+      ],
+      "flags": {},
+      "order": 49,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 54
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 55
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 56
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 57
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            58
+          ]
+        }
+      ],
+      "title": "KSampler — Vue de PROFIL droit",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        102,
+        "fixed",
+        4,
+        1,
+        "euler",
+        "simple",
+        1
+      ],
+      "widgets_values_named": {
+        "seed": 102,
+        "control_after_generate": "fixed",
+        "steps": 4,
+        "cfg": 1,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 1
+      }
+    },
+    {
+      "id": 104,
+      "type": "VAEDecode",
+      "pos": [
+        4115.519485825596,
+        574.3708368261598
+      ],
+      "size": [
+        200,
+        46
+      ],
+      "flags": {},
+      "order": 52,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 58
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 59
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            60
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 105,
+      "type": "SaveImage",
+      "pos": [
+        4345.519485825595,
+        574.3708368261598
+      ],
+      "size": [
+        360,
+        420
+      ],
+      "flags": {},
+      "order": 55,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 60
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "title": "Save — Vue de PROFIL droit",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "modelsheet/vue_profil"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "modelsheet/vue_profil"
+      }
+    },
+    {
+      "id": 106,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        3335.519485825597,
+        14.3708368261596
+      ],
+      "size": [
+        420,
+        200
+      ],
+      "flags": {},
+      "order": 43,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 61
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 62
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 63
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            51
+          ]
+        }
+      ],
+      "title": "Prompt — Vue 3/4 avant droite",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": [
+        "<sks> front-right quarter view eye-level shot wide shot\nKeep the exact same character, outfit, proportions, colors and accessories. Full body, A-pose, arms slightly away from the body, palms facing the thighs. Flat 2D vector illustration, flat saturated colors, no shading, no drop shadow, plain white background."
+      ],
+      "widgets_values_named": {
+        "prompt": "<sks> front-right quarter view eye-level shot wide shot\nKeep the exact same character, outfit, proportions, colors and accessories. Full body, A-pose, arms slightly away from the body, palms facing the thighs. Flat 2D vector illustration, flat saturated colors, no shading, no drop shadow, plain white background."
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 107,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        3335.519485825597,
+        574.3708368261598
+      ],
+      "size": [
+        441.4876133942371,
+        332.2314200913581
+      ],
+      "flags": {},
+      "order": 44,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 64
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 65
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 66
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            55
+          ]
+        }
+      ],
+      "title": "Prompt — Vue de PROFIL droit",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": [
+        "<sks> right side view eye-level shot wide shot\nKeep the exact same character, outfit, proportions, colors and accessories. Full body, A-pose, arms slightly away from the body, palms facing the thighs. Flat 2D vector illustration, flat saturated colors, no shading, no drop shadow, plain white background."
+      ],
+      "widgets_values_named": {
+        "prompt": "<sks> right side view eye-level shot wide shot\nKeep the exact same character, outfit, proportions, colors and accessories. Full body, A-pose, arms slightly away from the body, palms facing the thighs. Flat 2D vector illustration, flat saturated colors, no shading, no drop shadow, plain white background."
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 108,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        2835.519485825597,
+        654.37083682616
+      ],
+      "size": [
+        420,
+        200
+      ],
+      "flags": {},
+      "order": 45,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 67
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 68
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 69
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            52,
+            56,
+            82
+          ]
+        }
+      ],
+      "title": "Négatif (vide, CFG 1)",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "widgets_values_named": {
+        "prompt": ""
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 109,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        2835.519485825597,
+        14.3708368261596
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 70
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            71
+          ]
+        }
+      ],
+      "title": "LoRA Lightning 4 steps",
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+        1
+      ],
+      "widgets_values_named": {
+        "lora_name": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+        "strength_model": 1
+      }
+    },
+    {
+      "id": 110,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        2835.519485825597,
+        134.37083682615955
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 71
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            72
+          ]
+        }
+      ],
+      "title": "LoRA Multiple-Angles (0.8-1.0)",
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "qwen-image-edit-2511-multiple-angles-lora.safetensors",
+        0.9
+      ],
+      "widgets_values_named": {
+        "lora_name": "qwen-image-edit-2511-multiple-angles-lora.safetensors",
+        "strength_model": 0.9
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 111,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        2835.519485825597,
+        254.3708368261597
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 72
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            73
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow"
+      },
+      "widgets_values": [
+        3.1,
+        "flow"
+      ],
+      "widgets_values_named": {
+        "shift": 3.1,
+        "sampling": "flow"
+      }
+    },
+    {
+      "id": 112,
+      "type": "CFGNorm",
+      "pos": [
+        2835.519485825597,
+        344.37083682615986
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 73
+        }
+      ],
+      "outputs": [
+        {
+          "name": "patched_model",
+          "type": "MODEL",
+          "links": [
+            50,
+            54,
+            80
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CFGNorm"
+      },
+      "widgets_values": [
+        1,
+        false
+      ],
+      "widgets_values_named": {
+        "strength": 1,
+        "pre_cfg": false
+      }
+    },
+    {
+      "id": 113,
+      "type": "ImageScaleToTotalPixels",
+      "pos": [
+        2835.519485825597,
+        434.37083682615986
+      ],
+      "size": [
+        340,
+        106
+      ],
+      "flags": {},
+      "order": 42,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 87
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            63,
+            66,
+            69,
+            75,
+            79
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageScaleToTotalPixels"
+      },
+      "widgets_values": [
+        "lanczos",
+        1,
+        1
+      ],
+      "widgets_values_named": {
+        "upscale_method": "lanczos",
+        "megapixels": 1,
+        "resolution_steps": 1
+      }
+    },
+    {
+      "id": 114,
+      "type": "VAEEncode",
+      "pos": [
+        2835.519485825597,
+        554.3708368261598
+      ],
+      "size": [
+        340,
+        46
+      ],
+      "flags": {},
+      "order": 46,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 75
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 76
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            53,
+            57,
+            83
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncode"
+      }
+    },
+    {
+      "id": 115,
+      "type": "Note",
+      "pos": [
+        2455.519485825597,
+        814.37083682616
+      ],
+      "size": [
+        720,
+        360
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Mode d'emploi",
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "ROTATION CAMÉRA — Qwen-Image-Edit-2511 + LoRA Multiple-Angles\n\n1. Charge la vue de FACE maître (fond blanc, A-pose, flat vector).\n2. Queue : 3 vues générées TOUTES depuis la face (pas de chaîne = pas de dérive).\n3. Réglages : 4 steps / CFG 1.0 / euler / simple / denoise 1.0.\n4. Vue ratée ? Change la seed AVANT de toucher au reste.\n5. Profil gauche : remplace 'right side view' par 'left side view'.\n\nSyntaxe caméra : <sks> [azimut] [élévation] [distance]\nazimut : front view, front-right quarter view, right side view, back-right quarter view, back view...\nélévation : eye-level shot (à garder pour un model sheet)\ndistance : wide shot (plein pied) / medium shot / close-up"
+      ],
+      "widgets_values_named": {
+        "text": "ROTATION CAMÉRA — Qwen-Image-Edit-2511 + LoRA Multiple-Angles\n\n1. Charge la vue de FACE maître (fond blanc, A-pose, flat vector).\n2. Queue : 3 vues générées TOUTES depuis la face (pas de chaîne = pas de dérive).\n3. Réglages : 4 steps / CFG 1.0 / euler / simple / denoise 1.0.\n4. Vue ratée ? Change la seed AVANT de toucher au reste.\n5. Profil gauche : remplace 'right side view' par 'left side view'.\n\nSyntaxe caméra : <sks> [azimut] [élévation] [distance]\nazimut : front view, front-right quarter view, right side view, back-right quarter view, back view...\nélévation : eye-level shot (à garder pour un model sheet)\ndistance : wide shot (plein pied) / medium shot / close-up"
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 116,
+      "type": "TextEncodeQwenImageEditPlus",
+      "pos": [
+        3335.519485825597,
+        1134.3708368261603
+      ],
+      "size": [
+        420,
+        200
+      ],
+      "flags": {},
+      "order": 47,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 77
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 78
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 79
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            81
+          ]
+        }
+      ],
+      "title": "Prompt — Vue de DOS",
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImageEditPlus"
+      },
+      "widgets_values": [
+        "<sks> back view eye-level shot wide shot\nKeep the exact same character, outfit, proportions, colors and accessories. Full body, A-pose, arms slightly away from the body, palms facing the thighs. Flat 2D vector illustration, flat saturated colors, no shading, no drop shadow, plain white background."
+      ],
+      "widgets_values_named": {
+        "prompt": "<sks> back view eye-level shot wide shot\nKeep the exact same character, outfit, proportions, colors and accessories. Full body, A-pose, arms slightly away from the body, palms facing the thighs. Flat 2D vector illustration, flat saturated colors, no shading, no drop shadow, plain white background."
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 117,
+      "type": "KSampler",
+      "pos": [
+        3785.5194858255963,
+        1134.3708368261603
+      ],
+      "size": [
+        300,
+        262
+      ],
+      "flags": {},
+      "order": 50,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 80
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 81
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 82
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 83
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            84
+          ]
+        }
+      ],
+      "title": "KSampler — Vue de DOS",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        103,
+        "fixed",
+        4,
+        1,
+        "euler",
+        "simple",
+        1
+      ],
+      "widgets_values_named": {
+        "seed": 103,
+        "control_after_generate": "fixed",
+        "steps": 4,
+        "cfg": 1,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 1
+      }
+    },
+    {
+      "id": 118,
+      "type": "VAEDecode",
+      "pos": [
+        4115.519485825596,
+        1134.3708368261603
+      ],
+      "size": [
+        200,
+        46
+      ],
+      "flags": {},
+      "order": 53,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 84
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 85
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            86
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 119,
+      "type": "SaveImage",
+      "pos": [
+        4345.519485825595,
+        1134.3708368261603
+      ],
+      "size": [
+        360,
+        420
+      ],
+      "flags": {},
+      "order": 56,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 86
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "title": "Save — Vue de DOS",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "modelsheet/vue_dos"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "modelsheet/vue_dos"
+      }
+    },
+    {
+      "id": 120,
+      "type": "UNETLoader",
+      "pos": [
+        2455.519485825597,
+        14.3708368261596
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            70
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "qwen_image_edit_2511_fp8mixed.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "qwen_image_edit_2511_fp8mixed.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    {
+      "id": 121,
+      "type": "CLIPLoader",
+      "pos": [
+        2455.519485825597,
+        144.37083682615952
+      ],
+      "size": [
+        340,
+        106
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            61,
+            64,
+            67,
+            77
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+        "type": "qwen_image",
+        "device": "default"
+      }
+    },
+    {
+      "id": 122,
+      "type": "VAELoader",
+      "pos": [
+        2455.519485825597,
+        294.37083682615975
+      ],
+      "size": [
+        340,
+        58
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            49,
+            59,
+            62,
+            65,
+            68,
+            76,
+            78,
+            85
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "qwen_image_vae.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "qwen_image_vae.safetensors"
+      }
+    },
+    {
+      "id": 124,
+      "type": "8a2bde73-043c-48cb-bbcf-af5b929ef0f2",
+      "pos": [
+        1255.549961247711,
+        494.26875261744976
+      ],
+      "size": [
+        173.25,
+        66
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 88
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 89
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 90
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            91
+          ]
+        }
+      ],
+      "properties": {
+        "previewExposures": []
+      }
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      4,
+      0,
+      5,
+      0,
+      "MODEL"
+    ],
+    [
+      3,
+      5,
+      0,
+      6,
+      0,
+      "MODEL"
+    ],
+    [
+      4,
+      2,
+      0,
+      20,
+      0,
+      "CLIP"
+    ],
+    [
+      5,
+      3,
+      0,
+      20,
+      1,
+      "VAE"
+    ],
+    [
+      6,
+      10,
+      0,
+      20,
+      2,
+      "IMAGE"
+    ],
+    [
+      7,
+      11,
+      0,
+      20,
+      3,
+      "IMAGE"
+    ],
+    [
+      8,
+      12,
+      0,
+      20,
+      4,
+      "IMAGE"
+    ],
+    [
+      9,
+      2,
+      0,
+      21,
+      0,
+      "CLIP"
+    ],
+    [
+      10,
+      3,
+      0,
+      21,
+      1,
+      "VAE"
+    ],
+    [
+      11,
+      6,
+      0,
+      23,
+      0,
+      "MODEL"
+    ],
+    [
+      12,
+      20,
+      0,
+      23,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      13,
+      21,
+      0,
+      23,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      14,
+      22,
+      0,
+      23,
+      3,
+      "LATENT"
+    ],
+    [
+      15,
+      23,
+      0,
+      24,
+      0,
+      "LATENT"
+    ],
+    [
+      16,
+      3,
+      0,
+      24,
+      1,
+      "VAE"
+    ],
+    [
+      17,
+      24,
+      0,
+      25,
+      0,
+      "IMAGE"
+    ],
+    [
+      18,
+      24,
+      0,
+      31,
+      0,
+      "IMAGE"
+    ],
+    [
+      19,
+      31,
+      0,
+      32,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      3,
+      0,
+      32,
+      1,
+      "VAE"
+    ],
+    [
+      21,
+      2,
+      0,
+      33,
+      0,
+      "CLIP"
+    ],
+    [
+      22,
+      3,
+      0,
+      33,
+      1,
+      "VAE"
+    ],
+    [
+      23,
+      31,
+      0,
+      33,
+      2,
+      "IMAGE"
+    ],
+    [
+      24,
+      30,
+      0,
+      33,
+      3,
+      "IMAGE"
+    ],
+    [
+      28,
+      6,
+      0,
+      35,
+      0,
+      "MODEL"
+    ],
+    [
+      29,
+      33,
+      0,
+      35,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      31,
+      32,
+      0,
+      35,
+      3,
+      "LATENT"
+    ],
+    [
+      32,
+      35,
+      0,
+      36,
+      0,
+      "LATENT"
+    ],
+    [
+      33,
+      3,
+      0,
+      36,
+      1,
+      "VAE"
+    ],
+    [
+      34,
+      36,
+      0,
+      37,
+      0,
+      "IMAGE"
+    ],
+    [
+      35,
+      40,
+      0,
+      43,
+      0,
+      "MODEL"
+    ],
+    [
+      36,
+      41,
+      0,
+      44,
+      0,
+      "CLIP"
+    ],
+    [
+      37,
+      41,
+      0,
+      45,
+      0,
+      "CLIP"
+    ],
+    [
+      38,
+      36,
+      0,
+      46,
+      0,
+      "IMAGE"
+    ],
+    [
+      39,
+      42,
+      0,
+      46,
+      1,
+      "VAE"
+    ],
+    [
+      40,
+      43,
+      0,
+      47,
+      0,
+      "MODEL"
+    ],
+    [
+      41,
+      44,
+      0,
+      47,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      42,
+      45,
+      0,
+      47,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      43,
+      46,
+      0,
+      47,
+      3,
+      "LATENT"
+    ],
+    [
+      44,
+      47,
+      0,
+      48,
+      0,
+      "LATENT"
+    ],
+    [
+      45,
+      42,
+      0,
+      48,
+      1,
+      "VAE"
+    ],
+    [
+      46,
+      48,
+      0,
+      49,
+      0,
+      "IMAGE"
+    ],
+    [
+      47,
+      101,
+      0,
+      100,
+      0,
+      "IMAGE"
+    ],
+    [
+      48,
+      102,
+      0,
+      101,
+      0,
+      "LATENT"
+    ],
+    [
+      49,
+      122,
+      0,
+      101,
+      1,
+      "VAE"
+    ],
+    [
+      50,
+      112,
+      0,
+      102,
+      0,
+      "MODEL"
+    ],
+    [
+      51,
+      106,
+      0,
+      102,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      52,
+      108,
+      0,
+      102,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      53,
+      114,
+      0,
+      102,
+      3,
+      "LATENT"
+    ],
+    [
+      54,
+      112,
+      0,
+      103,
+      0,
+      "MODEL"
+    ],
+    [
+      55,
+      107,
+      0,
+      103,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      56,
+      108,
+      0,
+      103,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      57,
+      114,
+      0,
+      103,
+      3,
+      "LATENT"
+    ],
+    [
+      58,
+      103,
+      0,
+      104,
+      0,
+      "LATENT"
+    ],
+    [
+      59,
+      122,
+      0,
+      104,
+      1,
+      "VAE"
+    ],
+    [
+      60,
+      104,
+      0,
+      105,
+      0,
+      "IMAGE"
+    ],
+    [
+      61,
+      121,
+      0,
+      106,
+      0,
+      "CLIP"
+    ],
+    [
+      62,
+      122,
+      0,
+      106,
+      1,
+      "VAE"
+    ],
+    [
+      63,
+      113,
+      0,
+      106,
+      2,
+      "IMAGE"
+    ],
+    [
+      64,
+      121,
+      0,
+      107,
+      0,
+      "CLIP"
+    ],
+    [
+      65,
+      122,
+      0,
+      107,
+      1,
+      "VAE"
+    ],
+    [
+      66,
+      113,
+      0,
+      107,
+      2,
+      "IMAGE"
+    ],
+    [
+      67,
+      121,
+      0,
+      108,
+      0,
+      "CLIP"
+    ],
+    [
+      68,
+      122,
+      0,
+      108,
+      1,
+      "VAE"
+    ],
+    [
+      69,
+      113,
+      0,
+      108,
+      2,
+      "IMAGE"
+    ],
+    [
+      70,
+      120,
+      0,
+      109,
+      0,
+      "MODEL"
+    ],
+    [
+      71,
+      109,
+      0,
+      110,
+      0,
+      "MODEL"
+    ],
+    [
+      72,
+      110,
+      0,
+      111,
+      0,
+      "MODEL"
+    ],
+    [
+      73,
+      111,
+      0,
+      112,
+      0,
+      "MODEL"
+    ],
+    [
+      75,
+      113,
+      0,
+      114,
+      0,
+      "IMAGE"
+    ],
+    [
+      76,
+      122,
+      0,
+      114,
+      1,
+      "VAE"
+    ],
+    [
+      77,
+      121,
+      0,
+      116,
+      0,
+      "CLIP"
+    ],
+    [
+      78,
+      122,
+      0,
+      116,
+      1,
+      "VAE"
+    ],
+    [
+      79,
+      113,
+      0,
+      116,
+      2,
+      "IMAGE"
+    ],
+    [
+      80,
+      112,
+      0,
+      117,
+      0,
+      "MODEL"
+    ],
+    [
+      81,
+      116,
+      0,
+      117,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      82,
+      108,
+      0,
+      117,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      83,
+      114,
+      0,
+      117,
+      3,
+      "LATENT"
+    ],
+    [
+      84,
+      117,
+      0,
+      118,
+      0,
+      "LATENT"
+    ],
+    [
+      85,
+      122,
+      0,
+      118,
+      1,
+      "VAE"
+    ],
+    [
+      86,
+      118,
+      0,
+      119,
+      0,
+      "IMAGE"
+    ],
+    [
+      87,
+      49,
+      0,
+      113,
+      0,
+      "IMAGE"
+    ],
+    [
+      88,
+      2,
+      0,
+      124,
+      0,
+      "CLIP"
+    ],
+    [
+      89,
+      3,
+      0,
+      124,
+      1,
+      "VAE"
+    ],
+    [
+      90,
+      31,
+      0,
+      124,
+      2,
+      "IMAGE"
+    ],
+    [
+      91,
+      124,
+      0,
+      35,
+      2,
+      "CONDITIONING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "ÉTAPE 1 — Moodboard + prompt → vue de face",
+      "bounding": [
+        -930,
+        -60,
+        1640,
+        1260
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "ÉTAPE 2 — Forçage du style",
+      "bounding": [
+        764.4203999999994,
+        -76.10509999999991,
+        1580,
+        700
+      ],
+      "color": "#a1883f",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "ÉTAPE 3 — Uniformisation Z-Image (optionnelle, muted)",
+      "bounding": [
+        764.4203999999995,
+        660,
+        1580,
+        620
+      ],
+      "color": "#444",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "MODELSHEET GEne_View x3",
+      "bounding": [
+        2444.6642222952128,
+        -55.629163173840396,
+        2270.8552635303845,
+        1620
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "definitions": {
+    "subgraphs": [
+      {
+        "id": "8a2bde73-043c-48cb-bbcf-af5b929ef0f2",
+        "version": 1,
+        "state": {
+          "lastGroupId": 4,
+          "lastNodeId": 124,
+          "lastLinkId": 91,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "New Subgraph",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            892,
+            351,
+            128,
+            108
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            1600,
+            371,
+            137.25,
+            68
+          ]
+        },
+        "inputs": [
+          {
+            "id": "836cc2e4-3707-495c-aaef-ee770cc2ffd7",
+            "name": "clip",
+            "type": "CLIP",
+            "linkIds": [
+              25
+            ],
+            "localized_name": "clip",
+            "pos": [
+              51,
+              24
+            ]
+          },
+          {
+            "id": "4ca46102-12e2-4b4e-9670-e1099d426f9a",
+            "name": "vae",
+            "type": "VAE",
+            "linkIds": [
+              26
+            ],
+            "localized_name": "vae",
+            "shape": 7,
+            "pos": [
+              51,
+              44
+            ]
+          },
+          {
+            "id": "d46c16f9-5615-4e17-9a0d-e22e28623c4d",
+            "name": "image1",
+            "type": "IMAGE",
+            "linkIds": [
+              27
+            ],
+            "localized_name": "image1",
+            "shape": 7,
+            "pos": [
+              51,
+              64
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "6aa4439a-e716-4bcb-ac68-a66f4c3ad620",
+            "name": "CONDITIONING",
+            "type": "CONDITIONING",
+            "linkIds": [
+              30
+            ],
+            "localized_name": "CONDITIONING",
+            "pos": [
+              24,
+              24
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 34,
+            "type": "TextEncodeQwenImageEditPlus",
+            "pos": [
+              1080,
+              300
+            ],
+            "size": [
+              460,
+              240
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 25
+              },
+              {
+                "localized_name": "vae",
+                "name": "vae",
+                "shape": 7,
+                "type": "VAE",
+                "link": 26
+              },
+              {
+                "localized_name": "image1",
+                "name": "image1",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 27
+              },
+              {
+                "localized_name": "image2",
+                "name": "image2",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "localized_name": "image3",
+                "name": "image3",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "links": [
+                  30
+                ]
+              }
+            ],
+            "title": "Négatif (vide)",
+            "properties": {
+              "Node name for S&R": "TextEncodeQwenImageEditPlus"
+            },
+            "widgets_values": [
+              ""
+            ],
+            "widgets_values_named": {
+              "prompt": ""
+            },
+            "color": "#322",
+            "bgcolor": "#533"
+          }
+        ],
+        "groups": [],
+        "links": [
+          {
+            "id": 25,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 34,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 26,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 34,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 27,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 34,
+            "target_slot": 2,
+            "type": "IMAGE"
+          },
+          {
+            "id": 30,
+            "origin_id": 34,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "CONDITIONING"
+          }
+        ],
+        "extra": {}
+      }
+    ]
+  },
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.2120488091862472,
+      "offset": [
+        1955.8382658653027,
+        1372.3294551951537
+      ]
+    },
+    "frontendVersion": "1.55.16",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

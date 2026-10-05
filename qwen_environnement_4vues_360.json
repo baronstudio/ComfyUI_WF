@@ -1,0 +1,3088 @@
+{
+ "last_node_id": 140,
+ "last_link_id": 88,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "UNETLoader",
+   "pos": [
+    -1400,
+    0
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "qwen_image_edit_2511_fp8mixed.safetensors",
+    "default"
+   ]
+  },
+  {
+   "id": 2,
+   "type": "CLIPLoader",
+   "pos": [
+    -1400,
+    120
+   ],
+   "size": [
+    340,
+    106
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      4,
+      9,
+      23,
+      26,
+      40,
+      53,
+      66,
+      79
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader"
+   },
+   "widgets_values": [
+    "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+    "qwen_image",
+    "default"
+   ]
+  },
+  {
+   "id": 3,
+   "type": "VAELoader",
+   "pos": [
+    -1400,
+    260
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      5,
+      10,
+      16,
+      22,
+      24,
+      27,
+      39,
+      41,
+      48,
+      52,
+      54,
+      61,
+      65,
+      67,
+      74,
+      78,
+      80,
+      87
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "qwen_image_vae.safetensors"
+   ]
+  },
+  {
+   "id": 4,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    -1400,
+    350
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      2,
+      18
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+    1.0
+   ],
+   "title": "LoRA Lightning 4 steps"
+  },
+  {
+   "id": 5,
+   "type": "ModelSamplingAuraFlow",
+   "pos": [
+    -1400,
+    470
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      3
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ModelSamplingAuraFlow"
+   },
+   "widgets_values": [
+    3.1
+   ]
+  },
+  {
+   "id": 6,
+   "type": "CFGNorm",
+   "pos": [
+    -1400,
+    560
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 3
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      11,
+      43,
+      56,
+      69,
+      82
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CFGNorm"
+   },
+   "widgets_values": [
+    1.0
+   ],
+   "title": "MODÈLE BASE (étapes 1 et 3)"
+  },
+  {
+   "id": 10,
+   "type": "LoadImage",
+   "pos": [
+    -950,
+    0
+   ],
+   "size": [
+    320,
+    340
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      6
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "env_moodboard_1.png",
+    "image"
+   ],
+   "title": "Moodboard 1 — architecture / formes",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 11,
+   "type": "LoadImage",
+   "pos": [
+    -950,
+    380
+   ],
+   "size": [
+    320,
+    340
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      7
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "env_moodboard_2.png",
+    "image"
+   ],
+   "title": "Moodboard 2 — matières / végétation",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 12,
+   "type": "LoadImage",
+   "pos": [
+    -950,
+    760
+   ],
+   "size": [
+    320,
+    340
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      8
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "env_moodboard_3.png",
+    "image"
+   ],
+   "title": "Moodboard 3 — palette / lumière / ambiance",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 20,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    -570,
+    0
+   ],
+   "size": [
+    460,
+    240
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 4
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 5
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 6
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": 7
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": 8
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      12
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Wide establishing shot of ONE new original environment: [DESCRIPTION — ex. a small alpine research outpost on a rocky ridge at dawn, modular metal cabins, antennas, low clouds in the valley].\n\nUse Picture 1, Picture 2 and Picture 3 only as a moodboard: architecture and shape language from Picture 1, materials, textures and vegetation from Picture 2, color palette, lighting and mood from Picture 3. Take only design inspiration from them.\n\nEye-level camera at human height, straight horizon, level camera, 24mm lens, deep focus, the whole scene sharp. Clear and readable lighting from a single main light source. No people, no text, no watermark."
+   ],
+   "title": "PROMPT 1 — Moodboard + description de l'environnement",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 21,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    -570,
+    300
+   ],
+   "size": [
+    460,
+    240
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 9
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 10
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      13,
+      45,
+      58,
+      71,
+      84
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "title": "Négatif (vide, CFG 1)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 22,
+   "type": "EmptySD3LatentImage",
+   "pos": [
+    -570,
+    600
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      14
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "EmptySD3LatentImage"
+   },
+   "widgets_values": [
+    1664,
+    928,
+    1
+   ],
+   "title": "Format paysage 1664×928"
+  },
+  {
+   "id": 23,
+   "type": "KSampler",
+   "pos": [
+    -60,
+    0
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 11
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 12
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 13
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 14
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      15
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    1001,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    1.0
+   ],
+   "title": "KSampler — Étape 1 (plan héros)"
+  },
+  {
+   "id": 24,
+   "type": "VAEDecode",
+   "pos": [
+    270,
+    0
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 15
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 16
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      17,
+      25
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 25,
+   "type": "SaveImage",
+   "pos": [
+    270,
+    90
+   ],
+   "size": [
+    480,
+    330
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 17
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement/etape1_hero"
+   ],
+   "title": "Save — Plan héros"
+  },
+  {
+   "id": 30,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    800,
+    0
+   ],
+   "size": [
+    360,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 18
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      19
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "qwen-edit-360.safetensors",
+    1.0
+   ],
+   "title": "LoRA QWEN-EDIT_360 (mickmumpitz) — renomme selon ton fichier",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 31,
+   "type": "ModelSamplingAuraFlow",
+   "pos": [
+    800,
+    120
+   ],
+   "size": [
+    360,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 19
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      20
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ModelSamplingAuraFlow"
+   },
+   "widgets_values": [
+    3.1
+   ]
+  },
+  {
+   "id": 32,
+   "type": "CFGNorm",
+   "pos": [
+    800,
+    210
+   ],
+   "size": [
+    360,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 20
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      21
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CFGNorm"
+   },
+   "widgets_values": [
+    1.0
+   ]
+  },
+  {
+   "id": 33,
+   "type": "Apply Circular Padding Model",
+   "pos": [
+    800,
+    300
+   ],
+   "size": [
+    360,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 21
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      28
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Apply Circular Padding Model"
+   },
+   "widgets_values": [
+    false,
+    true
+   ],
+   "title": "Circular Padding Model (copie, axe X)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 34,
+   "type": "Apply Circular Padding VAE",
+   "pos": [
+    800,
+    420
+   ],
+   "size": [
+    360,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 22
+    }
+   ],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      33
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Apply Circular Padding VAE"
+   },
+   "widgets_values": [
+    false,
+    true
+   ],
+   "title": "Circular Padding VAE (copie, axe X)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 35,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    1200,
+    0
+   ],
+   "size": [
+    460,
+    240
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 23
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 24
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 25
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      29
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Create a 360 panoramic image of this environment, extending Picture 1 seamlessly in every direction with the same architecture, materials, colors, lighting and time of day. An HDRI image captured on a 360 degree camera placed at human eye level, full spherical view, equirectangular projection, straight horizon in the exact middle, seamless left and right edges, continuous sky at the top and continuous ground at the bottom. No people, no text."
+   ],
+   "title": "PROMPT 2 — Panorama 360",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 36,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    1200,
+    300
+   ],
+   "size": [
+    460,
+    240
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 26
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 27
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      30
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "title": "Négatif (vide)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 37,
+   "type": "EmptySD3LatentImage",
+   "pos": [
+    1200,
+    600
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      31
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "EmptySD3LatentImage"
+   },
+   "widgets_values": [
+    2048,
+    1024,
+    1
+   ],
+   "title": "Équirectangulaire 2:1 — 2048×1024"
+  },
+  {
+   "id": 38,
+   "type": "KSampler",
+   "pos": [
+    1700,
+    0
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 28
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 29
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 30
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 31
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      32
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    2001,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    1.0
+   ],
+   "title": "KSampler — Étape 2 (360°)"
+  },
+  {
+   "id": 39,
+   "type": "VAEDecode",
+   "pos": [
+    2030,
+    0
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 32
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 33
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      34,
+      35,
+      37,
+      50,
+      63,
+      76
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": [],
+   "title": "VAE Decode (circulaire)"
+  },
+  {
+   "id": 40,
+   "type": "SaveImage",
+   "pos": [
+    2030,
+    90
+   ],
+   "size": [
+    560,
+    330
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 34
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement/etape2_pano360"
+   ],
+   "title": "Save — Panorama 360 (LDR)"
+  },
+  {
+   "id": 41,
+   "type": "Roll Image Axes",
+   "pos": [
+    2030,
+    460
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 35
+    }
+   ],
+   "outputs": [
+    {
+     "name": "Rolled Image",
+     "type": "IMAGE",
+     "links": [
+      36
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Roll Image Axes"
+   },
+   "widgets_values": [
+    0,
+    0,
+    true
+   ],
+   "title": "Contrôle couture (décalage 50 %)"
+  },
+  {
+   "id": 42,
+   "type": "PreviewImage",
+   "pos": [
+    2360,
+    460
+   ],
+   "size": [
+    440,
+    260
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 36
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage"
+   },
+   "widgets_values": [],
+   "title": "Aperçu couture — doit être invisible au centre"
+  },
+  {
+   "id": 100,
+   "type": "Equirectangular to Perspective",
+   "pos": [
+    -950,
+    1150
+   ],
+   "size": [
+    340,
+    270
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "e_img",
+     "type": "IMAGE",
+     "link": 37
+    }
+   ],
+   "outputs": [
+    {
+     "name": "Perspective Image",
+     "type": "IMAGE",
+     "links": [
+      38,
+      42
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Equirectangular to Perspective"
+   },
+   "widgets_values": [
+    90.0,
+    58.3,
+    0.0,
+    0.0,
+    928,
+    1664,
+    0.0,
+    "bicubic"
+   ],
+   "title": "E2P — Vue 0° (avant / plan héros)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 101,
+   "type": "VAEEncode",
+   "pos": [
+    -580,
+    1150
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 38
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 39
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      46
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 102,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    -580,
+    1230
+   ],
+   "size": [
+    460,
+    240
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 40
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 41
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 42
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      44
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Enhance Picture 1: restore sharp details and clean textures, remove blur and projection artifacts. Keep exactly the same composition, perspective, camera angle, objects, colors and lighting. Do not add or remove anything."
+   ],
+   "title": "PROMPT 3 — Raffinage Vue 0° (avant / plan héros)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 103,
+   "type": "KSampler",
+   "pos": [
+    -90,
+    1150
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 43
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 44
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 45
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 46
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      47
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    3001,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    0.45
+   ],
+   "title": "KSampler — Vue 0° (avant / plan héros) (denoise 0.45)"
+  },
+  {
+   "id": 104,
+   "type": "VAEDecode",
+   "pos": [
+    240,
+    1150
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 47
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 48
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      49
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 105,
+   "type": "SaveImage",
+   "pos": [
+    240,
+    1230
+   ],
+   "size": [
+    480,
+    300
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 49
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement/etape3_vue_000"
+   ],
+   "title": "Save — Vue 0° (avant / plan héros)"
+  },
+  {
+   "id": 110,
+   "type": "Equirectangular to Perspective",
+   "pos": [
+    -950,
+    1710
+   ],
+   "size": [
+    340,
+    270
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "e_img",
+     "type": "IMAGE",
+     "link": 50
+    }
+   ],
+   "outputs": [
+    {
+     "name": "Perspective Image",
+     "type": "IMAGE",
+     "links": [
+      51,
+      55
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Equirectangular to Perspective"
+   },
+   "widgets_values": [
+    90.0,
+    58.3,
+    90.0,
+    0.0,
+    928,
+    1664,
+    0.0,
+    "bicubic"
+   ],
+   "title": "E2P — Vue 90° (droite)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 111,
+   "type": "VAEEncode",
+   "pos": [
+    -580,
+    1710
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 51
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 52
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      59
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 112,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    -580,
+    1790
+   ],
+   "size": [
+    460,
+    240
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 53
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 54
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 55
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      57
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Enhance Picture 1: restore sharp details and clean textures, remove blur and projection artifacts. Keep exactly the same composition, perspective, camera angle, objects, colors and lighting. Do not add or remove anything."
+   ],
+   "title": "PROMPT 3 — Raffinage Vue 90° (droite)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 113,
+   "type": "KSampler",
+   "pos": [
+    -90,
+    1710
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 56
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 57
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 58
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 59
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      60
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    3002,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    0.45
+   ],
+   "title": "KSampler — Vue 90° (droite) (denoise 0.45)"
+  },
+  {
+   "id": 114,
+   "type": "VAEDecode",
+   "pos": [
+    240,
+    1710
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 60
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 61
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      62
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 115,
+   "type": "SaveImage",
+   "pos": [
+    240,
+    1790
+   ],
+   "size": [
+    480,
+    300
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 62
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement/etape3_vue_090"
+   ],
+   "title": "Save — Vue 90° (droite)"
+  },
+  {
+   "id": 120,
+   "type": "Equirectangular to Perspective",
+   "pos": [
+    -950,
+    2270
+   ],
+   "size": [
+    340,
+    270
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "e_img",
+     "type": "IMAGE",
+     "link": 63
+    }
+   ],
+   "outputs": [
+    {
+     "name": "Perspective Image",
+     "type": "IMAGE",
+     "links": [
+      64,
+      68
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Equirectangular to Perspective"
+   },
+   "widgets_values": [
+    90.0,
+    58.3,
+    180.0,
+    0.0,
+    928,
+    1664,
+    0.0,
+    "bicubic"
+   ],
+   "title": "E2P — Vue 180° (arrière)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 121,
+   "type": "VAEEncode",
+   "pos": [
+    -580,
+    2270
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 64
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 65
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      72
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 122,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    -580,
+    2350
+   ],
+   "size": [
+    460,
+    240
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 66
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 67
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 68
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      70
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Enhance Picture 1: restore sharp details and clean textures, remove blur and projection artifacts. Keep exactly the same composition, perspective, camera angle, objects, colors and lighting. Do not add or remove anything."
+   ],
+   "title": "PROMPT 3 — Raffinage Vue 180° (arrière)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 123,
+   "type": "KSampler",
+   "pos": [
+    -90,
+    2270
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 69
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 70
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 71
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 72
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      73
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    3003,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    0.45
+   ],
+   "title": "KSampler — Vue 180° (arrière) (denoise 0.45)"
+  },
+  {
+   "id": 124,
+   "type": "VAEDecode",
+   "pos": [
+    240,
+    2270
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 73
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 74
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      75
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 125,
+   "type": "SaveImage",
+   "pos": [
+    240,
+    2350
+   ],
+   "size": [
+    480,
+    300
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 75
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement/etape3_vue_180"
+   ],
+   "title": "Save — Vue 180° (arrière)"
+  },
+  {
+   "id": 130,
+   "type": "Equirectangular to Perspective",
+   "pos": [
+    -950,
+    2830
+   ],
+   "size": [
+    340,
+    270
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "e_img",
+     "type": "IMAGE",
+     "link": 76
+    }
+   ],
+   "outputs": [
+    {
+     "name": "Perspective Image",
+     "type": "IMAGE",
+     "links": [
+      77,
+      81
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Equirectangular to Perspective"
+   },
+   "widgets_values": [
+    90.0,
+    58.3,
+    270.0,
+    0.0,
+    928,
+    1664,
+    0.0,
+    "bicubic"
+   ],
+   "title": "E2P — Vue 270° (gauche)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 131,
+   "type": "VAEEncode",
+   "pos": [
+    -580,
+    2830
+   ],
+   "size": [
+    220,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 77
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 78
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      85
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 132,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    -580,
+    2910
+   ],
+   "size": [
+    460,
+    240
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 79
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 80
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 81
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      83
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "Enhance Picture 1: restore sharp details and clean textures, remove blur and projection artifacts. Keep exactly the same composition, perspective, camera angle, objects, colors and lighting. Do not add or remove anything."
+   ],
+   "title": "PROMPT 3 — Raffinage Vue 270° (gauche)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 133,
+   "type": "KSampler",
+   "pos": [
+    -90,
+    2830
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 82
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 83
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 84
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 85
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      86
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    3004,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    0.45
+   ],
+   "title": "KSampler — Vue 270° (gauche) (denoise 0.45)"
+  },
+  {
+   "id": 134,
+   "type": "VAEDecode",
+   "pos": [
+    240,
+    2830
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 86
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 87
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      88
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 135,
+   "type": "SaveImage",
+   "pos": [
+    240,
+    2910
+   ],
+   "size": [
+    480,
+    300
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 88
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "environnement/etape3_vue_270"
+   ],
+   "title": "Save — Vue 270° (gauche)"
+  },
+  {
+   "id": 99,
+   "type": "Note",
+   "pos": [
+    -1400,
+    700
+   ],
+   "size": [
+    400,
+    1500
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "Note"
+   },
+   "widgets_values": [
+    "ENVIRONNEMENT : MOODBOARD -> PLAN HÉROS -> 360° -> 4 VUES\n\nNœuds custom : ComfyUI_pytorch360convert (ProGamerGov) via le Manager.\nLoRA : QWEN-EDIT_360 (mickmumpitz, Hugging Face) -> models/loras.\n\nÉTAPE 1 — Plan héros : 3 moodboards + [DESCRIPTION]. Moins de 3 images :\n  débranche et retire 'Picture 3' du prompt.\nÉTAPE 2 — 360° : le plan héros est étendu en équirectangulaire 2:1.\n  Circular Padding = couture gauche/droite raccordée pendant le calcul.\n  Vérifie l'aperçu 'couture' : la jointure est au centre, elle doit être invisible.\n  LoRA faible ? Il est entraîné sur Qwen-Edit-2509 : charge le modèle 2509 pour cette branche.\nÉTAPE 3 — 4 vues extraites du panorama (FOV 90°, 1664×928) puis raffinées.\n  Cohérence garantie : les 4 vues viennent de la même sphère.\n  Détails qui dérivent ? Baisse le denoise à 0.30. Trop flou ? Monte à 0.55.\n\nHDRI : la sortie est un panorama LDR 8 bits (fond, reflets, éclairage d'appoint).\nVrai HDR linéaire : DiffHDR (Wan2.1-VACE, ~28-48 Go VRAM -> cloud), sortie EXR."
+   ],
+   "title": "Mode d'emploi"
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   4,
+   0,
+   "MODEL"
+  ],
+  [
+   2,
+   4,
+   0,
+   5,
+   0,
+   "MODEL"
+  ],
+  [
+   3,
+   5,
+   0,
+   6,
+   0,
+   "MODEL"
+  ],
+  [
+   4,
+   2,
+   0,
+   20,
+   0,
+   "CLIP"
+  ],
+  [
+   5,
+   3,
+   0,
+   20,
+   1,
+   "VAE"
+  ],
+  [
+   6,
+   10,
+   0,
+   20,
+   2,
+   "IMAGE"
+  ],
+  [
+   7,
+   11,
+   0,
+   20,
+   3,
+   "IMAGE"
+  ],
+  [
+   8,
+   12,
+   0,
+   20,
+   4,
+   "IMAGE"
+  ],
+  [
+   9,
+   2,
+   0,
+   21,
+   0,
+   "CLIP"
+  ],
+  [
+   10,
+   3,
+   0,
+   21,
+   1,
+   "VAE"
+  ],
+  [
+   11,
+   6,
+   0,
+   23,
+   0,
+   "MODEL"
+  ],
+  [
+   12,
+   20,
+   0,
+   23,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   13,
+   21,
+   0,
+   23,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   14,
+   22,
+   0,
+   23,
+   3,
+   "LATENT"
+  ],
+  [
+   15,
+   23,
+   0,
+   24,
+   0,
+   "LATENT"
+  ],
+  [
+   16,
+   3,
+   0,
+   24,
+   1,
+   "VAE"
+  ],
+  [
+   17,
+   24,
+   0,
+   25,
+   0,
+   "IMAGE"
+  ],
+  [
+   18,
+   4,
+   0,
+   30,
+   0,
+   "MODEL"
+  ],
+  [
+   19,
+   30,
+   0,
+   31,
+   0,
+   "MODEL"
+  ],
+  [
+   20,
+   31,
+   0,
+   32,
+   0,
+   "MODEL"
+  ],
+  [
+   21,
+   32,
+   0,
+   33,
+   0,
+   "MODEL"
+  ],
+  [
+   22,
+   3,
+   0,
+   34,
+   0,
+   "VAE"
+  ],
+  [
+   23,
+   2,
+   0,
+   35,
+   0,
+   "CLIP"
+  ],
+  [
+   24,
+   3,
+   0,
+   35,
+   1,
+   "VAE"
+  ],
+  [
+   25,
+   24,
+   0,
+   35,
+   2,
+   "IMAGE"
+  ],
+  [
+   26,
+   2,
+   0,
+   36,
+   0,
+   "CLIP"
+  ],
+  [
+   27,
+   3,
+   0,
+   36,
+   1,
+   "VAE"
+  ],
+  [
+   28,
+   33,
+   0,
+   38,
+   0,
+   "MODEL"
+  ],
+  [
+   29,
+   35,
+   0,
+   38,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   30,
+   36,
+   0,
+   38,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   31,
+   37,
+   0,
+   38,
+   3,
+   "LATENT"
+  ],
+  [
+   32,
+   38,
+   0,
+   39,
+   0,
+   "LATENT"
+  ],
+  [
+   33,
+   34,
+   0,
+   39,
+   1,
+   "VAE"
+  ],
+  [
+   34,
+   39,
+   0,
+   40,
+   0,
+   "IMAGE"
+  ],
+  [
+   35,
+   39,
+   0,
+   41,
+   0,
+   "IMAGE"
+  ],
+  [
+   36,
+   41,
+   0,
+   42,
+   0,
+   "IMAGE"
+  ],
+  [
+   37,
+   39,
+   0,
+   100,
+   0,
+   "IMAGE"
+  ],
+  [
+   38,
+   100,
+   0,
+   101,
+   0,
+   "IMAGE"
+  ],
+  [
+   39,
+   3,
+   0,
+   101,
+   1,
+   "VAE"
+  ],
+  [
+   40,
+   2,
+   0,
+   102,
+   0,
+   "CLIP"
+  ],
+  [
+   41,
+   3,
+   0,
+   102,
+   1,
+   "VAE"
+  ],
+  [
+   42,
+   100,
+   0,
+   102,
+   2,
+   "IMAGE"
+  ],
+  [
+   43,
+   6,
+   0,
+   103,
+   0,
+   "MODEL"
+  ],
+  [
+   44,
+   102,
+   0,
+   103,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   45,
+   21,
+   0,
+   103,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   46,
+   101,
+   0,
+   103,
+   3,
+   "LATENT"
+  ],
+  [
+   47,
+   103,
+   0,
+   104,
+   0,
+   "LATENT"
+  ],
+  [
+   48,
+   3,
+   0,
+   104,
+   1,
+   "VAE"
+  ],
+  [
+   49,
+   104,
+   0,
+   105,
+   0,
+   "IMAGE"
+  ],
+  [
+   50,
+   39,
+   0,
+   110,
+   0,
+   "IMAGE"
+  ],
+  [
+   51,
+   110,
+   0,
+   111,
+   0,
+   "IMAGE"
+  ],
+  [
+   52,
+   3,
+   0,
+   111,
+   1,
+   "VAE"
+  ],
+  [
+   53,
+   2,
+   0,
+   112,
+   0,
+   "CLIP"
+  ],
+  [
+   54,
+   3,
+   0,
+   112,
+   1,
+   "VAE"
+  ],
+  [
+   55,
+   110,
+   0,
+   112,
+   2,
+   "IMAGE"
+  ],
+  [
+   56,
+   6,
+   0,
+   113,
+   0,
+   "MODEL"
+  ],
+  [
+   57,
+   112,
+   0,
+   113,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   58,
+   21,
+   0,
+   113,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   59,
+   111,
+   0,
+   113,
+   3,
+   "LATENT"
+  ],
+  [
+   60,
+   113,
+   0,
+   114,
+   0,
+   "LATENT"
+  ],
+  [
+   61,
+   3,
+   0,
+   114,
+   1,
+   "VAE"
+  ],
+  [
+   62,
+   114,
+   0,
+   115,
+   0,
+   "IMAGE"
+  ],
+  [
+   63,
+   39,
+   0,
+   120,
+   0,
+   "IMAGE"
+  ],
+  [
+   64,
+   120,
+   0,
+   121,
+   0,
+   "IMAGE"
+  ],
+  [
+   65,
+   3,
+   0,
+   121,
+   1,
+   "VAE"
+  ],
+  [
+   66,
+   2,
+   0,
+   122,
+   0,
+   "CLIP"
+  ],
+  [
+   67,
+   3,
+   0,
+   122,
+   1,
+   "VAE"
+  ],
+  [
+   68,
+   120,
+   0,
+   122,
+   2,
+   "IMAGE"
+  ],
+  [
+   69,
+   6,
+   0,
+   123,
+   0,
+   "MODEL"
+  ],
+  [
+   70,
+   122,
+   0,
+   123,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   71,
+   21,
+   0,
+   123,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   72,
+   121,
+   0,
+   123,
+   3,
+   "LATENT"
+  ],
+  [
+   73,
+   123,
+   0,
+   124,
+   0,
+   "LATENT"
+  ],
+  [
+   74,
+   3,
+   0,
+   124,
+   1,
+   "VAE"
+  ],
+  [
+   75,
+   124,
+   0,
+   125,
+   0,
+   "IMAGE"
+  ],
+  [
+   76,
+   39,
+   0,
+   130,
+   0,
+   "IMAGE"
+  ],
+  [
+   77,
+   130,
+   0,
+   131,
+   0,
+   "IMAGE"
+  ],
+  [
+   78,
+   3,
+   0,
+   131,
+   1,
+   "VAE"
+  ],
+  [
+   79,
+   2,
+   0,
+   132,
+   0,
+   "CLIP"
+  ],
+  [
+   80,
+   3,
+   0,
+   132,
+   1,
+   "VAE"
+  ],
+  [
+   81,
+   130,
+   0,
+   132,
+   2,
+   "IMAGE"
+  ],
+  [
+   82,
+   6,
+   0,
+   133,
+   0,
+   "MODEL"
+  ],
+  [
+   83,
+   132,
+   0,
+   133,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   84,
+   21,
+   0,
+   133,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   85,
+   131,
+   0,
+   133,
+   3,
+   "LATENT"
+  ],
+  [
+   86,
+   133,
+   0,
+   134,
+   0,
+   "LATENT"
+  ],
+  [
+   87,
+   3,
+   0,
+   134,
+   1,
+   "VAE"
+  ],
+  [
+   88,
+   134,
+   0,
+   135,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "groups": [
+  {
+   "title": "ÉTAPE 1 — Moodboard + prompt → plan héros",
+   "bounding": [
+    -980,
+    -60,
+    1760,
+    1180
+   ],
+   "color": "#3f789e"
+  },
+  {
+   "title": "ÉTAPE 2 — Panorama 360° équirectangulaire",
+   "bounding": [
+    780,
+    -60,
+    2240,
+    800
+   ],
+   "color": "#335"
+  },
+  {
+   "title": "ÉTAPE 3 — 4 vues extraites du 360° + raffinage",
+   "bounding": [
+    -980,
+    1090,
+    1720,
+    2280
+   ],
+   "color": "#a1883f"
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.45,
+   "offset": [
+    1500,
+    150
+   ]
+  }
+ },
+ "version": 0.4
+}

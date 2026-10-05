@@ -1,0 +1,1379 @@
+{
+ "last_node_id": 99,
+ "last_link_id": 40,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "UNETLoader",
+   "pos": [
+    -900,
+    0
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "qwen_image_edit_2511_fp8mixed.safetensors",
+    "default"
+   ]
+  },
+  {
+   "id": 2,
+   "type": "CLIPLoader",
+   "pos": [
+    -900,
+    130
+   ],
+   "size": [
+    340,
+    106
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      8,
+      11,
+      21,
+      31
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader"
+   },
+   "widgets_values": [
+    "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+    "qwen_image",
+    "default"
+   ]
+  },
+  {
+   "id": 3,
+   "type": "VAELoader",
+   "pos": [
+    -900,
+    280
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      7,
+      9,
+      12,
+      19,
+      22,
+      29,
+      32,
+      39
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "qwen_image_vae.safetensors"
+   ]
+  },
+  {
+   "id": 4,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    -520,
+    0
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      2
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+    1.0
+   ],
+   "title": "LoRA Lightning 4 steps"
+  },
+  {
+   "id": 5,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    -520,
+    120
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      3
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "qwen-image-edit-2511-multiple-angles-lora.safetensors",
+    0.9
+   ],
+   "title": "LoRA Multiple-Angles (0.8-1.0)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 6,
+   "type": "ModelSamplingAuraFlow",
+   "pos": [
+    -520,
+    240
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 3
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      4
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ModelSamplingAuraFlow"
+   },
+   "widgets_values": [
+    3.1
+   ]
+  },
+  {
+   "id": 7,
+   "type": "CFGNorm",
+   "pos": [
+    -520,
+    330
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 4
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      14,
+      24,
+      34
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CFGNorm"
+   },
+   "widgets_values": [
+    1.0
+   ]
+  },
+  {
+   "id": 8,
+   "type": "LoadImage",
+   "pos": [
+    -900,
+    420
+   ],
+   "size": [
+    340,
+    320
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      5
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "vue_face_maitre.png",
+    "image"
+   ],
+   "title": "Vue de FACE maître (source unique)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 9,
+   "type": "ImageScaleToTotalPixels",
+   "pos": [
+    -520,
+    420
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 5
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      6,
+      10,
+      13,
+      23,
+      33
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScaleToTotalPixels"
+   },
+   "widgets_values": [
+    "lanczos",
+    1.0
+   ]
+  },
+  {
+   "id": 10,
+   "type": "VAEEncode",
+   "pos": [
+    -520,
+    540
+   ],
+   "size": [
+    340,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 6
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      17,
+      27,
+      37
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 11,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    -520,
+    640
+   ],
+   "size": [
+    420,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 8
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 9
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 10
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      16,
+      26,
+      36
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "title": "Négatif (vide, CFG 1)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 20,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    -20,
+    0
+   ],
+   "size": [
+    420,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 11
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 12
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 13
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      15
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "<sks> front-right quarter view eye-level shot wide shot\nKeep the exact same character, outfit, proportions, colors and accessories. Full body, A-pose, arms slightly away from the body, palms facing the thighs. Flat 2D vector illustration, flat saturated colors, no shading, no drop shadow, plain white background."
+   ],
+   "title": "Prompt — Vue 3/4 avant droite",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 21,
+   "type": "KSampler",
+   "pos": [
+    430,
+    0
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 14
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 15
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 16
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 17
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      18
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    101,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    1.0
+   ],
+   "title": "KSampler — Vue 3/4 avant droite"
+  },
+  {
+   "id": 22,
+   "type": "VAEDecode",
+   "pos": [
+    760,
+    0
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 18
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 19
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      20
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 23,
+   "type": "SaveImage",
+   "pos": [
+    990,
+    0
+   ],
+   "size": [
+    360,
+    420
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 20
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "modelsheet/vue_34"
+   ],
+   "title": "Save — Vue 3/4 avant droite"
+  },
+  {
+   "id": 30,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    -20,
+    560
+   ],
+   "size": [
+    420,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 21
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 22
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 23
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      25
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "<sks> right side view eye-level shot wide shot\nKeep the exact same character, outfit, proportions, colors and accessories. Full body, A-pose, arms slightly away from the body, palms facing the thighs. Flat 2D vector illustration, flat saturated colors, no shading, no drop shadow, plain white background."
+   ],
+   "title": "Prompt — Vue de PROFIL droit",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 31,
+   "type": "KSampler",
+   "pos": [
+    430,
+    560
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 24
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 25
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 26
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 27
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      28
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    102,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    1.0
+   ],
+   "title": "KSampler — Vue de PROFIL droit"
+  },
+  {
+   "id": 32,
+   "type": "VAEDecode",
+   "pos": [
+    760,
+    560
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 28
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 29
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      30
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 33,
+   "type": "SaveImage",
+   "pos": [
+    990,
+    560
+   ],
+   "size": [
+    360,
+    420
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 30
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "modelsheet/vue_profil"
+   ],
+   "title": "Save — Vue de PROFIL droit"
+  },
+  {
+   "id": 40,
+   "type": "TextEncodeQwenImageEditPlus",
+   "pos": [
+    -20,
+    1120
+   ],
+   "size": [
+    420,
+    200
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 31
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 32
+    },
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 33
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "image3",
+     "type": "IMAGE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      35
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImageEditPlus"
+   },
+   "widgets_values": [
+    "<sks> back view eye-level shot wide shot\nKeep the exact same character, outfit, proportions, colors and accessories. Full body, A-pose, arms slightly away from the body, palms facing the thighs. Flat 2D vector illustration, flat saturated colors, no shading, no drop shadow, plain white background."
+   ],
+   "title": "Prompt — Vue de DOS",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 41,
+   "type": "KSampler",
+   "pos": [
+    430,
+    1120
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 34
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 35
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 36
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 37
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      38
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    103,
+    "fixed",
+    4,
+    1.0,
+    "euler",
+    "simple",
+    1.0
+   ],
+   "title": "KSampler — Vue de DOS"
+  },
+  {
+   "id": 42,
+   "type": "VAEDecode",
+   "pos": [
+    760,
+    1120
+   ],
+   "size": [
+    200,
+    46
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 38
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 39
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      40
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 43,
+   "type": "SaveImage",
+   "pos": [
+    990,
+    1120
+   ],
+   "size": [
+    360,
+    420
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 40
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "modelsheet/vue_dos"
+   ],
+   "title": "Save — Vue de DOS"
+  },
+  {
+   "id": 99,
+   "type": "Note",
+   "pos": [
+    -900,
+    800
+   ],
+   "size": [
+    720,
+    360
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "Note"
+   },
+   "widgets_values": [
+    "ROTATION CAMÉRA — Qwen-Image-Edit-2511 + LoRA Multiple-Angles\n\n1. Charge la vue de FACE maître (fond blanc, A-pose, flat vector).\n2. Queue : 3 vues générées TOUTES depuis la face (pas de chaîne = pas de dérive).\n3. Réglages : 4 steps / CFG 1.0 / euler / simple / denoise 1.0.\n4. Vue ratée ? Change la seed AVANT de toucher au reste.\n5. Profil gauche : remplace 'right side view' par 'left side view'.\n\nSyntaxe caméra : <sks> [azimut] [élévation] [distance]\nazimut : front view, front-right quarter view, right side view, back-right quarter view, back view...\nélévation : eye-level shot (à garder pour un model sheet)\ndistance : wide shot (plein pied) / medium shot / close-up"
+   ],
+   "title": "Mode d'emploi"
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   4,
+   0,
+   "MODEL"
+  ],
+  [
+   2,
+   4,
+   0,
+   5,
+   0,
+   "MODEL"
+  ],
+  [
+   3,
+   5,
+   0,
+   6,
+   0,
+   "MODEL"
+  ],
+  [
+   4,
+   6,
+   0,
+   7,
+   0,
+   "MODEL"
+  ],
+  [
+   5,
+   8,
+   0,
+   9,
+   0,
+   "IMAGE"
+  ],
+  [
+   6,
+   9,
+   0,
+   10,
+   0,
+   "IMAGE"
+  ],
+  [
+   7,
+   3,
+   0,
+   10,
+   1,
+   "VAE"
+  ],
+  [
+   8,
+   2,
+   0,
+   11,
+   0,
+   "CLIP"
+  ],
+  [
+   9,
+   3,
+   0,
+   11,
+   1,
+   "VAE"
+  ],
+  [
+   10,
+   9,
+   0,
+   11,
+   2,
+   "IMAGE"
+  ],
+  [
+   11,
+   2,
+   0,
+   20,
+   0,
+   "CLIP"
+  ],
+  [
+   12,
+   3,
+   0,
+   20,
+   1,
+   "VAE"
+  ],
+  [
+   13,
+   9,
+   0,
+   20,
+   2,
+   "IMAGE"
+  ],
+  [
+   14,
+   7,
+   0,
+   21,
+   0,
+   "MODEL"
+  ],
+  [
+   15,
+   20,
+   0,
+   21,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   16,
+   11,
+   0,
+   21,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   17,
+   10,
+   0,
+   21,
+   3,
+   "LATENT"
+  ],
+  [
+   18,
+   21,
+   0,
+   22,
+   0,
+   "LATENT"
+  ],
+  [
+   19,
+   3,
+   0,
+   22,
+   1,
+   "VAE"
+  ],
+  [
+   20,
+   22,
+   0,
+   23,
+   0,
+   "IMAGE"
+  ],
+  [
+   21,
+   2,
+   0,
+   30,
+   0,
+   "CLIP"
+  ],
+  [
+   22,
+   3,
+   0,
+   30,
+   1,
+   "VAE"
+  ],
+  [
+   23,
+   9,
+   0,
+   30,
+   2,
+   "IMAGE"
+  ],
+  [
+   24,
+   7,
+   0,
+   31,
+   0,
+   "MODEL"
+  ],
+  [
+   25,
+   30,
+   0,
+   31,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   26,
+   11,
+   0,
+   31,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   27,
+   10,
+   0,
+   31,
+   3,
+   "LATENT"
+  ],
+  [
+   28,
+   31,
+   0,
+   32,
+   0,
+   "LATENT"
+  ],
+  [
+   29,
+   3,
+   0,
+   32,
+   1,
+   "VAE"
+  ],
+  [
+   30,
+   32,
+   0,
+   33,
+   0,
+   "IMAGE"
+  ],
+  [
+   31,
+   2,
+   0,
+   40,
+   0,
+   "CLIP"
+  ],
+  [
+   32,
+   3,
+   0,
+   40,
+   1,
+   "VAE"
+  ],
+  [
+   33,
+   9,
+   0,
+   40,
+   2,
+   "IMAGE"
+  ],
+  [
+   34,
+   7,
+   0,
+   41,
+   0,
+   "MODEL"
+  ],
+  [
+   35,
+   40,
+   0,
+   41,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   36,
+   11,
+   0,
+   41,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   37,
+   10,
+   0,
+   41,
+   3,
+   "LATENT"
+  ],
+  [
+   38,
+   41,
+   0,
+   42,
+   0,
+   "LATENT"
+  ],
+  [
+   39,
+   3,
+   0,
+   42,
+   1,
+   "VAE"
+  ],
+  [
+   40,
+   42,
+   0,
+   43,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "groups": [],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.6,
+   "offset": [
+    1000,
+    100
+   ]
+  }
+ },
+ "version": 0.4
+}

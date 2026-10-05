@@ -1,0 +1,35 @@
+# --- ComfyUI runtime ---
+output/
+temp/
+input/
+models/
+custom_nodes/
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.gguf
+
+# --- Rendus lourds / non versionnés ---
+**/renders/
+**/_wip/
+*.mp4
+*.mov
+*.webm
+*.exr
+*.psd
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# --- OS / éditeurs ---
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+*.swp

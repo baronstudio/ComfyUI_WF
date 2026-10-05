@@ -1,0 +1,2836 @@
+{
+ "id": "ef52a88c-d030-4273-87d9-d21b19a9de82",
+ "revision": 0,
+ "last_node_id": 99,
+ "last_link_id": 72,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "LoadImage",
+   "pos": [
+    0,
+    60
+   ],
+   "size": [
+    440,
+    560
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      10,
+      30,
+      57
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": [
+      62
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "example.png",
+    "image"
+   ],
+   "title": "① IMAGE à modifier (+ masque : clic droit › Open in MaskEditor)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 2,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    470,
+    60
+   ],
+   "size": [
+    480,
+    220
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      28
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "Keep the exact same scene, framing, lighting and style. Change only this: "
+   ],
+   "title": "② PROMPT de modification (EN, impératif)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 3,
+   "type": "PrimitiveBoolean",
+   "pos": [
+    470,
+    310
+   ],
+   "size": [
+    480,
+    60
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "BOOLEAN",
+     "type": "BOOLEAN",
+     "links": [
+      71
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveBoolean",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    false
+   ],
+   "title": "③ Limiter la modification au MASQUE peint ?",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 4,
+   "type": "PrimitiveInt",
+   "pos": [
+    470,
+    400
+   ],
+   "size": [
+    230,
+    90
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      13,
+      17
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    0,
+    "fixed"
+   ],
+   "title": "④ Largeur sortie (0 = auto)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 5,
+   "type": "PrimitiveInt",
+   "pos": [
+    720,
+    400
+   ],
+   "size": [
+    230,
+    90
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      14,
+      18
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    0,
+    "fixed"
+   ],
+   "title": "④ Hauteur sortie (0 = auto)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 6,
+   "type": "PrimitiveInt",
+   "pos": [
+    470,
+    520
+   ],
+   "size": [
+    230,
+    90
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      43,
+      61
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    4,
+    "fixed"
+   ],
+   "title": "⑤ Nb de propositions",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 7,
+   "type": "PrimitiveInt",
+   "pos": [
+    720,
+    520
+   ],
+   "size": [
+    230,
+    90
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      46
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    0,
+    "randomize"
+   ],
+   "title": "⑥ Seed",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 8,
+   "type": "PrimitiveBoolean",
+   "pos": [
+    470,
+    640
+   ],
+   "size": [
+    480,
+    60
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "BOOLEAN",
+     "type": "BOOLEAN",
+     "links": [
+      3,
+      6,
+      9
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveBoolean",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    true
+   ],
+   "title": "⑦ Modèle : true = Klein 9B (qualité) · false = 4B (rapide)",
+   "color": "#442",
+   "bgcolor": "#663"
+  },
+  {
+   "id": 9,
+   "type": "PrimitiveFloat",
+   "pos": [
+    470,
+    730
+   ],
+   "size": [
+    480,
+    60
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      21,
+      24,
+      31
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    2.0
+   ],
+   "title": "⑧ Résolution de calcul max (mégapixels)",
+   "color": "#442",
+   "bgcolor": "#663"
+  },
+  {
+   "id": 10,
+   "type": "UNETLoader",
+   "pos": [
+    1000,
+    60
+   ],
+   "size": [
+    340,
+    90
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      2
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "flux-2-klein-9b-fp8.safetensors",
+    "default"
+   ],
+   "title": "UNet 9B"
+  },
+  {
+   "id": 11,
+   "type": "UNETLoader",
+   "pos": [
+    1000,
+    170
+   ],
+   "size": [
+    340,
+    90
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "flux-2-klein-4b-fp8.safetensors",
+    "default"
+   ],
+   "title": "UNet 4B"
+  },
+  {
+   "id": 12,
+   "type": "CLIPLoader",
+   "pos": [
+    1000,
+    280
+   ],
+   "size": [
+    340,
+    110
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      5
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "qwen_3_8b_fp8mixed.safetensors",
+    "flux2",
+    "default"
+   ],
+   "title": "Encodeur 9B (Qwen3 8B)"
+  },
+  {
+   "id": 13,
+   "type": "CLIPLoader",
+   "pos": [
+    1000,
+    410
+   ],
+   "size": [
+    340,
+    110
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      4
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "qwen_3_4b.safetensors",
+    "flux2",
+    "default"
+   ],
+   "title": "Encodeur 4B (Qwen3 4B)"
+  },
+  {
+   "id": 14,
+   "type": "VAELoader",
+   "pos": [
+    1000,
+    540
+   ],
+   "size": [
+    340,
+    60
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      8
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "full_encoder_small_decoder.safetensors"
+   ],
+   "title": "VAE 9B"
+  },
+  {
+   "id": 15,
+   "type": "VAELoader",
+   "pos": [
+    1000,
+    620
+   ],
+   "size": [
+    340,
+    60
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      7
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "flux2-vae.safetensors"
+   ],
+   "title": "VAE 4B"
+  },
+  {
+   "id": 16,
+   "type": "ComfySwitchNode",
+   "pos": [
+    1370,
+    60
+   ],
+   "size": [
+    240,
+    100
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "MODEL",
+     "link": 1,
+     "shape": 7
+    },
+    {
+     "name": "on_true",
+     "type": "MODEL",
+     "link": 2,
+     "shape": 7
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 3,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "MODEL",
+     "links": [
+      38
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    false
+   ],
+   "title": "modèle"
+  },
+  {
+   "id": 17,
+   "type": "ComfySwitchNode",
+   "pos": [
+    1370,
+    280
+   ],
+   "size": [
+    240,
+    100
+   ],
+   "flags": {},
+   "order": 16,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "CLIP",
+     "link": 4,
+     "shape": 7
+    },
+    {
+     "name": "on_true",
+     "type": "CLIP",
+     "link": 5,
+     "shape": 7
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 6,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "CLIP",
+     "links": [
+      27
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    false
+   ],
+   "title": "encodeur"
+  },
+  {
+   "id": 18,
+   "type": "ComfySwitchNode",
+   "pos": [
+    1370,
+    540
+   ],
+   "size": [
+    240,
+    100
+   ],
+   "flags": {},
+   "order": 17,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "VAE",
+     "link": 7,
+     "shape": 7
+    },
+    {
+     "name": "on_true",
+     "type": "VAE",
+     "link": 8,
+     "shape": 7
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 9,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "VAE",
+     "links": [
+      33,
+      53
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    false
+   ],
+   "title": "vae"
+  },
+  {
+   "id": 20,
+   "type": "GetImageSize",
+   "pos": [
+    0,
+    860
+   ],
+   "size": [
+    220,
+    100
+   ],
+   "flags": {},
+   "order": 18,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 10
+    }
+   ],
+   "outputs": [
+    {
+     "name": "width",
+     "type": "INT",
+     "links": [
+      11,
+      15
+     ]
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "links": [
+      12,
+      16
+     ]
+    },
+    {
+     "name": "batch_size",
+     "type": "INT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "GetImageSize",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 21,
+   "type": "ComfyMathExpression",
+   "pos": [
+    240,
+    860
+   ],
+   "size": [
+    380,
+    140
+   ],
+   "flags": {},
+   "order": 19,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 11
+    },
+    {
+     "label": "b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 12,
+     "shape": 7
+    },
+    {
+     "label": "c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 13,
+     "shape": 7
+    },
+    {
+     "label": "d",
+     "name": "values.d",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 14,
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      19,
+      22,
+      25,
+      55,
+      58
+     ]
+    },
+    {
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "c if c>0 else (round(a*d/b) if d>0 else a)"
+   ],
+   "title": "Largeur de sortie"
+  },
+  {
+   "id": 22,
+   "type": "ComfyMathExpression",
+   "pos": [
+    240,
+    1020
+   ],
+   "size": [
+    380,
+    140
+   ],
+   "flags": {},
+   "order": 20,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 15
+    },
+    {
+     "label": "b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 16,
+     "shape": 7
+    },
+    {
+     "label": "c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 17,
+     "shape": 7
+    },
+    {
+     "label": "d",
+     "name": "values.d",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 18,
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      20,
+      23,
+      26,
+      56,
+      59
+     ]
+    },
+    {
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "d if d>0 else (round(b*c/a) if c>0 else b)"
+   ],
+   "title": "Hauteur de sortie"
+  },
+  {
+   "id": 23,
+   "type": "ComfyMathExpression",
+   "pos": [
+    640,
+    860
+   ],
+   "size": [
+    380,
+    140
+   ],
+   "flags": {},
+   "order": 21,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 19
+    },
+    {
+     "label": "b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 20,
+     "shape": 7
+    },
+    {
+     "label": "c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 21,
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      41,
+      44
+     ]
+    },
+    {
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "max(256, round(a*min(1, sqrt(c*1e6/(a*b)))/16)*16)"
+   ],
+   "title": "Largeur de calcul (/16)"
+  },
+  {
+   "id": 24,
+   "type": "ComfyMathExpression",
+   "pos": [
+    640,
+    1020
+   ],
+   "size": [
+    380,
+    140
+   ],
+   "flags": {},
+   "order": 22,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 22
+    },
+    {
+     "label": "b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 23,
+     "shape": 7
+    },
+    {
+     "label": "c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 24,
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      42,
+      45
+     ]
+    },
+    {
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "max(256, round(b*min(1, sqrt(c*1e6/(a*b)))/16)*16)"
+   ],
+   "title": "Hauteur de calcul (/16)"
+  },
+  {
+   "id": 25,
+   "type": "PreviewAny",
+   "pos": [
+    1040,
+    860
+   ],
+   "size": [
+    200,
+    90
+   ],
+   "flags": {},
+   "order": 23,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "source",
+     "type": "*",
+     "link": 25
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewAny",
+    "cnr_id": "comfy-core"
+   },
+   "title": "largeur sortie"
+  },
+  {
+   "id": 26,
+   "type": "PreviewAny",
+   "pos": [
+    1040,
+    1020
+   ],
+   "size": [
+    200,
+    90
+   ],
+   "flags": {},
+   "order": 24,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "source",
+     "type": "*",
+     "link": 26
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewAny",
+    "cnr_id": "comfy-core"
+   },
+   "title": "hauteur sortie"
+  },
+  {
+   "id": 30,
+   "type": "CLIPTextEncode",
+   "pos": [
+    1720,
+    60
+   ],
+   "size": [
+    300,
+    100
+   ],
+   "flags": {},
+   "order": 25,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 27
+    },
+    {
+     "name": "text",
+     "type": "STRING",
+     "link": 28,
+     "widget": {
+      "name": "text"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      29,
+      34
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    ""
+   ]
+  },
+  {
+   "id": 31,
+   "type": "ConditioningZeroOut",
+   "pos": [
+    1720,
+    190
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 26,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 29
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      36
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ConditioningZeroOut",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 32,
+   "type": "ImageScaleToTotalPixels",
+   "pos": [
+    1720,
+    280
+   ],
+   "size": [
+    300,
+    110
+   ],
+   "flags": {},
+   "order": 27,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 30
+    },
+    {
+     "name": "megapixels",
+     "type": "FLOAT",
+     "link": 31,
+     "widget": {
+      "name": "megapixels"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      32
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScaleToTotalPixels",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "lanczos",
+    1.0,
+    16
+   ],
+   "title": "image de référence"
+  },
+  {
+   "id": 33,
+   "type": "VAEEncode",
+   "pos": [
+    1720,
+    420
+   ],
+   "size": [
+    300,
+    60
+   ],
+   "flags": {},
+   "order": 28,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 32
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 33
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      35,
+      37
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 34,
+   "type": "ReferenceLatent",
+   "pos": [
+    2050,
+    60
+   ],
+   "size": [
+    260,
+    60
+   ],
+   "flags": {},
+   "order": 29,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 34
+    },
+    {
+     "name": "latent",
+     "type": "LATENT",
+     "link": 35,
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      39
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ReferenceLatent",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 35,
+   "type": "ReferenceLatent",
+   "pos": [
+    2050,
+    190
+   ],
+   "size": [
+    260,
+    60
+   ],
+   "flags": {},
+   "order": 30,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 36
+    },
+    {
+     "name": "latent",
+     "type": "LATENT",
+     "link": 37,
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      40
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ReferenceLatent",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 36,
+   "type": "CFGGuider",
+   "pos": [
+    2050,
+    280
+   ],
+   "size": [
+    260,
+    100
+   ],
+   "flags": {},
+   "order": 31,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 38
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 39
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 40
+    }
+   ],
+   "outputs": [
+    {
+     "name": "GUIDER",
+     "type": "GUIDER",
+     "links": [
+      48
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CFGGuider",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    1.0
+   ]
+  },
+  {
+   "id": 37,
+   "type": "EmptyFlux2LatentImage",
+   "pos": [
+    2050,
+    410
+   ],
+   "size": [
+    260,
+    110
+   ],
+   "flags": {},
+   "order": 32,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "width",
+     "type": "INT",
+     "link": 41,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "link": 42,
+     "widget": {
+      "name": "height"
+     }
+    },
+    {
+     "name": "batch_size",
+     "type": "INT",
+     "link": 43,
+     "widget": {
+      "name": "batch_size"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      51
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "EmptyFlux2LatentImage",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    1024,
+    1024,
+    4
+   ],
+   "title": "4 latents = 4 propositions"
+  },
+  {
+   "id": 38,
+   "type": "Flux2Scheduler",
+   "pos": [
+    2050,
+    550
+   ],
+   "size": [
+    260,
+    110
+   ],
+   "flags": {},
+   "order": 33,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "width",
+     "type": "INT",
+     "link": 44,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "link": 45,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "SIGMAS",
+     "type": "SIGMAS",
+     "links": [
+      50
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Flux2Scheduler",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    4,
+    1024,
+    1024
+   ],
+   "title": "Scheduler (4 steps, distillé)"
+  },
+  {
+   "id": 39,
+   "type": "RandomNoise",
+   "pos": [
+    2340,
+    60
+   ],
+   "size": [
+    260,
+    90
+   ],
+   "flags": {},
+   "order": 34,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "noise_seed",
+     "type": "INT",
+     "link": 46,
+     "widget": {
+      "name": "noise_seed"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "NOISE",
+     "type": "NOISE",
+     "links": [
+      47
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RandomNoise",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    0,
+    "randomize"
+   ]
+  },
+  {
+   "id": 40,
+   "type": "KSamplerSelect",
+   "pos": [
+    2340,
+    180
+   ],
+   "size": [
+    260,
+    60
+   ],
+   "flags": {},
+   "order": 35,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "SAMPLER",
+     "type": "SAMPLER",
+     "links": [
+      49
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSamplerSelect",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "euler"
+   ]
+  },
+  {
+   "id": 41,
+   "type": "SamplerCustomAdvanced",
+   "pos": [
+    2340,
+    270
+   ],
+   "size": [
+    260,
+    120
+   ],
+   "flags": {},
+   "order": 36,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "noise",
+     "type": "NOISE",
+     "link": 47
+    },
+    {
+     "name": "guider",
+     "type": "GUIDER",
+     "link": 48
+    },
+    {
+     "name": "sampler",
+     "type": "SAMPLER",
+     "link": 49
+    },
+    {
+     "name": "sigmas",
+     "type": "SIGMAS",
+     "link": 50
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 51
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "LATENT",
+     "links": [
+      52
+     ]
+    },
+    {
+     "name": "denoised_output",
+     "type": "LATENT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SamplerCustomAdvanced",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 42,
+   "type": "VAEDecode",
+   "pos": [
+    2340,
+    420
+   ],
+   "size": [
+    260,
+    60
+   ],
+   "flags": {},
+   "order": 37,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 52
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 53
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      54
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 43,
+   "type": "ImageScale",
+   "pos": [
+    2340,
+    510
+   ],
+   "size": [
+    260,
+    150
+   ],
+   "flags": {},
+   "order": 38,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 54
+    },
+    {
+     "name": "width",
+     "type": "INT",
+     "link": 55,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "link": 56,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      67,
+      69
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScale",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "lanczos",
+    1024,
+    1024,
+    "disabled"
+   ],
+   "title": "→ taille de sortie"
+  },
+  {
+   "id": 50,
+   "type": "ImageScale",
+   "pos": [
+    1720,
+    760
+   ],
+   "size": [
+    260,
+    150
+   ],
+   "flags": {},
+   "order": 39,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 57
+    },
+    {
+     "name": "width",
+     "type": "INT",
+     "link": 58,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "link": 59,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      60
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScale",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "lanczos",
+    1024,
+    1024,
+    "center"
+   ],
+   "title": "original → taille de sortie"
+  },
+  {
+   "id": 51,
+   "type": "RepeatImageBatch",
+   "pos": [
+    1720,
+    940
+   ],
+   "size": [
+    260,
+    80
+   ],
+   "flags": {},
+   "order": 40,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 60
+    },
+    {
+     "name": "amount",
+     "type": "INT",
+     "link": 61,
+     "widget": {
+      "name": "amount"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      66
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RepeatImageBatch",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    4
+   ]
+  },
+  {
+   "id": 52,
+   "type": "GrowMask",
+   "pos": [
+    2010,
+    760
+   ],
+   "size": [
+    220,
+    90
+   ],
+   "flags": {},
+   "order": 41,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mask",
+     "type": "MASK",
+     "link": 62
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": [
+      63
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "GrowMask",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    16,
+    true
+   ],
+   "title": "masque · dilatation"
+  },
+  {
+   "id": 53,
+   "type": "MaskToImage",
+   "pos": [
+    2010,
+    880
+   ],
+   "size": [
+    220,
+    60
+   ],
+   "flags": {},
+   "order": 42,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mask",
+     "type": "MASK",
+     "link": 63
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      64
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "MaskToImage",
+    "cnr_id": "comfy-core"
+   }
+  },
+  {
+   "id": 54,
+   "type": "ImageBlur",
+   "pos": [
+    2010,
+    970
+   ],
+   "size": [
+    220,
+    90
+   ],
+   "flags": {},
+   "order": 43,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 64
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      65
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageBlur",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    31,
+    0.5
+   ],
+   "title": "masque · adoucissement"
+  },
+  {
+   "id": 55,
+   "type": "ImageToMask",
+   "pos": [
+    2010,
+    1090
+   ],
+   "size": [
+    220,
+    70
+   ],
+   "flags": {},
+   "order": 44,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 65
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": [
+      68
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageToMask",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "red"
+   ]
+  },
+  {
+   "id": 56,
+   "type": "ImageCompositeMasked",
+   "pos": [
+    2260,
+    760
+   ],
+   "size": [
+    280,
+    150
+   ],
+   "flags": {},
+   "order": 45,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "destination",
+     "type": "IMAGE",
+     "link": 66
+    },
+    {
+     "name": "source",
+     "type": "IMAGE",
+     "link": 67
+    },
+    {
+     "name": "mask",
+     "type": "MASK",
+     "link": 68,
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      70
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageCompositeMasked",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    0,
+    0,
+    true
+   ],
+   "title": "édition collée dans le masque"
+  },
+  {
+   "id": 57,
+   "type": "ComfySwitchNode",
+   "pos": [
+    2260,
+    950
+   ],
+   "size": [
+    240,
+    100
+   ],
+   "flags": {},
+   "order": 46,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "IMAGE",
+     "link": 69,
+     "shape": 7
+    },
+    {
+     "name": "on_true",
+     "type": "IMAGE",
+     "link": 70,
+     "shape": 7
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 71,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "IMAGE",
+     "links": [
+      72
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    false
+   ],
+   "title": "global / masque"
+  },
+  {
+   "id": 60,
+   "type": "SaveImage",
+   "pos": [
+    2640,
+    60
+   ],
+   "size": [
+    760,
+    900
+   ],
+   "flags": {},
+   "order": 47,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 72
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "Klein_edit/prop"
+   ],
+   "title": "⑨ 4 PROPOSITIONS (sauvegardées)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 99,
+   "type": "MarkdownNote",
+   "pos": [
+    0,
+    1240
+   ],
+   "size": [
+    1000,
+    700
+   ],
+   "flags": {},
+   "order": 48,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote",
+    "cnr_id": "comfy-core"
+   },
+   "widgets_values": [
+    "# Flux.2 Klein · Image edit · 4 propositions\n100 % nœuds natifs ComfyUI, aucun nœud partenaire (API).\n\n## Réglages\n1. **① Image** à modifier. Masque optionnel : clic droit › *Open in MaskEditor*.\n2. **② Prompt** en anglais, impératif, en ancrant ce qui ne change pas :\n   *Keep the exact same scene… Change only this: replace the red car with a vintage green bicycle.*\n3. **③ Masque** : `true` = seule la zone peinte change (bord adouci), le reste est l'original au pixel près.\n4. **④ Taille de sortie** : `0 / 0` = taille de l'image d'entrée. Une seule valeur = l'autre suit le ratio.\n   Deux valeurs = nouveau ratio (le modèle recompose le cadre).\n5. **⑤ Nb de propositions** (4 par défaut, même seed de base, bruits différents).\n6. **⑦ Modèle** : 9B = qualité, 4B = rapide. Le switch charge **toujours la bonne paire** modèle + encodeur + VAE.\n7. **⑧ Résolution de calcul** : Klein calcule à 2 MP max puis agrandit à la taille de sortie (évite les plantages mémoire en 4K).\n\n## Astuces\n- Relancer = 4 nouvelles propositions (seed en *randomize*). Passe ⑥ en *fixed* pour comparer des prompts.\n- Mode masque avec un ratio de sortie différent de l'image : le masque suit le recadrage centre.\n"
+   ],
+   "title": "MODE D'EMPLOI"
+  }
+ ],
+ "links": [
+  [
+   1,
+   11,
+   0,
+   16,
+   0,
+   "MODEL"
+  ],
+  [
+   2,
+   10,
+   0,
+   16,
+   1,
+   "MODEL"
+  ],
+  [
+   3,
+   8,
+   0,
+   16,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   4,
+   13,
+   0,
+   17,
+   0,
+   "CLIP"
+  ],
+  [
+   5,
+   12,
+   0,
+   17,
+   1,
+   "CLIP"
+  ],
+  [
+   6,
+   8,
+   0,
+   17,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   7,
+   15,
+   0,
+   18,
+   0,
+   "VAE"
+  ],
+  [
+   8,
+   14,
+   0,
+   18,
+   1,
+   "VAE"
+  ],
+  [
+   9,
+   8,
+   0,
+   18,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   10,
+   1,
+   0,
+   20,
+   0,
+   "IMAGE"
+  ],
+  [
+   11,
+   20,
+   0,
+   21,
+   0,
+   "INT"
+  ],
+  [
+   12,
+   20,
+   1,
+   21,
+   1,
+   "INT"
+  ],
+  [
+   13,
+   4,
+   0,
+   21,
+   2,
+   "INT"
+  ],
+  [
+   14,
+   5,
+   0,
+   21,
+   3,
+   "INT"
+  ],
+  [
+   15,
+   20,
+   0,
+   22,
+   0,
+   "INT"
+  ],
+  [
+   16,
+   20,
+   1,
+   22,
+   1,
+   "INT"
+  ],
+  [
+   17,
+   4,
+   0,
+   22,
+   2,
+   "INT"
+  ],
+  [
+   18,
+   5,
+   0,
+   22,
+   3,
+   "INT"
+  ],
+  [
+   19,
+   21,
+   1,
+   23,
+   0,
+   "INT"
+  ],
+  [
+   20,
+   22,
+   1,
+   23,
+   1,
+   "INT"
+  ],
+  [
+   21,
+   9,
+   0,
+   23,
+   2,
+   "FLOAT"
+  ],
+  [
+   22,
+   21,
+   1,
+   24,
+   0,
+   "INT"
+  ],
+  [
+   23,
+   22,
+   1,
+   24,
+   1,
+   "INT"
+  ],
+  [
+   24,
+   9,
+   0,
+   24,
+   2,
+   "FLOAT"
+  ],
+  [
+   25,
+   21,
+   1,
+   25,
+   0,
+   "INT"
+  ],
+  [
+   26,
+   22,
+   1,
+   26,
+   0,
+   "INT"
+  ],
+  [
+   27,
+   17,
+   0,
+   30,
+   0,
+   "CLIP"
+  ],
+  [
+   28,
+   2,
+   0,
+   30,
+   1,
+   "STRING"
+  ],
+  [
+   29,
+   30,
+   0,
+   31,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   30,
+   1,
+   0,
+   32,
+   0,
+   "IMAGE"
+  ],
+  [
+   31,
+   9,
+   0,
+   32,
+   1,
+   "FLOAT"
+  ],
+  [
+   32,
+   32,
+   0,
+   33,
+   0,
+   "IMAGE"
+  ],
+  [
+   33,
+   18,
+   0,
+   33,
+   1,
+   "VAE"
+  ],
+  [
+   34,
+   30,
+   0,
+   34,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   35,
+   33,
+   0,
+   34,
+   1,
+   "LATENT"
+  ],
+  [
+   36,
+   31,
+   0,
+   35,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   37,
+   33,
+   0,
+   35,
+   1,
+   "LATENT"
+  ],
+  [
+   38,
+   16,
+   0,
+   36,
+   0,
+   "MODEL"
+  ],
+  [
+   39,
+   34,
+   0,
+   36,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   40,
+   35,
+   0,
+   36,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   41,
+   23,
+   1,
+   37,
+   0,
+   "INT"
+  ],
+  [
+   42,
+   24,
+   1,
+   37,
+   1,
+   "INT"
+  ],
+  [
+   43,
+   6,
+   0,
+   37,
+   2,
+   "INT"
+  ],
+  [
+   44,
+   23,
+   1,
+   38,
+   0,
+   "INT"
+  ],
+  [
+   45,
+   24,
+   1,
+   38,
+   1,
+   "INT"
+  ],
+  [
+   46,
+   7,
+   0,
+   39,
+   0,
+   "INT"
+  ],
+  [
+   47,
+   39,
+   0,
+   41,
+   0,
+   "NOISE"
+  ],
+  [
+   48,
+   36,
+   0,
+   41,
+   1,
+   "GUIDER"
+  ],
+  [
+   49,
+   40,
+   0,
+   41,
+   2,
+   "SAMPLER"
+  ],
+  [
+   50,
+   38,
+   0,
+   41,
+   3,
+   "SIGMAS"
+  ],
+  [
+   51,
+   37,
+   0,
+   41,
+   4,
+   "LATENT"
+  ],
+  [
+   52,
+   41,
+   0,
+   42,
+   0,
+   "LATENT"
+  ],
+  [
+   53,
+   18,
+   0,
+   42,
+   1,
+   "VAE"
+  ],
+  [
+   54,
+   42,
+   0,
+   43,
+   0,
+   "IMAGE"
+  ],
+  [
+   55,
+   21,
+   1,
+   43,
+   1,
+   "INT"
+  ],
+  [
+   56,
+   22,
+   1,
+   43,
+   2,
+   "INT"
+  ],
+  [
+   57,
+   1,
+   0,
+   50,
+   0,
+   "IMAGE"
+  ],
+  [
+   58,
+   21,
+   1,
+   50,
+   1,
+   "INT"
+  ],
+  [
+   59,
+   22,
+   1,
+   50,
+   2,
+   "INT"
+  ],
+  [
+   60,
+   50,
+   0,
+   51,
+   0,
+   "IMAGE"
+  ],
+  [
+   61,
+   6,
+   0,
+   51,
+   1,
+   "INT"
+  ],
+  [
+   62,
+   1,
+   1,
+   52,
+   0,
+   "MASK"
+  ],
+  [
+   63,
+   52,
+   0,
+   53,
+   0,
+   "MASK"
+  ],
+  [
+   64,
+   53,
+   0,
+   54,
+   0,
+   "IMAGE"
+  ],
+  [
+   65,
+   54,
+   0,
+   55,
+   0,
+   "IMAGE"
+  ],
+  [
+   66,
+   51,
+   0,
+   56,
+   0,
+   "IMAGE"
+  ],
+  [
+   67,
+   43,
+   0,
+   56,
+   1,
+   "IMAGE"
+  ],
+  [
+   68,
+   55,
+   0,
+   56,
+   2,
+   "MASK"
+  ],
+  [
+   69,
+   43,
+   0,
+   57,
+   0,
+   "IMAGE"
+  ],
+  [
+   70,
+   56,
+   0,
+   57,
+   1,
+   "IMAGE"
+  ],
+  [
+   71,
+   3,
+   0,
+   57,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   72,
+   57,
+   0,
+   60,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "ENTRÉES",
+   "bounding": [
+    -20,
+    -20,
+    990,
+    840
+   ],
+   "color": "#3f5f3f",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "MODÈLES (paires 9B / 4B)",
+   "bounding": [
+    980,
+    -20,
+    660,
+    720
+   ],
+   "color": "#5f4f3f",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "TAILLES",
+   "bounding": [
+    -20,
+    800,
+    1280,
+    380
+   ],
+   "color": "#3f5f3f",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 4,
+   "title": "ÉDITION FLUX.2 KLEIN",
+   "bounding": [
+    1700,
+    -20,
+    920,
+    700
+   ],
+   "color": "#5f3f6f",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 5,
+   "title": "MASQUE (inpaint)",
+   "bounding": [
+    1700,
+    700,
+    860,
+    480
+   ],
+   "color": "#5f3f6f",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 6,
+   "title": "SORTIE",
+   "bounding": [
+    2620,
+    -20,
+    800,
+    1000
+   ],
+   "color": "#6f4f2f",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "definitions": {
+  "subgraphs": []
+ },
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.5,
+   "offset": [
+    50,
+    50
+   ]
+  }
+ },
+ "version": 0.4
+}
