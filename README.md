@@ -6,23 +6,23 @@ Chaque workflow est versionné avec son **Prompt Set pour Claude** : un fichier 
 
 ---
 
-## Arborescence cible
+## Arborescence
 
-À terme, un dossier par workflow :
+Chaque workflow a son dossier, nommé exactement comme son fichier `.json` (qui reste à la racine) :
 
 ```
+<Nom_Du_WF>.json                     # le workflow ComfyUI, à la racine
 <Nom_Du_WF>/
-├── README.md                     # à quoi sert le WF, modèles requis, nodes custom, réglages clés
-├── <nom>.json                    # le workflow ComfyUI (export API ou format natif)
-├── CONTEXT_prompt-set_<nom>.md   # le Prompt Set à donner à Claude
-└── images/                       # images d'exemple (entrées + résultats)
+├── CONTEXT_prompt-set_<nom>.md      # le Prompt Set à donner à Claude
+├── README.md                        # (à venir) modèles requis, nodes custom, réglages clés
+└── images/                          # images d'exemple (entrées + résultats)
     ├── in_*.png
     └── out_*.png
 ```
 
-Le dossier [_TEMPLATE_WF/](_TEMPLATE_WF/) sert de gabarit : le copier, le renommer, remplir.
+Le dossier [_TEMPLATE_WF/](_TEMPLATE_WF/) fournit les gabarits de `README.md` et de prompt set à copier dans un dossier de workflow.
 
-> La racine contient encore les fichiers « à plat » (état initial). Le classement en dossiers se fait progressivement, workflow par workflow.
+> Les 21 dossiers existent ; 4 contiennent déjà leur Prompt Set. Les autres se remplissent au fur et à mesure.
 
 ## Conventions
 
@@ -38,14 +38,14 @@ Le dossier [_TEMPLATE_WF/](_TEMPLATE_WF/) sert de gabarit : le copier, le renomm
 ### Model sheet / character & prop design
 | Workflow | Prompt Set |
 |---|---|
-| [Full_Workflow_ModelSheet_V1.json](Full_Workflow_ModelSheet_V1.json) — pipeline complet moodboard → face master → style → 3 vues tournées | [CONTEXT](CONTEXT_prompt-set_ModelSheet_V1.md) |
+| [Full_Workflow_ModelSheet_V1.json](Full_Workflow_ModelSheet_V1.json) — pipeline complet moodboard → face master → style → 3 vues tournées | [CONTEXT](Full_Workflow_ModelSheet_V1/CONTEXT_prompt-set_ModelSheet_V1.md) |
 | [qwen_modelsheet_rotation.json](qwen_modelsheet_rotation.json) — rotation seule (LoRA Multiple-Angles) | — |
 | [qwen_moodboard_face_style.json](qwen_moodboard_face_style.json) — moodboard → vue de face stylisée | — |
 
 ### Image editing / intégration
 | Workflow | Prompt Set |
 |---|---|
-| [Image_Edit_Klein_v3_CropStitch_RefSujet.json](Image_Edit_Klein_v3_CropStitch_RefSujet.json) — édition 4 props, crop & stitch, référence sujet | [CONTEXT](CONTEXT_prompt-set_Klein_v3_CropStitch_RefSujet.md) |
+| [Image_Edit_Klein_v3_CropStitch_RefSujet.json](Image_Edit_Klein_v3_CropStitch_RefSujet.json) — édition 4 props, crop & stitch, référence sujet | [CONTEXT](Image_Edit_Klein_v3_CropStitch_RefSujet/CONTEXT_prompt-set_Klein_v3_CropStitch_RefSujet.md) |
 | [Image_Edit_4props_Klein_v2_CropStitch.json](Image_Edit_4props_Klein_v2_CropStitch.json) — v2 | — |
 | [Image_Edit_4props_Klein.json](Image_Edit_4props_Klein.json) — v1 | — |
 | [Integration_sujet_environnement_Qwen.json](Integration_sujet_environnement_Qwen.json) — intégration sujet dans un environnement | — |
@@ -63,10 +63,10 @@ Le dossier [_TEMPLATE_WF/](_TEMPLATE_WF/) sert de gabarit : le copier, le renomm
 ### Vidéo (image-to-video, FX, SFX)
 | Workflow | Prompt Set |
 |---|---|
-| [JB_LTX23_FLF_EDIT_FX_SFX_v3.json](JB_LTX23_FLF_EDIT_FX_SFX_v3.json) — LTX 2.3, first/last frame + edit + FX + SFX | [CONTEXT](CONTEXT_prompt-set_LTX23_WF-v3.md) |
+| [JB_LTX23_FLF_EDIT_FX_SFX_v3.json](JB_LTX23_FLF_EDIT_FX_SFX_v3.json) — LTX 2.3, first/last frame + edit + FX + SFX | [CONTEXT](JB_LTX23_FLF_EDIT_FX_SFX_v3/CONTEXT_prompt-set_LTX23_WF-v3.md) |
 | [JB_LTX23_FLF_EDIT_FX_SFX_v2.json](JB_LTX23_FLF_EDIT_FX_SFX_v2.json) — v2 | — |
 | [JB_LTX23_I2V_FX_SFX.json](JB_LTX23_I2V_FX_SFX.json) — LTX 2.3 image-to-video | — |
-| [image_to_video_MiniMaxH3.json](image_to_video_MiniMaxH3.json) — MiniMax / Hailuo H3 | [CONTEXT](CONTEXT_prompt-set_H3_ImageToVideo_local_I2V.md) |
+| [image_to_video_MiniMaxH3.json](image_to_video_MiniMaxH3.json) — MiniMax / Hailuo H3 | [CONTEXT](image_to_video_MiniMaxH3/CONTEXT_prompt-set_H3_ImageToVideo_local_I2V.md) |
 | [H3_blocking_to_video.json](H3_blocking_to_video.json) — blocking 3D → vidéo | — |
 
 ### Text-to-image
