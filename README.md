@@ -1,6 +1,6 @@
 # ComfyUI_WF
 
-Workflows ComfyUI de **Jean-Baptiste BARON** (Baron Studio) — génération d'images, de model sheets, d'environnements 360 et de vidéos (Qwen-Image-Edit, Z-Image, Flux, LTX-Video, MiniMax/Hailuo).
+Workflows ComfyUI de **Jean-Baptiste BARON** (Baron Studio) — génération d'images, de model sheets, d'environnements 360, de vidéos et d'assets 3D (Qwen-Image-Edit, Z-Image, Flux, LTX-Video, MiniMax/Hailuo, Pixal3D, Tripo).
 
 Chaque workflow est versionné avec son **Prompt Set pour Claude** : un fichier `CONTEXT_prompt-set_*.md` à coller en début de conversation, qui transforme Claude en générateur de prompts calibré pour ce workflow précis (champ par champ, avec les contraintes du modèle et du pipeline).
 
@@ -14,7 +14,8 @@ Chaque workflow a son dossier, nommé exactement comme son fichier `.json` (qui 
 <Nom_Du_WF>.json                     # le workflow ComfyUI, à la racine
 <Nom_Du_WF>/
 ├── CONTEXT_prompt-set_<nom>.md      # le Prompt Set à donner à Claude
-├── README.md                        # (à venir) modèles requis, nodes custom, réglages clés
+├── README.md                        # modèles requis, nodes custom, réglages clés
+├── *.py                             # (optionnel) scripts annexes (post-traitement Blender…)
 └── images/                          # images d'exemple (entrées + résultats)
     ├── in_*.png
     └── out_*.png
@@ -22,11 +23,11 @@ Chaque workflow a son dossier, nommé exactement comme son fichier `.json` (qui 
 
 Le dossier [_TEMPLATE_WF/](_TEMPLATE_WF/) fournit les gabarits de `README.md` et de prompt set à copier dans un dossier de workflow.
 
-> Les 21 dossiers existent ; 4 contiennent déjà leur Prompt Set. Les autres se remplissent au fur et à mesure.
+> Les 25 dossiers existent ; 8 contiennent déjà leur Prompt Set et 4 leur README technique. Les autres se remplissent au fur et à mesure.
 
 ## Conventions
 
-- **Nommage** : `Domaine_Sujet_vN` — la version `vN` est portée par le nom de fichier, pas par un commit « v2 » (on garde l'historique des variantes côte à côte quand elles restent utiles).
+- **Nommage** : `[type]_[ModèlePrincipal]_[ModèleSecondaire]_[vNN]` — segment secondaire omis s'il n'y en a pas (ex. `t2i_Flux2Dev_v01`, `i2i_QwenEdit2511_MultiAngleLoRA_v01`). Types : `t2i, i2i, i2v, t2v, v2v, inpaint, upscale, relight, i2Vecto, i23d, t23D, 3D2UV, 3D2Remesh, 3D2Parts, i2pbr, t2audio, i2audio`. La version `vNN` est portée par le nom de fichier (nouveau fichier + nouveau dossier à chaque version, on ne réécrit pas l'ancienne). Les workflows antérieurs gardent leur nom historique `Domaine_Sujet_vN`.
 - **Prompt Set** : toujours préfixé `CONTEXT_prompt-set_`, rédigé en anglais pour la partie prompts, en français pour les consignes de travail.
 - **Images d'exemple** : PNG/JPG uniquement, préfixe `in_` (entrées) / `out_` (résultats). Les vidéos et fichiers lourds sont exclus par le [.gitignore](.gitignore) — les héberger ailleurs et pointer le lien dans le README du WF.
 - **Modèles / checkpoints** : jamais versionnés. Les lister dans le README du workflow (nom exact + source).
@@ -68,6 +69,14 @@ Le dossier [_TEMPLATE_WF/](_TEMPLATE_WF/) fournit les gabarits de `README.md` et
 | [JB_LTX23_I2V_FX_SFX.json](JB_LTX23_I2V_FX_SFX.json) — LTX 2.3 image-to-video | — |
 | [image_to_video_MiniMaxH3.json](image_to_video_MiniMaxH3.json) — MiniMax / Hailuo H3 | [CONTEXT](image_to_video_MiniMaxH3/CONTEXT_prompt-set_H3_ImageToVideo_local_I2V.md) |
 | [H3_blocking_to_video.json](H3_blocking_to_video.json) — blocking 3D → vidéo | — |
+
+### 3D (image-to-3D, remesh, UV, découpe en pièces)
+| Workflow | Prompt Set |
+|---|---|
+| [3D2UV_UnwrapMesh_v01.json](3D2UV_UnwrapMesh_v01.json) — dépliage UV auto d'un GLB → GLB avec UV + layout PNG + AO, 100 % natif, Cloud | [CONTEXT](3D2UV_UnwrapMesh_v01/CONTEXT_prompt-set_3D2UV_UnwrapMesh_v01.md) |
+| [3D2Remesh_NativeDC_v01.json](3D2Remesh_NativeDC_v01.json) — remesh étanche (Dual Contouring) + décimation au poly count d'un GLB → GLB triangulé, 100 % natif, Cloud | [CONTEXT](3D2Remesh_NativeDC_v01/CONTEXT_prompt-set_3D2Remesh_NativeDC_v01.md) |
+| [3D2Parts_TripoSmartSegment_v01.json](3D2Parts_TripoSmartSegment_v01.json) — découpe sémantique d'un GLB en pièces nommées (nombre visé via prompt) + **Cap ON/OFF** (complétion des pièces) → GLB une pièce = un objet, nœuds Partner Tripo (crédits), Cloud | [CONTEXT](3D2Parts_TripoSmartSegment_v01/CONTEXT_prompt-set_3D2Parts_TripoSmartSegment_v01.md) |
+| [i23d_Pixal3D_v02.json](i23d_Pixal3D_v02.json) — multivue (face, côté, dos) → GLB triangulé manifold **paroi simple (SDF)** sans UV, poly count cible, hauteur dans le nom + script Blender, Pixal3D natif, Cloud | [CONTEXT](i23d_Pixal3D_v02/CONTEXT_prompt-set_i23d_Pixal3D_v02.md) |
 
 ### Text-to-image
 | Workflow | Prompt Set |

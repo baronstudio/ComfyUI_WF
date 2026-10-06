@@ -1,0 +1,3420 @@
+{
+ "id": "b7c1e5a2-5f3d-4e8a-9a51-0000i23d0001",
+ "revision": 0,
+ "last_node_id": 56,
+ "last_link_id": 80,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "MarkdownNote",
+   "pos": [
+    40,
+    40
+   ],
+   "size": [
+    440,
+    1300
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {},
+   "widgets_values": [
+    "# i23d_Pixal3D — Multivue → modèle 3D (GLB)\n\n**Ce que fait le workflow**\n1. Prend **3 à 4 images** d'un même sujet : **face (obligatoire)**, **côté**, **dos**, et un **3/4** gardé en référence visuelle (non injecté : Pixal3D n'accepte que 0° / 90° / 180° / 270°).\n2. Détourage auto (BiRefNet), recadrage centré, mise au carré **1024 × 1024** : les images peuvent avoir des **tailles et ratios différents**.\n3. **Pixal3D** (Trellis.2, natif) génère la forme : structure → forme 512 → détail (upsample).\n4. Post-traitement : soudure, bouchage des petits trous, **remesh étanche UDF (SDF en option)**, **décimation au nombre de triangles cible**, normales lissées.\n5. Sortie : **GLB triangulé, manifold, sans UV, sans texture**, dans `output/i23d_Pixal3D/`. Le nom contient la hauteur et le poly count : `model_H180cm_20000tris_00001_.glb`.\n\n**Aucun custom node, aucun nœud API.** Compatible Comfy Cloud.\n\n---\n\n**À régler (🎛️ CONTRÔLES)**\n- *Poly count cible* : max de triangles (web 5–20k, jeu 20–80k).\n- *Hauteur cible (cm)* : écrite dans le nom du fichier, appliquée dans Blender par `blender_scale_to_height.py` (aucun nœud natif ne met un mesh à l'échelle — le scale de `Save 3D (Advanced)` ne sert qu'à l'aperçu).\n- *Vue de côté = gauche du perso* : ON si on voit le **flanc gauche** du sujet (il regarde vers la droite de l'image). OFF = flanc droit.\n- *Utiliser la vue de dos* : OFF si pas de dos.\n- *Seed* : changer si la forme déçoit.\n- *FOV* : 20 pour des vues de model sheet / rendus orthographiques.\n- *Résolution détail* : 1536 (1024 = plus rapide, 2048 = plus fin, plus de VRAM).\n- *Lissage* : 2 (0 = arêtes vives).\n- *Remesh SDF* : **OFF = UDF (défaut, meilleurs résultats testés)** — double paroi possible aux ouvertures (manches, bas de veste), coque interne retirée quand elle est détachée. ON = SDF paroi simple, expérimental (résultats médiocres sur Pixal3D).\n\n**Images d'entrée**\n- **≥ 1024 px** sur le petit côté conseillé (en dessous, le détourage et le détail s'appauvrissent).\n- Même sujet, même pose (A-pose), même échelle, cadrage complet, fond uni de préférence.\n- Pas de 3/4 dans les slots face / côté / dos : volume faussé.\n- Il manque des vues ? Les générer avec **Qwen_3Ref_ModelSheet_V1**.\n\n---\n\n**Modèles à télécharger** (Cloud : déjà présents)\n- `models/diffusion_models/pixal3d_multiview_int8_convrot.safetensors` (5,2 Go)\n- `models/vae/trellis_2_shape_vae_bf16.safetensors` (1,0 Go)\n- `models/clip_vision/dino_v3_L_naf_fp32.safetensors` (1,1 Go)\n- `models/background_removal/birefnet.safetensors` (0,4 Go)\nSource : huggingface.co/Comfy-Org/Pixal3D et Comfy-Org/BiRefNet.\n\n**Limites**\n- Triangles uniquement (glTF), pas de quad ni de symétrie.\n- Le poly count est un **maximum**.\n- Aperçu 3D vide = WebGL du navigateur ; fichier dans **Assets → Generated**.\n"
+   ],
+   "title": "📖 Mode d'emploi",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 2,
+   "type": "PrimitiveInt",
+   "pos": [
+    540,
+    60
+   ],
+   "size": [
+    300,
+    82
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      63,
+      74,
+      78
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    20000,
+    "fixed"
+   ],
+   "title": "🎛️ Poly count cible (triangles)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 3,
+   "type": "PrimitiveFloat",
+   "pos": [
+    540,
+    180
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      77
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    180.0
+   ],
+   "title": "🎛️ Hauteur cible (cm)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 4,
+   "type": "PrimitiveBoolean",
+   "pos": [
+    540,
+    280
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "BOOLEAN",
+     "type": "BOOLEAN",
+     "links": [
+      17,
+      19
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveBoolean",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    true
+   ],
+   "title": "🎛️ Vue de côté = gauche du perso",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 5,
+   "type": "PrimitiveBoolean",
+   "pos": [
+    540,
+    380
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "BOOLEAN",
+     "type": "BOOLEAN",
+     "links": [
+      21
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveBoolean",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    true
+   ],
+   "title": "🎛️ Utiliser la vue de dos",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 6,
+   "type": "PrimitiveInt",
+   "pos": [
+    540,
+    480
+   ],
+   "size": [
+    300,
+    82
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      37,
+      47,
+      57
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    42,
+    "fixed"
+   ],
+   "title": "🎛️ Seed",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 7,
+   "type": "PrimitiveFloat",
+   "pos": [
+    540,
+    600
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      27
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    20.0
+   ],
+   "title": "🎛️ FOV des vues (°)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 8,
+   "type": "PrimitiveInt",
+   "pos": [
+    540,
+    700
+   ],
+   "size": [
+    300,
+    82
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      52
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    1536,
+    "fixed"
+   ],
+   "title": "🎛️ Résolution détail (1024–2048)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 9,
+   "type": "PrimitiveInt",
+   "pos": [
+    540,
+    820
+   ],
+   "size": [
+    300,
+    82
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      66,
+      69
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    2,
+    "fixed"
+   ],
+   "title": "🎛️ Lissage (itérations, 0–20)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 10,
+   "type": "PrimitiveBoolean",
+   "pos": [
+    540,
+    940
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "BOOLEAN",
+     "type": "BOOLEAN",
+     "links": [
+      72
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveBoolean",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    false
+   ],
+   "title": "🎛️ Remesh SDF paroi simple (OFF = UDF)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 11,
+   "type": "UNETLoader",
+   "pos": [
+    540,
+    1100
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      28,
+      31
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "models": [
+     {
+      "name": "pixal3d_multiview_int8_convrot.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Pixal3D/resolve/main/diffusion_models/pixal3d_multiview_int8_convrot.safetensors",
+      "directory": "diffusion_models"
+     }
+    ]
+   },
+   "widgets_values": [
+    "pixal3d_multiview_int8_convrot.safetensors",
+    "default"
+   ],
+   "title": "Pixal3D multiview (diffusion)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 12,
+   "type": "VAELoader",
+   "pos": [
+    540,
+    1240
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      39,
+      51,
+      59
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "models": [
+     {
+      "name": "trellis_2_shape_vae_bf16.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Pixal3D/resolve/main/vae/trellis_2_shape_vae_bf16.safetensors",
+      "directory": "vae"
+     }
+    ]
+   },
+   "widgets_values": [
+    "trellis_2_shape_vae_bf16.safetensors"
+   ],
+   "title": "VAE forme Trellis.2",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 13,
+   "type": "CLIPVisionLoader",
+   "pos": [
+    540,
+    1330
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP_VISION",
+     "type": "CLIP_VISION",
+     "links": [
+      22
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPVisionLoader",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "models": [
+     {
+      "name": "dino_v3_L_naf_fp32.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Pixal3D/resolve/main/clip_vision/dino_v3_L_naf_fp32.safetensors",
+      "directory": "clip_vision"
+     }
+    ]
+   },
+   "widgets_values": [
+    "dino_v3_L_naf_fp32.safetensors"
+   ],
+   "title": "DINOv3 (clip vision)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 14,
+   "type": "LoadBackgroundRemovalModel",
+   "pos": [
+    540,
+    1420
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "bg_model",
+     "type": "BACKGROUND_REMOVAL",
+     "links": [
+      1,
+      6,
+      11
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadBackgroundRemovalModel",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "models": [
+     {
+      "name": "birefnet.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/BiRefNet/resolve/main/background_removal/birefnet.safetensors",
+      "directory": "background_removal"
+     }
+    ]
+   },
+   "widgets_values": [
+    "birefnet.safetensors"
+   ],
+   "title": "BiRefNet (détourage)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 15,
+   "type": "LoadImage",
+   "pos": [
+    920,
+    60
+   ],
+   "size": [
+    300,
+    360
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      2,
+      3
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "example.png",
+    "image"
+   ],
+   "title": "📥 Vue de FACE (obligatoire)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 16,
+   "type": "RemoveBackground",
+   "pos": [
+    1260,
+    60
+   ],
+   "size": [
+    280,
+    66
+   ],
+   "flags": {},
+   "order": 16,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "bg_removal_model",
+     "type": "BACKGROUND_REMOVAL",
+     "link": 1
+    },
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mask",
+     "type": "MASK",
+     "links": [
+      4
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RemoveBackground",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "title": "✂️ Détourage front",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 17,
+   "type": "ImageCropToMask",
+   "pos": [
+    1260,
+    160
+   ],
+   "size": [
+    280,
+    200
+   ],
+   "flags": {},
+   "order": 17,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 3
+    },
+    {
+     "name": "masks",
+     "type": "MASK",
+     "link": 4
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      5,
+      23
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageCropToMask",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    1024,
+    1024,
+    1.1,
+    0,
+    "#000000"
+   ],
+   "title": "⬛ Recadrage 1024² front",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 18,
+   "type": "PreviewImage",
+   "pos": [
+    1580,
+    60
+   ],
+   "size": [
+    260,
+    300
+   ],
+   "flags": {},
+   "order": 18,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 5
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "title": "👁️ Contrôle front",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 19,
+   "type": "LoadImage",
+   "pos": [
+    920,
+    460
+   ],
+   "size": [
+    300,
+    360
+   ],
+   "flags": {},
+   "order": 19,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      7,
+      8
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "example.png",
+    "image"
+   ],
+   "title": "📥 Vue de CÔTÉ",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 20,
+   "type": "RemoveBackground",
+   "pos": [
+    1260,
+    460
+   ],
+   "size": [
+    280,
+    66
+   ],
+   "flags": {},
+   "order": 20,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "bg_removal_model",
+     "type": "BACKGROUND_REMOVAL",
+     "link": 6
+    },
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mask",
+     "type": "MASK",
+     "links": [
+      9
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RemoveBackground",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "title": "✂️ Détourage side",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 21,
+   "type": "ImageCropToMask",
+   "pos": [
+    1260,
+    560
+   ],
+   "size": [
+    280,
+    200
+   ],
+   "flags": {},
+   "order": 21,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 8
+    },
+    {
+     "name": "masks",
+     "type": "MASK",
+     "link": 9
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      10,
+      16,
+      18
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageCropToMask",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    1024,
+    1024,
+    1.1,
+    0,
+    "#000000"
+   ],
+   "title": "⬛ Recadrage 1024² side",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 22,
+   "type": "PreviewImage",
+   "pos": [
+    1580,
+    460
+   ],
+   "size": [
+    260,
+    300
+   ],
+   "flags": {},
+   "order": 22,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 10
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "title": "👁️ Contrôle side",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 23,
+   "type": "LoadImage",
+   "pos": [
+    920,
+    860
+   ],
+   "size": [
+    300,
+    360
+   ],
+   "flags": {},
+   "order": 23,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      12,
+      13
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "example.png",
+    "image"
+   ],
+   "title": "📥 Vue de DOS",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 24,
+   "type": "RemoveBackground",
+   "pos": [
+    1260,
+    860
+   ],
+   "size": [
+    280,
+    66
+   ],
+   "flags": {},
+   "order": 24,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "bg_removal_model",
+     "type": "BACKGROUND_REMOVAL",
+     "link": 11
+    },
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 12
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mask",
+     "type": "MASK",
+     "links": [
+      14
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RemoveBackground",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "title": "✂️ Détourage back",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 25,
+   "type": "ImageCropToMask",
+   "pos": [
+    1260,
+    960
+   ],
+   "size": [
+    280,
+    200
+   ],
+   "flags": {},
+   "order": 25,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 13
+    },
+    {
+     "name": "masks",
+     "type": "MASK",
+     "link": 14
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      15,
+      20
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageCropToMask",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    1024,
+    1024,
+    1.1,
+    0,
+    "#000000"
+   ],
+   "title": "⬛ Recadrage 1024² back",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 26,
+   "type": "PreviewImage",
+   "pos": [
+    1580,
+    860
+   ],
+   "size": [
+    260,
+    300
+   ],
+   "flags": {},
+   "order": 26,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 15
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "title": "👁️ Contrôle back",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 27,
+   "type": "LoadImage",
+   "pos": [
+    920,
+    1260
+   ],
+   "size": [
+    300,
+    360
+   ],
+   "flags": {},
+   "order": 27,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": []
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "example.png",
+    "image"
+   ],
+   "title": "📥 Vue 3/4 (référence, non injectée)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 28,
+   "type": "ComfySwitchNode",
+   "pos": [
+    1880,
+    560
+   ],
+   "size": [
+    260,
+    100
+   ],
+   "flags": {},
+   "order": 28,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "IMAGE",
+     "link": null,
+     "shape": 7
+    },
+    {
+     "name": "on_true",
+     "type": "IMAGE",
+     "link": 16,
+     "shape": 7
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 17,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "IMAGE",
+     "links": [
+      24
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    true
+   ],
+   "title": "🔀 → slot left (si ON)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 29,
+   "type": "ComfySwitchNode",
+   "pos": [
+    1880,
+    700
+   ],
+   "size": [
+    260,
+    100
+   ],
+   "flags": {},
+   "order": 29,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "IMAGE",
+     "link": 18,
+     "shape": 7
+    },
+    {
+     "name": "on_true",
+     "type": "IMAGE",
+     "link": null,
+     "shape": 7
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 19,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "IMAGE",
+     "links": [
+      26
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    true
+   ],
+   "title": "🔀 → slot right (si OFF)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 30,
+   "type": "ComfySwitchNode",
+   "pos": [
+    1880,
+    860
+   ],
+   "size": [
+    260,
+    100
+   ],
+   "flags": {},
+   "order": 30,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "IMAGE",
+     "link": null,
+     "shape": 7
+    },
+    {
+     "name": "on_true",
+     "type": "IMAGE",
+     "link": 20,
+     "shape": 7
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 21,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "IMAGE",
+     "links": [
+      25
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    true
+   ],
+   "title": "🔀 Dos ON / OFF",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 31,
+   "type": "Pixal3DMultiViewConditioning",
+   "pos": [
+    2220,
+    60
+   ],
+   "size": [
+    300,
+    190
+   ],
+   "flags": {},
+   "order": 31,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip_vision_model",
+     "type": "CLIP_VISION",
+     "link": 22
+    },
+    {
+     "name": "front",
+     "type": "IMAGE",
+     "link": 23,
+     "shape": 7
+    },
+    {
+     "name": "left",
+     "type": "IMAGE",
+     "link": 24,
+     "shape": 7
+    },
+    {
+     "name": "back",
+     "type": "IMAGE",
+     "link": 25,
+     "shape": 7
+    },
+    {
+     "name": "right",
+     "type": "IMAGE",
+     "link": 26,
+     "shape": 7
+    },
+    {
+     "name": "fov",
+     "type": "FLOAT",
+     "link": 27,
+     "widget": {
+      "name": "fov"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "links": [
+      34,
+      40
+     ]
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "links": [
+      35,
+      41
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Pixal3DMultiViewConditioning",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    20.0
+   ],
+   "title": "🧭 Conditionnement multivue",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 32,
+   "type": "CFGOverride",
+   "pos": [
+    2220,
+    290
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {},
+   "order": 32,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 28
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      29
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CFGOverride",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    1,
+    0.667,
+    1
+   ],
+   "title": "CFG override (structure)",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 33,
+   "type": "RescaleCFG",
+   "pos": [
+    2220,
+    430
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 33,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 29
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      30
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RescaleCFG",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    0.7
+   ],
+   "title": "Rescale CFG 0.7",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 34,
+   "type": "ModelSamplingSD3",
+   "pos": [
+    2220,
+    520
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 34,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 30
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      33
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ModelSamplingSD3",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    5.0
+   ],
+   "title": "Shift 5",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 35,
+   "type": "CFGOverride",
+   "pos": [
+    2220,
+    610
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {},
+   "order": 35,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 31
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      32
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CFGOverride",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    1,
+    0.769,
+    1
+   ],
+   "title": "CFG override (forme)",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 36,
+   "type": "RescaleCFG",
+   "pos": [
+    2220,
+    750
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 36,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 32
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      43,
+      53
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RescaleCFG",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    0.5
+   ],
+   "title": "Rescale CFG 0.5",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 37,
+   "type": "EmptyTrellis2LatentStructure",
+   "pos": [
+    2220,
+    840
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 37,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      36
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "EmptyTrellis2LatentStructure",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    1
+   ],
+   "title": "Latent structure",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 38,
+   "type": "KSampler",
+   "pos": [
+    2220,
+    940
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 38,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 33
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 34
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 35
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 36
+    },
+    {
+     "name": "seed",
+     "type": "INT",
+     "link": 37,
+     "widget": {
+      "name": "seed"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      38
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    42,
+    "fixed",
+    12,
+    7.5,
+    "euler",
+    "normal",
+    1
+   ],
+   "title": "① KSampler structure",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 39,
+   "type": "VaeDecodeStructureTrellis2",
+   "pos": [
+    2560,
+    60
+   ],
+   "size": [
+    300,
+    82
+   ],
+   "flags": {},
+   "order": 39,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 38
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 39
+    }
+   ],
+   "outputs": [
+    {
+     "name": "voxel",
+     "type": "VOXEL",
+     "links": [
+      42
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VaeDecodeStructureTrellis2",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "32"
+   ],
+   "title": "Décodage structure",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 40,
+   "type": "Trellis2ShapeStage",
+   "pos": [
+    2560,
+    180
+   ],
+   "size": [
+    300,
+    86
+   ],
+   "flags": {},
+   "order": 40,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 40
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 41
+    },
+    {
+     "name": "voxel",
+     "type": "VOXEL",
+     "link": 42
+    }
+   ],
+   "outputs": [
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "links": [
+      44,
+      48
+     ]
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "links": [
+      45,
+      49
+     ]
+    },
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      46
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Trellis2ShapeStage",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "title": "Étape forme",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 41,
+   "type": "KSampler",
+   "pos": [
+    2560,
+    300
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 41,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 43
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 44
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 45
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 46
+    },
+    {
+     "name": "seed",
+     "type": "INT",
+     "link": 47,
+     "widget": {
+      "name": "seed"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      50
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    42,
+    "fixed",
+    20,
+    7.5,
+    "euler",
+    "normal",
+    1
+   ],
+   "title": "② KSampler forme 512",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 42,
+   "type": "Trellis2UpsampleStage",
+   "pos": [
+    2560,
+    600
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 42,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 48
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 49
+    },
+    {
+     "name": "shape_latent",
+     "type": "LATENT",
+     "link": 50
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 51
+    },
+    {
+     "name": "target_resolution",
+     "type": "INT",
+     "link": 52,
+     "widget": {
+      "name": "target_resolution"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "links": [
+      54
+     ]
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "links": [
+      55
+     ]
+    },
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      56
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Trellis2UpsampleStage",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    1536
+   ],
+   "title": "Étape détail (upsample)",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 43,
+   "type": "KSampler",
+   "pos": [
+    2560,
+    770
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 43,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 53
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 54
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 55
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 56
+    },
+    {
+     "name": "seed",
+     "type": "INT",
+     "link": 57,
+     "widget": {
+      "name": "seed"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      58
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    42,
+    "fixed",
+    12,
+    7.5,
+    "euler",
+    "simple",
+    1
+   ],
+   "title": "③ KSampler détail",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 44,
+   "type": "VaeDecodeShapeTrellis",
+   "pos": [
+    2560,
+    1070
+   ],
+   "size": [
+    300,
+    66
+   ],
+   "flags": {},
+   "order": 44,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 58
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 59
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "links": [
+      60
+     ]
+    },
+    {
+     "name": "shape_subdivides",
+     "type": "SHAPE_SUBDIVIDES",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VaeDecodeShapeTrellis",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "title": "Décodage mesh",
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 45,
+   "type": "GetMeshInfo",
+   "pos": [
+    2940,
+    60
+   ],
+   "size": [
+    320,
+    150
+   ],
+   "flags": {},
+   "order": 45,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "link": 60
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "links": [
+      61
+     ]
+    },
+    {
+     "name": "info",
+     "type": "STRING",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "GetMeshInfo",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "title": "ℹ️ Stats brutes",
+   "color": "#332922",
+   "bgcolor": "#593930"
+  },
+  {
+   "id": 46,
+   "type": "WeldVertices",
+   "pos": [
+    2940,
+    240
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 46,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "link": 61
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "links": [
+      62
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "WeldVertices",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    1e-05,
+    0.0
+   ],
+   "title": "🧲 Souder les vertices",
+   "color": "#332922",
+   "bgcolor": "#593930"
+  },
+  {
+   "id": 47,
+   "type": "FillHoles",
+   "pos": [
+    2940,
+    360
+   ],
+   "size": [
+    320,
+    130
+   ],
+   "flags": {},
+   "order": 47,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "link": 62
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "links": [
+      64,
+      67
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "FillHoles",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    0.03,
+    1e-05,
+    16,
+    false
+   ],
+   "title": "🩹 Boucher les petits trous",
+   "color": "#332922",
+   "bgcolor": "#593930"
+  },
+  {
+   "id": 48,
+   "type": "ComfyMathExpression",
+   "pos": [
+    2940,
+    530
+   ],
+   "size": [
+    320,
+    150
+   ],
+   "flags": {},
+   "order": 48,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 63,
+     "label": "a"
+    },
+    {
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null,
+     "label": "b",
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      65,
+      68
+     ]
+    },
+    {
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "max(128, min(1024, round(sqrt(a * 2.7) / 32) * 32))"
+   ],
+   "title": "🧮 Résolution remesh auto",
+   "color": "#332922",
+   "bgcolor": "#593930"
+  },
+  {
+   "id": 49,
+   "type": "RemeshMesh",
+   "pos": [
+    3300,
+    60
+   ],
+   "size": [
+    320,
+    320
+   ],
+   "flags": {},
+   "order": 49,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "link": 64
+    },
+    {
+     "name": "resolution",
+     "type": "INT",
+     "link": 65,
+     "widget": {
+      "name": "resolution"
+     }
+    },
+    {
+     "name": "smooth_iters",
+     "type": "INT",
+     "link": 66,
+     "widget": {
+      "name": "smooth_iters"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "links": [
+      71
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RemeshMesh",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    256,
+    "sdf",
+    true,
+    true,
+    1.0,
+    0.0,
+    true,
+    2,
+    0.01,
+    20000000
+   ],
+   "title": "♻️ Remesh SDF — paroi simple, manifold",
+   "color": "#332922",
+   "bgcolor": "#593930"
+  },
+  {
+   "id": 50,
+   "type": "RemeshMesh",
+   "pos": [
+    3300,
+    410
+   ],
+   "size": [
+    320,
+    340
+   ],
+   "flags": {},
+   "order": 50,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "link": 67
+    },
+    {
+     "name": "resolution",
+     "type": "INT",
+     "link": 68,
+     "widget": {
+      "name": "resolution"
+     }
+    },
+    {
+     "name": "smooth_iters",
+     "type": "INT",
+     "link": 69,
+     "widget": {
+      "name": "smooth_iters"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "links": [
+      70
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RemeshMesh",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    256,
+    "udf",
+    false,
+    true,
+    true,
+    1.0,
+    0.0,
+    true,
+    2,
+    0.01,
+    20000000
+   ],
+   "title": "♻️ Remesh UDF — secours (si SDF troué)",
+   "color": "#332922",
+   "bgcolor": "#593930"
+  },
+  {
+   "id": 51,
+   "type": "ComfySwitchNode",
+   "pos": [
+    3300,
+    780
+   ],
+   "size": [
+    320,
+    100
+   ],
+   "flags": {},
+   "order": 51,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "MESH",
+     "link": 70,
+     "shape": 7
+    },
+    {
+     "name": "on_true",
+     "type": "MESH",
+     "link": 71,
+     "shape": 7
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 72,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "MESH",
+     "links": [
+      73
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    false
+   ],
+   "title": "🔀 SDF ON / UDF OFF",
+   "color": "#332922",
+   "bgcolor": "#593930"
+  },
+  {
+   "id": 52,
+   "type": "DecimateMesh",
+   "pos": [
+    3300,
+    910
+   ],
+   "size": [
+    320,
+    110
+   ],
+   "flags": {},
+   "order": 52,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "link": 73
+    },
+    {
+     "name": "target_face_count",
+     "type": "INT",
+     "link": 74,
+     "widget": {
+      "name": "target_face_count"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "links": [
+      75
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "DecimateMesh",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    20000,
+    "midpoint"
+   ],
+   "title": "📉 Décimation au poly count",
+   "color": "#332922",
+   "bgcolor": "#593930"
+  },
+  {
+   "id": 53,
+   "type": "MeshSmoothNormals",
+   "pos": [
+    3300,
+    1050
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 53,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "link": 75
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "links": [
+      76
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "MeshSmoothNormals",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    180.0
+   ],
+   "title": "✨ Normales lissées",
+   "color": "#332922",
+   "bgcolor": "#593930"
+  },
+  {
+   "id": 54,
+   "type": "GetMeshInfo",
+   "pos": [
+    3300,
+    1170
+   ],
+   "size": [
+    320,
+    150
+   ],
+   "flags": {},
+   "order": 54,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "link": 76
+    }
+   ],
+   "outputs": [
+    {
+     "name": "mesh",
+     "type": "MESH",
+     "links": [
+      79
+     ]
+    },
+    {
+     "name": "info",
+     "type": "STRING",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "GetMeshInfo",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "title": "ℹ️ Stats finales",
+   "color": "#332922",
+   "bgcolor": "#593930"
+  },
+  {
+   "id": 55,
+   "type": "StringFormat",
+   "pos": [
+    3700,
+    60
+   ],
+   "size": [
+    500,
+    160
+   ],
+   "flags": {},
+   "order": 55,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "values.a",
+     "type": "*",
+     "link": 77,
+     "label": "a",
+     "shape": 7
+    },
+    {
+     "name": "values.b",
+     "type": "*",
+     "link": 78,
+     "label": "b",
+     "shape": 7
+    },
+    {
+     "name": "values.c",
+     "type": "*",
+     "link": null,
+     "label": "c",
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      80
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringFormat",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "i23d_Pixal3D/model_H{a:g}cm_{b}tris"
+   ],
+   "title": "🏷️ Nom du fichier (hauteur + tris)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 56,
+   "type": "SaveGLB",
+   "pos": [
+    3700,
+    265
+   ],
+   "size": [
+    500,
+    700
+   ],
+   "flags": {},
+   "order": 56,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH,FILE_3D_GLB,FILE_3D_GLTF,FILE_3D_OBJ,FILE_3D_FBX,FILE_3D_STL,FILE_3D_USDZ,FILE_3D_PLY,FILE_3D_SPLAT,FILE_3D_SPZ,FILE_3D_KSPLAT,FILE_3D_SPLAT_ANY,FILE_3D_POINTCLOUD_ANY,FILE_3D",
+     "link": 79
+    },
+    {
+     "name": "filename_prefix",
+     "type": "STRING",
+     "link": 80,
+     "widget": {
+      "name": "filename_prefix"
+     }
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveGLB",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "i23d_Pixal3D/model"
+   ],
+   "title": "💾 GLB final + aperçu 3D",
+   "color": "#233",
+   "bgcolor": "#355"
+  }
+ ],
+ "links": [
+  [
+   1,
+   14,
+   0,
+   16,
+   0,
+   "BACKGROUND_REMOVAL"
+  ],
+  [
+   2,
+   15,
+   0,
+   16,
+   1,
+   "IMAGE"
+  ],
+  [
+   3,
+   15,
+   0,
+   17,
+   0,
+   "IMAGE"
+  ],
+  [
+   4,
+   16,
+   0,
+   17,
+   1,
+   "MASK"
+  ],
+  [
+   5,
+   17,
+   0,
+   18,
+   0,
+   "IMAGE"
+  ],
+  [
+   6,
+   14,
+   0,
+   20,
+   0,
+   "BACKGROUND_REMOVAL"
+  ],
+  [
+   7,
+   19,
+   0,
+   20,
+   1,
+   "IMAGE"
+  ],
+  [
+   8,
+   19,
+   0,
+   21,
+   0,
+   "IMAGE"
+  ],
+  [
+   9,
+   20,
+   0,
+   21,
+   1,
+   "MASK"
+  ],
+  [
+   10,
+   21,
+   0,
+   22,
+   0,
+   "IMAGE"
+  ],
+  [
+   11,
+   14,
+   0,
+   24,
+   0,
+   "BACKGROUND_REMOVAL"
+  ],
+  [
+   12,
+   23,
+   0,
+   24,
+   1,
+   "IMAGE"
+  ],
+  [
+   13,
+   23,
+   0,
+   25,
+   0,
+   "IMAGE"
+  ],
+  [
+   14,
+   24,
+   0,
+   25,
+   1,
+   "MASK"
+  ],
+  [
+   15,
+   25,
+   0,
+   26,
+   0,
+   "IMAGE"
+  ],
+  [
+   16,
+   21,
+   0,
+   28,
+   1,
+   "IMAGE"
+  ],
+  [
+   17,
+   4,
+   0,
+   28,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   18,
+   21,
+   0,
+   29,
+   0,
+   "IMAGE"
+  ],
+  [
+   19,
+   4,
+   0,
+   29,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   20,
+   25,
+   0,
+   30,
+   1,
+   "IMAGE"
+  ],
+  [
+   21,
+   5,
+   0,
+   30,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   22,
+   13,
+   0,
+   31,
+   0,
+   "CLIP_VISION"
+  ],
+  [
+   23,
+   17,
+   0,
+   31,
+   1,
+   "IMAGE"
+  ],
+  [
+   24,
+   28,
+   0,
+   31,
+   2,
+   "IMAGE"
+  ],
+  [
+   25,
+   30,
+   0,
+   31,
+   3,
+   "IMAGE"
+  ],
+  [
+   26,
+   29,
+   0,
+   31,
+   4,
+   "IMAGE"
+  ],
+  [
+   27,
+   7,
+   0,
+   31,
+   5,
+   "FLOAT"
+  ],
+  [
+   28,
+   11,
+   0,
+   32,
+   0,
+   "MODEL"
+  ],
+  [
+   29,
+   32,
+   0,
+   33,
+   0,
+   "MODEL"
+  ],
+  [
+   30,
+   33,
+   0,
+   34,
+   0,
+   "MODEL"
+  ],
+  [
+   31,
+   11,
+   0,
+   35,
+   0,
+   "MODEL"
+  ],
+  [
+   32,
+   35,
+   0,
+   36,
+   0,
+   "MODEL"
+  ],
+  [
+   33,
+   34,
+   0,
+   38,
+   0,
+   "MODEL"
+  ],
+  [
+   34,
+   31,
+   0,
+   38,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   35,
+   31,
+   1,
+   38,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   36,
+   37,
+   0,
+   38,
+   3,
+   "LATENT"
+  ],
+  [
+   37,
+   6,
+   0,
+   38,
+   4,
+   "INT"
+  ],
+  [
+   38,
+   38,
+   0,
+   39,
+   0,
+   "LATENT"
+  ],
+  [
+   39,
+   12,
+   0,
+   39,
+   1,
+   "VAE"
+  ],
+  [
+   40,
+   31,
+   0,
+   40,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   41,
+   31,
+   1,
+   40,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   42,
+   39,
+   0,
+   40,
+   2,
+   "VOXEL"
+  ],
+  [
+   43,
+   36,
+   0,
+   41,
+   0,
+   "MODEL"
+  ],
+  [
+   44,
+   40,
+   0,
+   41,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   45,
+   40,
+   1,
+   41,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   46,
+   40,
+   2,
+   41,
+   3,
+   "LATENT"
+  ],
+  [
+   47,
+   6,
+   0,
+   41,
+   4,
+   "INT"
+  ],
+  [
+   48,
+   40,
+   0,
+   42,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   49,
+   40,
+   1,
+   42,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   50,
+   41,
+   0,
+   42,
+   2,
+   "LATENT"
+  ],
+  [
+   51,
+   12,
+   0,
+   42,
+   3,
+   "VAE"
+  ],
+  [
+   52,
+   8,
+   0,
+   42,
+   4,
+   "INT"
+  ],
+  [
+   53,
+   36,
+   0,
+   43,
+   0,
+   "MODEL"
+  ],
+  [
+   54,
+   42,
+   0,
+   43,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   55,
+   42,
+   1,
+   43,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   56,
+   42,
+   2,
+   43,
+   3,
+   "LATENT"
+  ],
+  [
+   57,
+   6,
+   0,
+   43,
+   4,
+   "INT"
+  ],
+  [
+   58,
+   43,
+   0,
+   44,
+   0,
+   "LATENT"
+  ],
+  [
+   59,
+   12,
+   0,
+   44,
+   1,
+   "VAE"
+  ],
+  [
+   60,
+   44,
+   0,
+   45,
+   0,
+   "MESH"
+  ],
+  [
+   61,
+   45,
+   0,
+   46,
+   0,
+   "MESH"
+  ],
+  [
+   62,
+   46,
+   0,
+   47,
+   0,
+   "MESH"
+  ],
+  [
+   63,
+   2,
+   0,
+   48,
+   0,
+   "INT"
+  ],
+  [
+   64,
+   47,
+   0,
+   49,
+   0,
+   "MESH"
+  ],
+  [
+   65,
+   48,
+   1,
+   49,
+   1,
+   "INT"
+  ],
+  [
+   66,
+   9,
+   0,
+   49,
+   2,
+   "INT"
+  ],
+  [
+   67,
+   47,
+   0,
+   50,
+   0,
+   "MESH"
+  ],
+  [
+   68,
+   48,
+   1,
+   50,
+   1,
+   "INT"
+  ],
+  [
+   69,
+   9,
+   0,
+   50,
+   2,
+   "INT"
+  ],
+  [
+   70,
+   50,
+   0,
+   51,
+   0,
+   "MESH"
+  ],
+  [
+   71,
+   49,
+   0,
+   51,
+   1,
+   "MESH"
+  ],
+  [
+   72,
+   10,
+   0,
+   51,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   73,
+   51,
+   0,
+   52,
+   0,
+   "MESH"
+  ],
+  [
+   74,
+   2,
+   0,
+   52,
+   1,
+   "INT"
+  ],
+  [
+   75,
+   52,
+   0,
+   53,
+   0,
+   "MESH"
+  ],
+  [
+   76,
+   53,
+   0,
+   54,
+   0,
+   "MESH"
+  ],
+  [
+   77,
+   3,
+   0,
+   55,
+   0,
+   "FLOAT"
+  ],
+  [
+   78,
+   2,
+   0,
+   55,
+   1,
+   "INT"
+  ],
+  [
+   79,
+   54,
+   0,
+   56,
+   0,
+   "MESH"
+  ],
+  [
+   80,
+   55,
+   0,
+   56,
+   1,
+   "STRING"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "🎛️ CONTRÔLES",
+   "bounding": [
+    510,
+    0,
+    360,
+    1028
+   ],
+   "color": "#335",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "MODÈLES",
+   "bounding": [
+    510,
+    1040,
+    360,
+    468
+   ],
+   "color": "#533",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "📥 ENTRÉES + PRÉPARATION DES VUES",
+   "bounding": [
+    890,
+    0,
+    1280,
+    1650
+   ],
+   "color": "#353",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 4,
+   "title": "🧊 GÉNÉRATION PIXAL3D",
+   "bounding": [
+    2190,
+    0,
+    700,
+    1232
+   ],
+   "color": "#535",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 5,
+   "title": "♻️ MESH : MANIFOLD + POLY COUNT",
+   "bounding": [
+    2910,
+    0,
+    740,
+    1350
+   ],
+   "color": "#593930",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 6,
+   "title": "💾 SORTIE",
+   "bounding": [
+    3670,
+    0,
+    560,
+    995
+   ],
+   "color": "#355",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.5,
+   "offset": [
+    0,
+    120
+   ]
+  },
+  "workflow_name": "i23d_Pixal3D_v02"
+ },
+ "version": 0.4
+}

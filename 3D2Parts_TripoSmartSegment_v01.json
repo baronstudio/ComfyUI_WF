@@ -1,0 +1,849 @@
+{
+ "id": "3d2parts-tripo-v01",
+ "revision": 0,
+ "last_node_id": 14,
+ "last_link_id": 12,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "MarkdownNote",
+   "pos": [
+    40,
+    40
+   ],
+   "size": [
+    440,
+    1060
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "📖 Mode d'emploi",
+   "properties": {
+    "Node name for S&R": "MarkdownNote",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "# 3D2Parts — Découper un GLB en pièces (Tripo, Comfy Cloud)\n\n**Ce que fait le workflow**\n1. Charge un fichier 3D (**GLB** conseillé ; FBX, OBJ, STL acceptés, 150 Mo max).\n2. L'importe chez Tripo (*Tripo: Import Model*, gratuit).\n3. **Découpe sémantique** (*Tripo: Smart Segment*) : pièces séparées **et nommées**, guidée par ton prompt (nombre + liste des pièces).\n4. **🧩 Cap ON** : chaque pièce est **complétée / fermée** (*Tripo: Complete Mesh Parts*), les zones cachées sont reconstruites.\n   **Cap OFF** : découpe brute, ouvertures aux jonctions.\n5. Sortie : **un GLB, une pièce = un objet**, dossier `output/3D2Parts/` + aperçu 3D.\n\n**💳 Crédits (nœuds Partner)**\nImport gratuit · Smart Segment ≈ 0,55 $ · Cap ≈ 0,50 $ → **≈ 1,05 $ / run en Cap ON**, ≈ 0,55 $ en Cap OFF.\n\n**À régler**\n- 🎛️ *Nombre d'éléments visé* : **indicatif**, injecté dans le prompt. Tripo peut en rendre un peu plus ou moins.\n- ✏️ *Description des pièces* (anglais) : nature de l'objet + liste des pièces attendues. C'est le levier le plus fort.\n- *granularity* (sur le nœud ✂️) : `coarse` (gros blocs) · `medium` · `fine` (détail). Accorde-la au nombre d'éléments : ≤ 4 → coarse, 5–10 → medium, 10+ → fine.\n- **🧩 Cap ON / OFF** : sélectionne le nœud **🧩 CAP** et fais **Ctrl+B**. Violet (bypass) = OFF, aucun crédit consommé. Le switch de sortie bascule tout seul sur la découpe brute.\n\n**Lire le résultat**\n- 📋 *Noms des pièces* : liste renvoyée par Tripo (= noms des objets dans le GLB).\n- 📝 *Analyse Tripo* : ce que Tripo a compris de l'objet.\n- 🖼️ *Masque* : carte couleur des pièces.\n\n**Limites connues**\n- Nombre de pièces **non garanti** (pas de paramètre « N pièces exact » dans l'API).\n- Le Cap **reconstruit** la géométrie : les pièces complétées peuvent s'écarter légèrement de l'original et perdre leurs UV / textures d'origine.\n- GLTF (multi-fichiers) refusé : exporter en **.glb** unique.\n- Aperçu 3D vide = souci WebGL du navigateur, pas du WF : récupère le fichier dans **Assets → Generated**.\n"
+   ]
+  },
+  {
+   "id": 2,
+   "type": "PrimitiveInt",
+   "pos": [
+    540,
+    60
+   ],
+   "size": [
+    300,
+    82
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "title": "🎛️ Nombre d'éléments visé (indicatif)",
+   "properties": {
+    "Node name for S&R": "PrimitiveInt",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    6,
+    "fixed"
+   ],
+   "color": "#223"
+  },
+  {
+   "id": 3,
+   "type": "MarkdownNote",
+   "pos": [
+    540,
+    180
+   ],
+   "size": [
+    300,
+    140
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "🧩 Cap ON / OFF",
+   "properties": {
+    "Node name for S&R": "MarkdownNote",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "**Cap ON / OFF** = nœud **🧩 CAP** (groupe 🧩).\n\nSélectionne-le → **Ctrl+B**.\n- Normal = **ON** : pièces fermées (≈ +0,50 $)\n- Violet = **OFF** : découpe brute, gratuit"
+   ],
+   "color": "#223"
+  },
+  {
+   "id": 4,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    540,
+    420
+   ],
+   "size": [
+    300,
+    200
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      2
+     ]
+    }
+   ],
+   "title": "✏️ Description des pièces (EN)",
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "a fantasy game character: head, helmet, torso, arms, legs, sword, shield"
+   ],
+   "color": "#323"
+  },
+  {
+   "id": 5,
+   "type": "StringFormat",
+   "pos": [
+    540,
+    650
+   ],
+   "size": [
+    300,
+    190
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "values.a",
+     "type": "*",
+     "link": 1,
+     "shape": 7,
+     "localized_name": "a"
+    },
+    {
+     "name": "values.b",
+     "type": "*",
+     "link": 2,
+     "shape": 7,
+     "localized_name": "b"
+    },
+    {
+     "name": "values.c",
+     "type": "*",
+     "link": null,
+     "shape": 7,
+     "localized_name": "c"
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      3
+     ]
+    }
+   ],
+   "title": "🧮 Prompt Tripo (nombre + description)",
+   "properties": {
+    "Node name for S&R": "StringFormat",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "Split this 3D model into about {a} separate parts. Object and expected parts: {b}"
+   ],
+   "widgets_values_named": {
+    "f_string": "Split this 3D model into about {a} separate parts. Object and expected parts: {b}"
+   },
+   "color": "#323"
+  },
+  {
+   "id": 6,
+   "type": "Load3DAdvanced",
+   "pos": [
+    920,
+    60
+   ],
+   "size": [
+    340,
+    620
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "model_3d",
+     "type": "FILE_3D",
+     "links": [
+      4
+     ]
+    },
+    {
+     "name": "model_3d_info",
+     "type": "LOAD3D_MODEL_INFO",
+     "links": null
+    },
+    {
+     "name": "camera_info",
+     "type": "LOAD3D_CAMERA",
+     "links": null
+    },
+    {
+     "name": "width",
+     "type": "INT",
+     "links": null
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "links": null
+    }
+   ],
+   "title": "📥 Fichier 3D (GLB)",
+   "properties": {
+    "Node name for S&R": "Load3DAdvanced",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Camera Config": {
+     "cameraType": "perspective",
+     "fov": 35,
+     "state": {
+      "position": {
+       "x": 9,
+       "y": 10,
+       "z": 9
+      },
+      "target": {
+       "x": 0,
+       "y": 2.5,
+       "z": 0
+      },
+      "zoom": 1,
+      "cameraType": "perspective"
+     }
+    }
+   },
+   "widgets_values": [
+    "none",
+    "",
+    1024,
+    1024
+   ],
+   "color": "#232"
+  },
+  {
+   "id": 7,
+   "type": "TripoImportModelNode",
+   "pos": [
+    920,
+    710
+   ],
+   "size": [
+    340,
+    60
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model_3d",
+     "type": "FILE_3D_GLB,FILE_3D_FBX,FILE_3D_OBJ,FILE_3D_STL,FILE_3D",
+     "link": 4
+    }
+   ],
+   "outputs": [
+    {
+     "name": "model task_id",
+     "type": "MODEL_TASK_ID",
+     "links": [
+      5
+     ]
+    }
+   ],
+   "title": "☁️ Import Tripo (gratuit)",
+   "properties": {
+    "Node name for S&R": "TripoImportModelNode",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "color": "#232"
+  },
+  {
+   "id": 8,
+   "type": "TripoSmartSegmentNode",
+   "pos": [
+    1340,
+    60
+   ],
+   "size": [
+    340,
+    300
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "source.model_task_id",
+     "type": "MODEL_TASK_ID",
+     "link": 5
+    },
+    {
+     "name": "source.hint",
+     "type": "STRING",
+     "link": 3,
+     "widget": {
+      "name": "source.hint"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "segment task_id",
+     "type": "SEGMENT_TASK_ID",
+     "links": [
+      9
+     ]
+    },
+    {
+     "name": "model task_id",
+     "type": "MODEL_TASK_ID",
+     "links": null
+    },
+    {
+     "name": "GLB",
+     "type": "FILE_3D_GLB",
+     "links": [
+      10
+     ]
+    },
+    {
+     "name": "part_names",
+     "type": "STRING",
+     "links": [
+      6
+     ]
+    },
+    {
+     "name": "parts",
+     "type": "STRING",
+     "links": [
+      7
+     ]
+    },
+    {
+     "name": "mask",
+     "type": "IMAGE",
+     "links": [
+      8
+     ]
+    }
+   ],
+   "title": "✂️ Découpe sémantique (Tripo Smart Segment)",
+   "properties": {
+    "Node name for S&R": "TripoSmartSegmentNode",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "model",
+    "medium",
+    ""
+   ],
+   "widgets_values_named": {
+    "source": "model",
+    "source.granularity": "medium",
+    "source.hint": ""
+   },
+   "color": "#322"
+  },
+  {
+   "id": 9,
+   "type": "PreviewAny",
+   "pos": [
+    1340,
+    390
+   ],
+   "size": [
+    340,
+    170
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "source",
+     "type": "*",
+     "link": 6
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": null
+    }
+   ],
+   "title": "📋 Noms des pièces",
+   "properties": {
+    "Node name for S&R": "PreviewAny",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    null,
+    null,
+    null
+   ],
+   "color": "#322"
+  },
+  {
+   "id": 10,
+   "type": "PreviewAny",
+   "pos": [
+    1340,
+    590
+   ],
+   "size": [
+    340,
+    200
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "source",
+     "type": "*",
+     "link": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": null
+    }
+   ],
+   "title": "📝 Analyse Tripo",
+   "properties": {
+    "Node name for S&R": "PreviewAny",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    null,
+    null,
+    null
+   ],
+   "color": "#322"
+  },
+  {
+   "id": 11,
+   "type": "PreviewImage",
+   "pos": [
+    1340,
+    820
+   ],
+   "size": [
+    340,
+    300
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 8
+    }
+   ],
+   "outputs": [],
+   "title": "🖼️ Masque des pièces",
+   "properties": {
+    "Node name for S&R": "PreviewImage",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [],
+   "color": "#322"
+  },
+  {
+   "id": 12,
+   "type": "TripoMeshCompleteNode",
+   "pos": [
+    1760,
+    60
+   ],
+   "size": [
+    340,
+    110
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "segment_task_id",
+     "type": "SEGMENT_TASK_ID",
+     "link": 9
+    },
+    {
+     "name": "part_names",
+     "type": "STRING",
+     "link": null,
+     "widget": {
+      "name": "part_names"
+     },
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "model_file",
+     "type": "STRING",
+     "links": null
+    },
+    {
+     "name": "model task_id",
+     "type": "MODEL_TASK_ID",
+     "links": null
+    },
+    {
+     "name": "GLB",
+     "type": "FILE_3D_GLB",
+     "links": [
+      11
+     ]
+    }
+   ],
+   "title": "🧩 CAP — compléter les pièces (Ctrl+B = OFF)",
+   "properties": {
+    "Node name for S&R": "TripoMeshCompleteNode",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "color": "#332"
+  },
+  {
+   "id": 13,
+   "type": "ComfySoftSwitchNode",
+   "pos": [
+    2180,
+    60
+   ],
+   "size": [
+    320,
+    110
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "on_false",
+     "type": "FILE_3D_GLB",
+     "link": 10,
+     "shape": 7
+    },
+    {
+     "name": "on_true",
+     "type": "FILE_3D_GLB",
+     "link": 11,
+     "shape": 7
+    },
+    {
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": null,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "FILE_3D_GLB",
+     "links": [
+      12
+     ]
+    }
+   ],
+   "title": "🔀 Cap ON → complété · OFF → brut",
+   "properties": {
+    "Node name for S&R": "ComfySoftSwitchNode",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    true
+   ],
+   "color": "#233"
+  },
+  {
+   "id": 14,
+   "type": "SaveGLB",
+   "pos": [
+    2180,
+    200
+   ],
+   "size": [
+    500,
+    700
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH,FILE_3D_GLB,FILE_3D_GLTF,FILE_3D_OBJ,FILE_3D_FBX,FILE_3D_STL,FILE_3D_USDZ,FILE_3D_PLY,FILE_3D_SPLAT,FILE_3D_SPZ,FILE_3D_KSPLAT,FILE_3D_SPLAT_ANY,FILE_3D_POINT_CLOUD_ANY,FILE_3D",
+     "link": 12
+    }
+   ],
+   "outputs": [],
+   "title": "💾 GLB en pièces + aperçu 3D",
+   "properties": {
+    "Node name for S&R": "SaveGLB",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "3D2Parts/parts",
+    ""
+   ],
+   "color": "#233"
+  }
+ ],
+ "links": [
+  [
+   1,
+   2,
+   0,
+   5,
+   0,
+   "INT"
+  ],
+  [
+   2,
+   4,
+   0,
+   5,
+   1,
+   "STRING"
+  ],
+  [
+   3,
+   5,
+   0,
+   8,
+   1,
+   "STRING"
+  ],
+  [
+   4,
+   6,
+   0,
+   7,
+   0,
+   "FILE_3D"
+  ],
+  [
+   5,
+   7,
+   0,
+   8,
+   0,
+   "MODEL_TASK_ID"
+  ],
+  [
+   6,
+   8,
+   3,
+   9,
+   0,
+   "STRING"
+  ],
+  [
+   7,
+   8,
+   4,
+   10,
+   0,
+   "STRING"
+  ],
+  [
+   8,
+   8,
+   5,
+   11,
+   0,
+   "IMAGE"
+  ],
+  [
+   9,
+   8,
+   0,
+   12,
+   0,
+   "SEGMENT_TASK_ID"
+  ],
+  [
+   10,
+   8,
+   2,
+   13,
+   0,
+   "FILE_3D_GLB"
+  ],
+  [
+   11,
+   12,
+   2,
+   13,
+   1,
+   "FILE_3D_GLB"
+  ],
+  [
+   12,
+   13,
+   0,
+   14,
+   0,
+   "FILE_3D_GLB"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "🎛️ CONTRÔLES",
+   "bounding": [
+    510,
+    0,
+    360,
+    340
+   ],
+   "color": "#335",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "✏️ PROMPT",
+   "bounding": [
+    510,
+    360,
+    360,
+    500
+   ],
+   "color": "#435",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "📥 ENTRÉE + IMPORT",
+   "bounding": [
+    900,
+    0,
+    380,
+    800
+   ],
+   "color": "#353",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 4,
+   "title": "✂️ SEGMENTATION",
+   "bounding": [
+    1320,
+    0,
+    380,
+    1140
+   ],
+   "color": "#533",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 5,
+   "title": "🧩 CAP (complétion)",
+   "bounding": [
+    1740,
+    0,
+    380,
+    190
+   ],
+   "color": "#553",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 6,
+   "title": "💾 SORTIE",
+   "bounding": [
+    2160,
+    0,
+    540,
+    920
+   ],
+   "color": "#355",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.6,
+   "offset": [
+    0,
+    120
+   ]
+  },
+  "workflow_name": "3D2Parts_TripoSmartSegment_v01"
+ },
+ "version": 0.4
+}
