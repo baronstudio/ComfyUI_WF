@@ -1,13 +1,15 @@
 {
- "last_node_id": 140,
- "last_link_id": 115,
+ "id": "10e691ea-ee4c-4f46-bff7-5dd120c8b5dd",
+ "revision": 0,
+ "last_node_id": 141,
+ "last_link_id": 116,
  "nodes": [
   {
    "id": 2,
    "type": "CLIPLoader",
    "pos": [
-    -1500,
-    0
+    -1495.107272764127,
+    -12.23181808968289
    ],
    "size": [
     340,
@@ -16,9 +18,40 @@
    "flags": {},
    "order": 0,
    "mode": 0,
-   "inputs": [],
+   "showAdvanced": false,
+   "inputs": [
+    {
+     "localized_name": "clip_name",
+     "name": "clip_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "clip_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "type",
+     "name": "type",
+     "type": "COMBO",
+     "widget": {
+      "name": "type"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "device",
+     "name": "device",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "device"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "CLIP",
      "name": "CLIP",
      "type": "CLIP",
      "links": [
@@ -33,6 +66,7 @@
      ]
     }
    ],
+   "title": "Text encoder (commun)",
    "properties": {
     "Node name for S&R": "CLIPLoader"
    },
@@ -41,7 +75,11 @@
     "qwen_image",
     "default"
    ],
-   "title": "Text encoder (commun)"
+   "widgets_values_named": {
+    "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+    "type": "qwen_image",
+    "device": "default"
+   }
   },
   {
    "id": 3,
@@ -55,11 +93,22 @@
     58
    ],
    "flags": {},
-   "order": 0,
+   "order": 1,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "vae_name",
+     "name": "vae_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "vae_name"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "VAE",
      "name": "VAE",
      "type": "VAE",
      "links": [
@@ -83,31 +132,45 @@
      ]
     }
    ],
+   "title": "VAE (commun)",
    "properties": {
     "Node name for S&R": "VAELoader"
    },
    "widgets_values": [
     "qwen_image_vae.safetensors"
    ],
-   "title": "VAE (commun)"
+   "widgets_values_named": {
+    "vae_name": "qwen_image_vae.safetensors"
+   }
   },
   {
    "id": 7,
    "type": "PrimitiveStringMultiline",
    "pos": [
-    -1500,
-    240
+    -1543.9574846688934,
+    245.69819245707876
    ],
    "size": [
-    340,
+    428.29999389648435,
     260
    ],
    "flags": {},
-   "order": 0,
+   "order": 2,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -115,13 +178,16 @@
      ]
     }
    ],
+   "title": "✏️ DESCRIPTION (couleurs + matières + lumière + pièces)",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "a bright open-plan Scandinavian kitchen that opens onto a cozy living room, light oak wood cabinets and open wooden shelves, warm cream and off-white walls, light oak wooden floor, white countertops, a kitchen island with wooden bar stools, black pendant lamps, green potted plants, a beige fabric sofa, a low wooden coffee table and a woven rug in the living area, large windows with soft warm morning daylight, warm neutral color palette, cozy natural atmosphere"
    ],
-   "title": "✏️ DESCRIPTION (couleurs + matières + lumière + pièces)",
+   "widgets_values_named": {
+    "value": "A seamless 360-degree equirectangular panorama, 2:1 aspect ratio, full spherical view shot from the exact center of a small modern Scandinavian bathroom, camera at 1.6 m height, level horizon, straight verticals, left and right edges connecting seamlessly.\n\nSoft, diffuse natural daylight from a frosted window, gentle warm fill light, bright airy atmosphere, subtle soft shadows under floating furniture, realistic global illumination, high-end interior photography, photorealistic.\n\nWalls: lower half covered with glossy sage-green vertical rectangular tiles in stacked bond with thin white grout; upper half glossy white vertical tiles with irregular sage-green vertical stripe accents of varying lengths, forming a playful graphic rhythm that continues around the whole room. Floor: large light warm-grey matte tiles. Ceiling: flat matte white with small recessed spotlights.\n\n0° (front): floating blush-pink lacquered vanity with two wide drawers and slim horizontal handles, white stone countertop, sage-green round vessel basin, tall white matte mixer tap, round backlit LED mirror with a glowing ring, small amber glass soap dispenser, a cup with colorful toothbrushes. Above and beside it, a tall blush-pink wall cabinet with an open light-oak niche holding small toiletry bottles. Below, an open shelf with neatly folded striped towels in blue, yellow and pink.\n\n90° (right): walk-in shower with a single frameless clear glass panel, matte white rainfall shower head on a curved arm, white hand shower on a slide rail, small integrated shelf, low-profile white shower tray. A pale pink bathrobe hanging on a wall hook next to the shower, a sage-green woven bath mat on the floor, a small blush-pink pedal bin.\n\n180° (back): white interior door with a slim brushed-nickel handle, a white ladder towel radiator holding a folded pale-pink towel, a light-oak wall shelf with a small green plant and a woven basket.\n\n270° (left): wall-hung white toilet with a flush plate, a frosted window with a white frame letting soft daylight in, a small potted plant on the windowsill.\n\nClean, tidy, lived-in feel, pastel palette of blush pink, sage green, white and light oak, crisp details, accurate proportions, no people, no text."
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -137,11 +203,31 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 3,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "unet_name",
+     "name": "unet_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "unet_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "weight_dtype",
+     "name": "weight_dtype",
+     "type": "COMBO",
+     "widget": {
+      "name": "weight_dtype"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -149,6 +235,7 @@
      ]
     }
    ],
+   "title": "Qwen-Image-2512",
    "properties": {
     "Node name for S&R": "UNETLoader"
    },
@@ -156,7 +243,10 @@
     "qwen_image_2512_fp8_e4m3fn.safetensors",
     "default"
    ],
-   "title": "Qwen-Image-2512",
+   "widgets_values_named": {
+    "unet_name": "qwen_image_2512_fp8_e4m3fn.safetensors",
+    "weight_dtype": "default"
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -172,17 +262,37 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 15,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 1
+    },
+    {
+     "localized_name": "lora_name",
+     "name": "lora_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "lora_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "strength_model",
+     "name": "strength_model",
+     "type": "FLOAT",
+     "widget": {
+      "name": "strength_model"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -190,14 +300,18 @@
      ]
     }
    ],
+   "title": "LoRA Lightning 2512 4 steps",
    "properties": {
     "Node name for S&R": "LoraLoaderModelOnly"
    },
    "widgets_values": [
     "Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors",
-    1.0
+    1
    ],
-   "title": "LoRA Lightning 2512 4 steps"
+   "widgets_values_named": {
+    "lora_name": "Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors",
+    "strength_model": 1
+   }
   },
   {
    "id": 32,
@@ -211,17 +325,37 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 21,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 2
+    },
+    {
+     "localized_name": "lora_name",
+     "name": "lora_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "lora_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "strength_model",
+     "name": "strength_model",
+     "type": "FLOAT",
+     "widget": {
+      "name": "strength_model"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -229,14 +363,18 @@
      ]
     }
    ],
+   "title": "LoRA qwen-360-diffusion 2512 v2",
    "properties": {
     "Node name for S&R": "LoraLoaderModelOnly"
    },
    "widgets_values": [
     "qwen-360-diffusion-2512-int8-bf16-v2.safetensors",
-    1.0
+    1
    ],
-   "title": "LoRA qwen-360-diffusion 2512 v2",
+   "widgets_values_named": {
+    "lora_name": "qwen-360-diffusion-2512-int8-bf16-v2.safetensors",
+    "strength_model": 1
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -249,20 +387,41 @@
    ],
    "size": [
     360,
-    58
+    82
    ],
    "flags": {},
-   "order": 0,
+   "order": 28,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 3
+    },
+    {
+     "localized_name": "shift",
+     "name": "shift",
+     "type": "FLOAT",
+     "widget": {
+      "name": "shift"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampling",
+     "name": "sampling",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "sampling"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -274,8 +433,13 @@
     "Node name for S&R": "ModelSamplingAuraFlow"
    },
    "widgets_values": [
-    3.1
-   ]
+    3.1,
+    "flow"
+   ],
+   "widgets_values_named": {
+    "shift": 3.1,
+    "sampling": "flow"
+   }
   },
   {
    "id": 38,
@@ -286,14 +450,25 @@
    ],
    "size": [
     360,
-    80
+    88
    ],
    "flags": {},
-   "order": 0,
+   "order": 4,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -301,13 +476,16 @@
      ]
     }
    ],
+   "title": "Trigger 360 (ne pas modifier)",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "equirectangular 360 degree panorama with equirectangular projection, photograph of"
    ],
-   "title": "Trigger 360 (ne pas modifier)",
+   "widgets_values_named": {
+    "value": "equirectangular 360 degree panorama with equirectangular projection, photograph of"
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -323,11 +501,22 @@
     170
    ],
    "flags": {},
-   "order": 0,
+   "order": 5,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -335,13 +524,16 @@
      ]
     }
    ],
+   "title": "Consignes 360",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "Full spherical view captured from human eye level at the center of the room, straight horizon in the exact middle, seamless left and right edges, continuous ceiling at the top, continuous floor at the bottom, consistent architecture, materials and lighting all around. No people, no text."
    ],
-   "title": "Consignes 360"
+   "widgets_values_named": {
+    "value": "Full spherical view captured from human eye level at the center of the room, straight horizon in the exact middle, seamless left and right edges, continuous ceiling at the top, continuous floor at the bottom, consistent architecture, materials and lighting all around. No people, no text."
+   }
   },
   {
    "id": 40,
@@ -352,31 +544,43 @@
    ],
    "size": [
     300,
-    110
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 16,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 4,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 4
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 5,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 5
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -384,6 +588,7 @@
      ]
     }
    ],
+   "title": "Concat trigger + description",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -392,7 +597,11 @@
     "",
     "\n\n"
    ],
-   "title": "Concat trigger + description"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 41,
@@ -403,31 +612,43 @@
    ],
    "size": [
     300,
-    110
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 22,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 6,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 6
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 7,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 7
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -435,6 +656,7 @@
      ]
     }
    ],
+   "title": "Concat + consignes",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -443,7 +665,11 @@
     "",
     "\n\n"
    ],
-   "title": "Concat + consignes"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 42,
@@ -457,25 +683,28 @@
     110
    ],
    "flags": {},
-   "order": 0,
+   "order": 29,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
      "link": 8
     },
     {
+     "localized_name": "text",
      "name": "text",
      "type": "STRING",
-     "link": 9,
      "widget": {
       "name": "text"
-     }
+     },
+     "link": 9
     }
    ],
    "outputs": [
     {
+     "localized_name": "CONDITIONING",
      "name": "CONDITIONING",
      "type": "CONDITIONING",
      "links": [
@@ -483,13 +712,16 @@
      ]
     }
    ],
+   "title": "PROMPT 1 — Panorama 360",
    "properties": {
     "Node name for S&R": "CLIPTextEncode"
    },
    "widgets_values": [
     ""
    ],
-   "title": "PROMPT 1 — Panorama 360",
+   "widgets_values_named": {
+    "text": ""
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -502,20 +734,31 @@
    ],
    "size": [
     400,
-    80
+    88
    ],
    "flags": {},
-   "order": 0,
+   "order": 13,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
      "link": 10
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "widget": {
+      "name": "text"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "CONDITIONING",
      "name": "CONDITIONING",
      "type": "CONDITIONING",
      "links": [
@@ -523,13 +766,16 @@
      ]
     }
    ],
+   "title": "Négatif (vide)",
    "properties": {
     "Node name for S&R": "CLIPTextEncode"
    },
    "widgets_values": [
-    ""
+    "melted furniture, distorted shapes, cramped space, narrow walkway, warped geometry"
    ],
-   "title": "Négatif (vide)",
+   "widgets_values_named": {
+    "text": "melted furniture, distorted shapes, cramped space, narrow walkway, warped geometry"
+   },
    "color": "#322",
    "bgcolor": "#533"
   },
@@ -545,11 +791,40 @@
     106
    ],
    "flags": {},
-   "order": 0,
+   "order": 6,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "batch_size",
+     "name": "batch_size",
+     "type": "INT",
+     "widget": {
+      "name": "batch_size"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -557,6 +832,7 @@
      ]
     }
    ],
+   "title": "Équirectangulaire 2048×1024",
    "properties": {
     "Node name for S&R": "EmptySD3LatentImage"
    },
@@ -565,7 +841,11 @@
     1024,
     1
    ],
-   "title": "Équirectangulaire 2048×1024"
+   "widgets_values_named": {
+    "width": 2048,
+    "height": 1024,
+    "batch_size": 1
+   }
   },
   {
    "id": 45,
@@ -575,36 +855,95 @@
     390
    ],
    "size": [
-    300,
+    374.73334350585935,
     262
    ],
    "flags": {},
-   "order": 0,
+   "order": 32,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 11
     },
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 12
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 13
     },
     {
+     "localized_name": "latent_image",
      "name": "latent_image",
      "type": "LATENT",
      "link": 14
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -612,19 +951,28 @@
      ]
     }
    ],
+   "title": "KSampler — Étape 1 (360° brut) — varie la seed ici",
    "properties": {
     "Node name for S&R": "KSampler"
    },
    "widgets_values": [
-    1001,
+    1003,
     "fixed",
-    4,
-    1.0,
+    5,
+    2.5,
     "euler",
     "simple",
-    1.0
+    1
    ],
-   "title": "KSampler — Étape 1 (360° brut) — varie la seed ici"
+   "widgets_values_named": {
+    "seed": 1003,
+    "control_after_generate": "fixed",
+    "steps": 5,
+    "cfg": 2.5,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 1
+   }
   },
   {
    "id": 46,
@@ -638,15 +986,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 33,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "samples",
      "name": "samples",
      "type": "LATENT",
      "link": 15
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 16
@@ -654,6 +1004,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -665,8 +1016,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEDecode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 47,
@@ -680,23 +1030,43 @@
     320
    ],
    "flags": {},
-   "order": 0,
+   "order": 34,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 17
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Save — 360° brut (structure de la pièce)",
    "properties": {
     "Node name for S&R": "SaveImage"
    },
    "widgets_values": [
     "environnement_v2/etape1_pano360_brut"
    ],
-   "title": "Save — 360° brut (structure de la pièce)"
+   "widgets_values_named": {
+    "filename_prefix": "environnement_v2/etape1_pano360_brut"
+   }
   },
   {
    "id": 60,
@@ -710,11 +1080,22 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 7,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "INT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
@@ -727,13 +1108,18 @@
      ]
     }
    ],
+   "title": "📐 Taille des références (px, carré)",
    "properties": {
     "Node name for S&R": "PrimitiveInt"
    },
    "widgets_values": [
-    1024
+    1024,
+    "fixed"
    ],
-   "title": "📐 Taille des références (px, carré)",
+   "widgets_values_named": {
+    "value": 1024,
+    "fixed": "fixed"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -749,11 +1135,31 @@
     340
    ],
    "flags": {},
-   "order": 0,
+   "order": 8,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -761,19 +1167,24 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "Moodboard 1 — architecture / formes",
    "properties": {
     "Node name for S&R": "LoadImage"
    },
    "widgets_values": [
-    "env_moodboard_1.png",
+    "0f1ec4b35992c1cfeaf0514a3a33c1e92c2bdfd9544c133d068cc18faa8d2732.webp",
     "image"
    ],
-   "title": "Moodboard 1 — architecture / formes",
+   "widgets_values_named": {
+    "image": "0f1ec4b35992c1cfeaf0514a3a33c1e92c2bdfd9544c133d068cc18faa8d2732.webp",
+    "upload": "image"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -785,37 +1196,59 @@
     1150
    ],
    "size": [
-    320,
+    323.1999877929687,
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 17,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 18
     },
     {
-     "name": "width",
-     "type": "INT",
-     "link": 19,
+     "localized_name": "upscale_method",
+     "name": "upscale_method",
+     "type": "COMBO",
      "widget": {
-      "name": "width"
-     }
+      "name": "upscale_method"
+     },
+     "link": null
     },
     {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": 19
+    },
+    {
+     "localized_name": "height",
      "name": "height",
      "type": "INT",
-     "link": 20,
      "widget": {
       "name": "height"
-     }
+     },
+     "link": 20
+    },
+    {
+     "localized_name": "crop",
+     "name": "crop",
+     "type": "COMBO",
+     "widget": {
+      "name": "crop"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -828,6 +1261,7 @@
      ]
     }
    ],
+   "title": "Prépa moodboard 1 — resize + crop centre",
    "properties": {
     "Node name for S&R": "ImageScale"
    },
@@ -837,7 +1271,12 @@
     1024,
     "center"
    ],
-   "title": "Prépa moodboard 1 — resize + crop centre",
+   "widgets_values_named": {
+    "upscale_method": "lanczos",
+    "width": 1024,
+    "height": 1024,
+    "crop": "center"
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -853,21 +1292,28 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 23,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 21
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Contrôle cadrage 1",
    "properties": {
     "Node name for S&R": "PreviewImage"
-   },
-   "widgets_values": [],
-   "title": "Contrôle cadrage 1"
+   }
   },
   {
    "id": 11,
@@ -881,11 +1327,31 @@
     340
    ],
    "flags": {},
-   "order": 0,
+   "order": 9,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -893,19 +1359,24 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "Moodboard 2 — matières / mobilier",
    "properties": {
     "Node name for S&R": "LoadImage"
    },
    "widgets_values": [
-    "env_moodboard_2.png",
+    "dcf9e661322da2854e2e38efd887b1738d0c9d2ded4096532584eee3e784cedd.jpeg",
     "image"
    ],
-   "title": "Moodboard 2 — matières / mobilier",
+   "widgets_values_named": {
+    "image": "dcf9e661322da2854e2e38efd887b1738d0c9d2ded4096532584eee3e784cedd.jpeg",
+    "upload": "image"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -917,37 +1388,59 @@
     1530
    ],
    "size": [
-    320,
+    326.0333312988281,
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 18,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 22
     },
     {
-     "name": "width",
-     "type": "INT",
-     "link": 23,
+     "localized_name": "upscale_method",
+     "name": "upscale_method",
+     "type": "COMBO",
      "widget": {
-      "name": "width"
-     }
+      "name": "upscale_method"
+     },
+     "link": null
     },
     {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": 23
+    },
+    {
+     "localized_name": "height",
      "name": "height",
      "type": "INT",
-     "link": 24,
      "widget": {
       "name": "height"
-     }
+     },
+     "link": 24
+    },
+    {
+     "localized_name": "crop",
+     "name": "crop",
+     "type": "COMBO",
+     "widget": {
+      "name": "crop"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -956,6 +1449,7 @@
      ]
     }
    ],
+   "title": "Prépa moodboard 2 — resize + crop centre",
    "properties": {
     "Node name for S&R": "ImageScale"
    },
@@ -965,7 +1459,12 @@
     1024,
     "center"
    ],
-   "title": "Prépa moodboard 2 — resize + crop centre",
+   "widgets_values_named": {
+    "upscale_method": "lanczos",
+    "width": 1024,
+    "height": 1024,
+    "crop": "center"
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -981,21 +1480,28 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 24,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 25
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Contrôle cadrage 2",
    "properties": {
     "Node name for S&R": "PreviewImage"
-   },
-   "widgets_values": [],
-   "title": "Contrôle cadrage 2"
+   }
   },
   {
    "id": 12,
@@ -1009,11 +1515,31 @@
     340
    ],
    "flags": {},
-   "order": 0,
+   "order": 10,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -1021,19 +1547,24 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "Moodboard 3 — palette / lumière",
    "properties": {
     "Node name for S&R": "LoadImage"
    },
    "widgets_values": [
-    "env_moodboard_3.png",
+    "1dfd02d4c2555b0fb3bf62fb9d2e09dade1619393bbcee11e02f48d830abbc13.jpeg",
     "image"
    ],
-   "title": "Moodboard 3 — palette / lumière",
+   "widgets_values_named": {
+    "image": "1dfd02d4c2555b0fb3bf62fb9d2e09dade1619393bbcee11e02f48d830abbc13.jpeg",
+    "upload": "image"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -1045,37 +1576,59 @@
     1910
    ],
    "size": [
-    320,
+    326.15,
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 19,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 26
     },
     {
-     "name": "width",
-     "type": "INT",
-     "link": 27,
+     "localized_name": "upscale_method",
+     "name": "upscale_method",
+     "type": "COMBO",
      "widget": {
-      "name": "width"
-     }
+      "name": "upscale_method"
+     },
+     "link": null
     },
     {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": 27
+    },
+    {
+     "localized_name": "height",
      "name": "height",
      "type": "INT",
-     "link": 28,
      "widget": {
       "name": "height"
-     }
+     },
+     "link": 28
+    },
+    {
+     "localized_name": "crop",
+     "name": "crop",
+     "type": "COMBO",
+     "widget": {
+      "name": "crop"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -1084,6 +1637,7 @@
      ]
     }
    ],
+   "title": "Prépa moodboard 3 — resize + crop centre",
    "properties": {
     "Node name for S&R": "ImageScale"
    },
@@ -1093,7 +1647,12 @@
     1024,
     "center"
    ],
-   "title": "Prépa moodboard 3 — resize + crop centre",
+   "widgets_values_named": {
+    "upscale_method": "lanczos",
+    "width": 1024,
+    "height": 1024,
+    "crop": "center"
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -1109,21 +1668,28 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 25,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 29
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Contrôle cadrage 3",
    "properties": {
     "Node name for S&R": "PreviewImage"
-   },
-   "widgets_values": [],
-   "title": "Contrôle cadrage 3"
+   }
   },
   {
    "id": 67,
@@ -1133,26 +1699,66 @@
     1530
    ],
    "size": [
-    320,
+    321.5000061035156,
     150
    ],
    "flags": {},
-   "order": 0,
+   "order": 26,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image1",
      "name": "image1",
      "type": "IMAGE",
      "link": 30
     },
     {
+     "localized_name": "image2",
      "name": "image2",
+     "shape": 7,
      "type": "IMAGE",
      "link": 31
+    },
+    {
+     "localized_name": "direction",
+     "name": "direction",
+     "type": "COMBO",
+     "widget": {
+      "name": "direction"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "match_image_size",
+     "name": "match_image_size",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "match_image_size"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "spacing_width",
+     "name": "spacing_width",
+     "type": "INT",
+     "widget": {
+      "name": "spacing_width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "spacing_color",
+     "name": "spacing_color",
+     "type": "COMBO",
+     "widget": {
+      "name": "spacing_color"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -1165,6 +1771,7 @@
      ]
     }
    ],
+   "title": "Moodboards 2 | 3 côte à côte (= Picture 3)",
    "properties": {
     "Node name for S&R": "ImageStitch"
    },
@@ -1174,7 +1781,12 @@
     0,
     "white"
    ],
-   "title": "Moodboards 2 | 3 côte à côte (= Picture 3)",
+   "widgets_values_named": {
+    "direction": "right",
+    "match_image_size": true,
+    "spacing_width": 0,
+    "spacing_color": "white"
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -1190,21 +1802,28 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 30,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 32
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Contrôle Picture 3",
    "properties": {
     "Node name for S&R": "PreviewImage"
-   },
-   "widgets_values": [],
-   "title": "Contrôle Picture 3"
+   }
   },
   {
    "id": 1,
@@ -1218,11 +1837,31 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 11,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "unet_name",
+     "name": "unet_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "unet_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "weight_dtype",
+     "name": "weight_dtype",
+     "type": "COMBO",
+     "widget": {
+      "name": "weight_dtype"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -1230,6 +1869,7 @@
      ]
     }
    ],
+   "title": "Qwen-Image-EDIT-2511 (étapes 2 et 3)",
    "properties": {
     "Node name for S&R": "UNETLoader"
    },
@@ -1237,7 +1877,10 @@
     "qwen_image_edit_2511_fp8mixed.safetensors",
     "default"
    ],
-   "title": "Qwen-Image-EDIT-2511 (étapes 2 et 3)"
+   "widgets_values_named": {
+    "unet_name": "qwen_image_edit_2511_fp8mixed.safetensors",
+    "weight_dtype": "default"
+   }
   },
   {
    "id": 4,
@@ -1251,17 +1894,37 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 20,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 33
+    },
+    {
+     "localized_name": "lora_name",
+     "name": "lora_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "lora_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "strength_model",
+     "name": "strength_model",
+     "type": "FLOAT",
+     "widget": {
+      "name": "strength_model"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -1269,14 +1932,18 @@
      ]
     }
    ],
+   "title": "LoRA Lightning Edit 4 steps",
    "properties": {
     "Node name for S&R": "LoraLoaderModelOnly"
    },
    "widgets_values": [
     "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
-    1.0
+    1
    ],
-   "title": "LoRA Lightning Edit 4 steps"
+   "widgets_values_named": {
+    "lora_name": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+    "strength_model": 1
+   }
   },
   {
    "id": 5,
@@ -1287,20 +1954,41 @@
    ],
    "size": [
     340,
-    58
+    82
    ],
    "flags": {},
-   "order": 0,
+   "order": 27,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 34
+    },
+    {
+     "localized_name": "shift",
+     "name": "shift",
+     "type": "FLOAT",
+     "widget": {
+      "name": "shift"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampling",
+     "name": "sampling",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "sampling"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -1312,8 +2000,13 @@
     "Node name for S&R": "ModelSamplingAuraFlow"
    },
    "widgets_values": [
-    3.1
-   ]
+    3.1,
+    "flow"
+   ],
+   "widgets_values_named": {
+    "shift": 3.1,
+    "sampling": "flow"
+   }
   },
   {
    "id": 6,
@@ -1324,21 +2017,42 @@
    ],
    "size": [
     340,
-    58
+    82
    ],
    "flags": {},
-   "order": 0,
+   "order": 31,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 35
+    },
+    {
+     "localized_name": "strength",
+     "name": "strength",
+     "type": "FLOAT",
+     "widget": {
+      "name": "strength"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "pre_cfg",
+     "name": "pre_cfg",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "pre_cfg"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
-     "name": "MODEL",
+     "localized_name": "patched_model",
+     "name": "patched_model",
      "type": "MODEL",
      "links": [
       45,
@@ -1349,13 +2063,18 @@
      ]
     }
    ],
+   "title": "MODÈLE EDIT",
    "properties": {
     "Node name for S&R": "CFGNorm"
    },
    "widgets_values": [
-    1.0
+    1,
+    false
    ],
-   "title": "MODÈLE EDIT"
+   "widgets_values_named": {
+    "strength": 1,
+    "pre_cfg": false
+   }
   },
   {
    "id": 21,
@@ -1369,37 +2088,56 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 14,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
      "link": 36
     },
     {
+     "localized_name": "vae",
      "name": "vae",
+     "shape": 7,
      "type": "VAE",
      "link": 37
     },
     {
+     "localized_name": "image1",
      "name": "image1",
+     "shape": 7,
      "type": "IMAGE",
      "link": null
     },
     {
+     "localized_name": "image2",
      "name": "image2",
+     "shape": 7,
      "type": "IMAGE",
      "link": null
     },
     {
+     "localized_name": "image3",
      "name": "image3",
+     "shape": 7,
      "type": "IMAGE",
+     "link": null
+    },
+    {
+     "localized_name": "prompt",
+     "name": "prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "prompt"
+     },
      "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "CONDITIONING",
      "name": "CONDITIONING",
      "type": "CONDITIONING",
      "links": [
@@ -1411,13 +2149,16 @@
      ]
     }
    ],
+   "title": "Négatif Edit (vide)",
    "properties": {
     "Node name for S&R": "TextEncodeQwenImageEditPlus"
    },
    "widgets_values": [
     ""
    ],
-   "title": "Négatif Edit (vide)",
+   "widgets_values_named": {
+    "prompt": ""
+   },
    "color": "#322",
    "bgcolor": "#533"
   },
@@ -1433,37 +2174,56 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 35,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
      "link": 38
     },
     {
+     "localized_name": "vae",
      "name": "vae",
+     "shape": 7,
      "type": "VAE",
      "link": 39
     },
     {
+     "localized_name": "image1",
      "name": "image1",
+     "shape": 7,
      "type": "IMAGE",
      "link": 40
     },
     {
+     "localized_name": "image2",
      "name": "image2",
+     "shape": 7,
      "type": "IMAGE",
      "link": 41
     },
     {
+     "localized_name": "image3",
      "name": "image3",
+     "shape": 7,
      "type": "IMAGE",
      "link": 42
+    },
+    {
+     "localized_name": "prompt",
+     "name": "prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "prompt"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "CONDITIONING",
      "name": "CONDITIONING",
      "type": "CONDITIONING",
      "links": [
@@ -1471,13 +2231,16 @@
      ]
     }
    ],
+   "title": "PROMPT 2 — Restyle du 360° (moodboards)",
    "properties": {
     "Node name for S&R": "TextEncodeQwenImageEditPlus"
    },
    "widgets_values": [
     "Restyle Picture 1 with the design language of the moodboard: architecture and shapes from Picture 2, materials, furniture and textures from the left half of Picture 3, color palette and lighting mood from the right half of Picture 3.\nKeep exactly the same layout, room geometry, camera, projection and horizon of Picture 1: it is a 360 degree equirectangular panorama, keep its curved lines and keep the left and right edges continuous. Only change materials, colors, furniture style and lighting."
    ],
-   "title": "PROMPT 2 — Restyle du 360° (moodboards)",
+   "widgets_values_named": {
+    "prompt": "Restyle Picture 1 with the design language of the moodboard: architecture and shapes from Picture 2, materials, furniture and textures from the left half of Picture 3, color palette and lighting mood from the right half of Picture 3.\nKeep exactly the same layout, room geometry, camera, projection and horizon of Picture 1: it is a 360 degree equirectangular panorama, keep its curved lines and keep the left and right edges continuous. Only change materials, colors, furniture style and lighting."
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -1493,15 +2256,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 36,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "pixels",
      "name": "pixels",
      "type": "IMAGE",
      "link": 43
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 44
@@ -1509,6 +2274,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1518,8 +2284,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEEncode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 52,
@@ -1529,36 +2294,95 @@
     0
    ],
    "size": [
-    300,
+    361.65,
     262
    ],
    "flags": {},
-   "order": 0,
+   "order": 37,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 45
     },
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 46
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 47
     },
     {
+     "localized_name": "latent_image",
      "name": "latent_image",
      "type": "LATENT",
      "link": 48
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1566,6 +2390,7 @@
      ]
     }
    ],
+   "title": "KSampler — Étape 2 restyle 360° (denoise 0.40)",
    "properties": {
     "Node name for S&R": "KSampler"
    },
@@ -1573,12 +2398,20 @@
     2001,
     "fixed",
     4,
-    1.0,
+    1,
     "euler",
     "simple",
     0.4
    ],
-   "title": "KSampler — Étape 2 restyle 360° (denoise 0.40)"
+   "widgets_values_named": {
+    "seed": 2001,
+    "control_after_generate": "fixed",
+    "steps": 4,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 0.4
+   }
   },
   {
    "id": 53,
@@ -1592,15 +2425,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 38,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "samples",
      "name": "samples",
      "type": "LATENT",
      "link": 49
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 50
@@ -1608,6 +2443,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -1621,8 +2457,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEDecode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 54,
@@ -1636,23 +2471,43 @@
     320
    ],
    "flags": {},
-   "order": 0,
+   "order": 39,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 51
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Save — 360° final (LDR) → World Blender",
    "properties": {
     "Node name for S&R": "SaveImage"
    },
    "widgets_values": [
     "environnement_v2/etape2_pano360_final"
    ],
-   "title": "Save — 360° final (LDR) → World Blender"
+   "widgets_values_named": {
+    "filename_prefix": "environnement_v2/etape2_pano360_final"
+   }
   },
   {
    "id": 100,
@@ -1666,17 +2521,55 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 40,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 52
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "x",
+     "name": "x",
+     "type": "INT",
+     "widget": {
+      "name": "x"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "y",
+     "name": "y",
+     "type": "INT",
+     "widget": {
+      "name": "y"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -1684,6 +2577,7 @@
      ]
     }
    ],
+   "title": "Crop Vue A — HÉROS (face) — x=512",
    "properties": {
     "Node name for S&R": "ImageCrop"
    },
@@ -1693,7 +2587,12 @@
     512,
     368
    ],
-   "title": "Crop Vue A — HÉROS (face) — x=512",
+   "widgets_values_named": {
+    "width": 512,
+    "height": 288,
+    "x": 512,
+    "y": 368
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -1709,17 +2608,55 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 44,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 53
+    },
+    {
+     "localized_name": "upscale_method",
+     "name": "upscale_method",
+     "type": "COMBO",
+     "widget": {
+      "name": "upscale_method"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "crop",
+     "name": "crop",
+     "type": "COMBO",
+     "widget": {
+      "name": "crop"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -1728,6 +2665,7 @@
      ]
     }
    ],
+   "title": "→ 1664×928",
    "properties": {
     "Node name for S&R": "ImageScale"
    },
@@ -1737,7 +2675,12 @@
     928,
     "disabled"
    ],
-   "title": "→ 1664×928"
+   "widgets_values_named": {
+    "upscale_method": "lanczos",
+    "width": 1664,
+    "height": 928,
+    "crop": "disabled"
+   }
   },
   {
    "id": 102,
@@ -1751,15 +2694,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 48,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "pixels",
      "name": "pixels",
      "type": "IMAGE",
      "link": 54
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 55
@@ -1767,6 +2712,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1776,8 +2722,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEEncode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 103,
@@ -1791,37 +2736,56 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 49,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
      "link": 56
     },
     {
+     "localized_name": "vae",
      "name": "vae",
+     "shape": 7,
      "type": "VAE",
      "link": 57
     },
     {
+     "localized_name": "image1",
      "name": "image1",
+     "shape": 7,
      "type": "IMAGE",
      "link": 58
     },
     {
+     "localized_name": "image2",
      "name": "image2",
+     "shape": 7,
      "type": "IMAGE",
      "link": 59
     },
     {
+     "localized_name": "image3",
      "name": "image3",
+     "shape": 7,
      "type": "IMAGE",
      "link": 60
+    },
+    {
+     "localized_name": "prompt",
+     "name": "prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "prompt"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "CONDITIONING",
      "name": "CONDITIONING",
      "type": "CONDITIONING",
      "links": [
@@ -1829,13 +2793,16 @@
      ]
     }
    ],
+   "title": "PROMPT 3 — Vue A — HÉROS (face)",
    "properties": {
     "Node name for S&R": "TextEncodeQwenImageEditPlus"
    },
    "widgets_values": [
     "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
    ],
-   "title": "PROMPT 3 — Vue A — HÉROS (face)",
+   "widgets_values_named": {
+    "prompt": "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -1847,36 +2814,95 @@
     720
    ],
    "size": [
-    300,
+    376.76666870117185,
     262
    ],
    "flags": {},
-   "order": 0,
+   "order": 56,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 61
     },
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 62
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 63
     },
     {
+     "localized_name": "latent_image",
      "name": "latent_image",
      "type": "LATENT",
      "link": 64
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1884,6 +2910,7 @@
      ]
     }
    ],
+   "title": "KSampler — Vue A — HÉROS (face) (denoise 0.55)",
    "properties": {
     "Node name for S&R": "KSampler"
    },
@@ -1891,12 +2918,20 @@
     3001,
     "fixed",
     4,
-    1.0,
+    1,
     "euler",
     "simple",
     0.55
    ],
-   "title": "KSampler — Vue A — HÉROS (face) (denoise 0.55)"
+   "widgets_values_named": {
+    "seed": 3001,
+    "control_after_generate": "fixed",
+    "steps": 4,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 0.55
+   }
   },
   {
    "id": 105,
@@ -1910,15 +2945,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 60,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "samples",
      "name": "samples",
      "type": "LATENT",
      "link": 65
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 66
@@ -1926,6 +2963,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -1935,8 +2973,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEDecode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 106,
@@ -1950,23 +2987,43 @@
     280
    ],
    "flags": {},
-   "order": 0,
+   "order": 64,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 67
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Save — Vue A — HÉROS (face)",
    "properties": {
     "Node name for S&R": "SaveImage"
    },
    "widgets_values": [
     "environnement_v2/etape3_vue_A_hero"
    ],
-   "title": "Save — Vue A — HÉROS (face)"
+   "widgets_values_named": {
+    "filename_prefix": "environnement_v2/etape3_vue_A_hero"
+   }
   },
   {
    "id": 110,
@@ -1980,17 +3037,55 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 41,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 68
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "x",
+     "name": "x",
+     "type": "INT",
+     "widget": {
+      "name": "x"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "y",
+     "name": "y",
+     "type": "INT",
+     "widget": {
+      "name": "y"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -1998,6 +3093,7 @@
      ]
     }
    ],
+   "title": "Crop Vue B (droite) — x=1024",
    "properties": {
     "Node name for S&R": "ImageCrop"
    },
@@ -2007,7 +3103,12 @@
     1024,
     368
    ],
-   "title": "Crop Vue B (droite) — x=1024",
+   "widgets_values_named": {
+    "width": 512,
+    "height": 288,
+    "x": 1024,
+    "y": 368
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -2023,17 +3124,55 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 45,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 69
+    },
+    {
+     "localized_name": "upscale_method",
+     "name": "upscale_method",
+     "type": "COMBO",
+     "widget": {
+      "name": "upscale_method"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "crop",
+     "name": "crop",
+     "type": "COMBO",
+     "widget": {
+      "name": "crop"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -2042,6 +3181,7 @@
      ]
     }
    ],
+   "title": "→ 1664×928",
    "properties": {
     "Node name for S&R": "ImageScale"
    },
@@ -2051,7 +3191,12 @@
     928,
     "disabled"
    ],
-   "title": "→ 1664×928"
+   "widgets_values_named": {
+    "upscale_method": "lanczos",
+    "width": 1664,
+    "height": 928,
+    "crop": "disabled"
+   }
   },
   {
    "id": 112,
@@ -2065,15 +3210,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 50,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "pixels",
      "name": "pixels",
      "type": "IMAGE",
      "link": 70
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 71
@@ -2081,6 +3228,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -2090,8 +3238,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEEncode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 113,
@@ -2105,37 +3252,56 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 51,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
      "link": 72
     },
     {
+     "localized_name": "vae",
      "name": "vae",
+     "shape": 7,
      "type": "VAE",
      "link": 73
     },
     {
+     "localized_name": "image1",
      "name": "image1",
+     "shape": 7,
      "type": "IMAGE",
      "link": 74
     },
     {
+     "localized_name": "image2",
      "name": "image2",
+     "shape": 7,
      "type": "IMAGE",
      "link": 75
     },
     {
+     "localized_name": "image3",
      "name": "image3",
+     "shape": 7,
      "type": "IMAGE",
      "link": 76
+    },
+    {
+     "localized_name": "prompt",
+     "name": "prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "prompt"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "CONDITIONING",
      "name": "CONDITIONING",
      "type": "CONDITIONING",
      "links": [
@@ -2143,13 +3309,16 @@
      ]
     }
    ],
+   "title": "PROMPT 3 — Vue B (droite)",
    "properties": {
     "Node name for S&R": "TextEncodeQwenImageEditPlus"
    },
    "widgets_values": [
     "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
    ],
-   "title": "PROMPT 3 — Vue B (droite)",
+   "widgets_values_named": {
+    "prompt": "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -2161,36 +3330,95 @@
     1240
    ],
    "size": [
-    300,
+    315.73334350585935,
     262
    ],
    "flags": {},
-   "order": 0,
+   "order": 57,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 77
     },
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 78
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 79
     },
     {
+     "localized_name": "latent_image",
      "name": "latent_image",
      "type": "LATENT",
      "link": 80
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -2198,6 +3426,7 @@
      ]
     }
    ],
+   "title": "KSampler — Vue B (droite) (denoise 0.55)",
    "properties": {
     "Node name for S&R": "KSampler"
    },
@@ -2205,12 +3434,20 @@
     3002,
     "fixed",
     4,
-    1.0,
+    1,
     "euler",
     "simple",
     0.55
    ],
-   "title": "KSampler — Vue B (droite) (denoise 0.55)"
+   "widgets_values_named": {
+    "seed": 3002,
+    "control_after_generate": "fixed",
+    "steps": 4,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 0.55
+   }
   },
   {
    "id": 115,
@@ -2224,15 +3461,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 61,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "samples",
      "name": "samples",
      "type": "LATENT",
      "link": 81
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 82
@@ -2240,6 +3479,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -2249,8 +3489,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEDecode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 116,
@@ -2264,23 +3503,43 @@
     280
    ],
    "flags": {},
-   "order": 0,
+   "order": 65,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 83
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Save — Vue B (droite)",
    "properties": {
     "Node name for S&R": "SaveImage"
    },
    "widgets_values": [
     "environnement_v2/etape3_vue_B"
    ],
-   "title": "Save — Vue B (droite)"
+   "widgets_values_named": {
+    "filename_prefix": "environnement_v2/etape3_vue_B"
+   }
   },
   {
    "id": 120,
@@ -2294,17 +3553,55 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 42,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 84
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "x",
+     "name": "x",
+     "type": "INT",
+     "widget": {
+      "name": "x"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "y",
+     "name": "y",
+     "type": "INT",
+     "widget": {
+      "name": "y"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -2312,6 +3609,7 @@
      ]
     }
    ],
+   "title": "Crop Vue C (arrière) — x=1536",
    "properties": {
     "Node name for S&R": "ImageCrop"
    },
@@ -2321,7 +3619,12 @@
     1536,
     368
    ],
-   "title": "Crop Vue C (arrière) — x=1536",
+   "widgets_values_named": {
+    "width": 512,
+    "height": 288,
+    "x": 1536,
+    "y": 368
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -2337,17 +3640,55 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 46,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 85
+    },
+    {
+     "localized_name": "upscale_method",
+     "name": "upscale_method",
+     "type": "COMBO",
+     "widget": {
+      "name": "upscale_method"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "crop",
+     "name": "crop",
+     "type": "COMBO",
+     "widget": {
+      "name": "crop"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -2356,6 +3697,7 @@
      ]
     }
    ],
+   "title": "→ 1664×928",
    "properties": {
     "Node name for S&R": "ImageScale"
    },
@@ -2365,7 +3707,12 @@
     928,
     "disabled"
    ],
-   "title": "→ 1664×928"
+   "widgets_values_named": {
+    "upscale_method": "lanczos",
+    "width": 1664,
+    "height": 928,
+    "crop": "disabled"
+   }
   },
   {
    "id": 122,
@@ -2379,15 +3726,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 52,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "pixels",
      "name": "pixels",
      "type": "IMAGE",
      "link": 86
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 87
@@ -2395,6 +3744,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -2404,8 +3754,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEEncode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 123,
@@ -2419,37 +3768,56 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 53,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
      "link": 88
     },
     {
+     "localized_name": "vae",
      "name": "vae",
+     "shape": 7,
      "type": "VAE",
      "link": 89
     },
     {
+     "localized_name": "image1",
      "name": "image1",
+     "shape": 7,
      "type": "IMAGE",
      "link": 90
     },
     {
+     "localized_name": "image2",
      "name": "image2",
+     "shape": 7,
      "type": "IMAGE",
      "link": 91
     },
     {
+     "localized_name": "image3",
      "name": "image3",
+     "shape": 7,
      "type": "IMAGE",
      "link": 92
+    },
+    {
+     "localized_name": "prompt",
+     "name": "prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "prompt"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "CONDITIONING",
      "name": "CONDITIONING",
      "type": "CONDITIONING",
      "links": [
@@ -2457,13 +3825,16 @@
      ]
     }
    ],
+   "title": "PROMPT 3 — Vue C (arrière)",
    "properties": {
     "Node name for S&R": "TextEncodeQwenImageEditPlus"
    },
    "widgets_values": [
     "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
    ],
-   "title": "PROMPT 3 — Vue C (arrière)",
+   "widgets_values_named": {
+    "prompt": "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -2475,36 +3846,95 @@
     1760
    ],
    "size": [
-    300,
+    322.4499877929687,
     262
    ],
    "flags": {},
-   "order": 0,
+   "order": 58,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 93
     },
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 94
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 95
     },
     {
+     "localized_name": "latent_image",
      "name": "latent_image",
      "type": "LATENT",
      "link": 96
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -2512,6 +3942,7 @@
      ]
     }
    ],
+   "title": "KSampler — Vue C (arrière) (denoise 0.55)",
    "properties": {
     "Node name for S&R": "KSampler"
    },
@@ -2519,12 +3950,20 @@
     3003,
     "fixed",
     4,
-    1.0,
+    1,
     "euler",
     "simple",
     0.55
    ],
-   "title": "KSampler — Vue C (arrière) (denoise 0.55)"
+   "widgets_values_named": {
+    "seed": 3003,
+    "control_after_generate": "fixed",
+    "steps": 4,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 0.55
+   }
   },
   {
    "id": 125,
@@ -2538,15 +3977,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 62,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "samples",
      "name": "samples",
      "type": "LATENT",
      "link": 97
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 98
@@ -2554,6 +3995,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -2563,8 +4005,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEDecode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 126,
@@ -2578,23 +4019,43 @@
     280
    ],
    "flags": {},
-   "order": 0,
+   "order": 66,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 99
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Save — Vue C (arrière)",
    "properties": {
     "Node name for S&R": "SaveImage"
    },
    "widgets_values": [
     "environnement_v2/etape3_vue_C"
    ],
-   "title": "Save — Vue C (arrière)"
+   "widgets_values_named": {
+    "filename_prefix": "environnement_v2/etape3_vue_C"
+   }
   },
   {
    "id": 130,
@@ -2608,17 +4069,55 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 43,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 100
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "x",
+     "name": "x",
+     "type": "INT",
+     "widget": {
+      "name": "x"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "y",
+     "name": "y",
+     "type": "INT",
+     "widget": {
+      "name": "y"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -2626,6 +4125,7 @@
      ]
     }
    ],
+   "title": "Crop Vue D (gauche) — x=0",
    "properties": {
     "Node name for S&R": "ImageCrop"
    },
@@ -2635,7 +4135,12 @@
     0,
     368
    ],
-   "title": "Crop Vue D (gauche) — x=0",
+   "widgets_values_named": {
+    "width": 512,
+    "height": 288,
+    "x": 0,
+    "y": 368
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -2651,17 +4156,55 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 47,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 101
+    },
+    {
+     "localized_name": "upscale_method",
+     "name": "upscale_method",
+     "type": "COMBO",
+     "widget": {
+      "name": "upscale_method"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "crop",
+     "name": "crop",
+     "type": "COMBO",
+     "widget": {
+      "name": "crop"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -2670,6 +4213,7 @@
      ]
     }
    ],
+   "title": "→ 1664×928",
    "properties": {
     "Node name for S&R": "ImageScale"
    },
@@ -2679,7 +4223,12 @@
     928,
     "disabled"
    ],
-   "title": "→ 1664×928"
+   "widgets_values_named": {
+    "upscale_method": "lanczos",
+    "width": 1664,
+    "height": 928,
+    "crop": "disabled"
+   }
   },
   {
    "id": 132,
@@ -2693,15 +4242,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 54,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "pixels",
      "name": "pixels",
      "type": "IMAGE",
      "link": 102
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 103
@@ -2709,6 +4260,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -2718,8 +4270,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEEncode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 133,
@@ -2733,37 +4284,56 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 55,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
      "link": 104
     },
     {
+     "localized_name": "vae",
      "name": "vae",
+     "shape": 7,
      "type": "VAE",
      "link": 105
     },
     {
+     "localized_name": "image1",
      "name": "image1",
+     "shape": 7,
      "type": "IMAGE",
      "link": 106
     },
     {
+     "localized_name": "image2",
      "name": "image2",
+     "shape": 7,
      "type": "IMAGE",
      "link": 107
     },
     {
+     "localized_name": "image3",
      "name": "image3",
+     "shape": 7,
      "type": "IMAGE",
      "link": 108
+    },
+    {
+     "localized_name": "prompt",
+     "name": "prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "prompt"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "CONDITIONING",
      "name": "CONDITIONING",
      "type": "CONDITIONING",
      "links": [
@@ -2771,13 +4341,16 @@
      ]
     }
    ],
+   "title": "PROMPT 3 — Vue D (gauche)",
    "properties": {
     "Node name for S&R": "TextEncodeQwenImageEditPlus"
    },
    "widgets_values": [
     "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
    ],
-   "title": "PROMPT 3 — Vue D (gauche)",
+   "widgets_values_named": {
+    "prompt": "Redraw Picture 1 as a sharp, detailed, rectilinear perspective interior photograph at eye level: straighten all curved lines, verticals perfectly vertical, horizon level, remove blur and stretching. Keep exactly the same layout, objects, colors and lighting of Picture 1. Refine materials and furniture details following Picture 2 (architecture) and Picture 3 (materials on the left, palette and lighting on the right)."
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -2789,36 +4362,95 @@
     2280
    ],
    "size": [
-    300,
+    327.8500122070312,
     262
    ],
    "flags": {},
-   "order": 0,
+   "order": 59,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 109
     },
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 110
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 111
     },
     {
+     "localized_name": "latent_image",
      "name": "latent_image",
      "type": "LATENT",
      "link": 112
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -2826,6 +4458,7 @@
      ]
     }
    ],
+   "title": "KSampler — Vue D (gauche) (denoise 0.55)",
    "properties": {
     "Node name for S&R": "KSampler"
    },
@@ -2833,12 +4466,20 @@
     3004,
     "fixed",
     4,
-    1.0,
+    1,
     "euler",
     "simple",
     0.55
    ],
-   "title": "KSampler — Vue D (gauche) (denoise 0.55)"
+   "widgets_values_named": {
+    "seed": 3004,
+    "control_after_generate": "fixed",
+    "steps": 4,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 0.55
+   }
   },
   {
    "id": 135,
@@ -2852,15 +4493,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 63,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "samples",
      "name": "samples",
      "type": "LATENT",
      "link": 113
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 114
@@ -2868,6 +4511,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -2877,8 +4521,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEDecode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 136,
@@ -2892,23 +4535,43 @@
     280
    ],
    "flags": {},
-   "order": 0,
+   "order": 67,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 115
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Save — Vue D (gauche)",
    "properties": {
     "Node name for S&R": "SaveImage"
    },
    "widgets_values": [
     "environnement_v2/etape3_vue_D"
    ],
-   "title": "Save — Vue D (gauche)"
+   "widgets_values_named": {
+    "filename_prefix": "environnement_v2/etape3_vue_D"
+   }
   },
   {
    "id": 99,
@@ -2922,17 +4585,22 @@
     560
    ],
    "flags": {},
-   "order": 0,
+   "order": 12,
    "mode": 0,
    "inputs": [],
    "outputs": [],
+   "title": "Mode d'emploi",
    "properties": {
     "Node name for S&R": "Note"
    },
    "widgets_values": [
     "ENVIRONNEMENT v2 — PIPELINE INVERSÉ (360° d'abord)\n\n1. DESCRIPTION : décris couleurs, matières, lumière ET toutes les zones de la pièce.\n   C'est le seul canal vers l'étape 1.\n2. ÉTAPE 1 : Qwen-Image-2512 + LoRA 360 -> structure de la pièce.\n   Lance plusieurs seeds et garde la meilleure disposition AVANT la suite.\n3. ÉTAPE 2 : Qwen-Edit restyle le 360° avec les moodboards (denoise 0.40).\n   Picture 2 = moodboard 1 ; Picture 3 = moodboards 2 | 3 côte à côte.\n   Structure qui bouge / couture cassée : 0.30. Style trop faible : 0.50.\n4. ÉTAPE 3 : 4 découpes du 360° final, redressées (denoise 0.55).\n   Vue A = plan HÉROS. Cohérence : les 4 vues viennent de la même sphère.\n   Couture gauche/droite : entre les vues C et D (invisible dans les vues).\n\nMoins de 3 moodboards : garde au minimum le 1 et adapte les prompts 2 et 3.\nHDRI : sortie LDR. Blender : World = 360° final (force 1-2) + Sun lamp."
    ],
-   "title": "Mode d'emploi"
+   "widgets_values_named": {
+    "text": "ENVIRONNEMENT v2 — PIPELINE INVERSÉ (360° d'abord)\n\n1. DESCRIPTION : décris couleurs, matières, lumière ET toutes les zones de la pièce.\n   C'est le seul canal vers l'étape 1.\n2. ÉTAPE 1 : Qwen-Image-2512 + LoRA 360 -> structure de la pièce.\n   Lance plusieurs seeds et garde la meilleure disposition AVANT la suite.\n3. ÉTAPE 2 : Qwen-Edit restyle le 360° avec les moodboards (denoise 0.40).\n   Picture 2 = moodboard 1 ; Picture 3 = moodboards 2 | 3 côte à côte.\n   Structure qui bouge / couture cassée : 0.30. Style trop faible : 0.50.\n4. ÉTAPE 3 : 4 découpes du 360° final, redressées (denoise 0.55).\n   Vue A = plan HÉROS. Cohérence : les 4 vues viennent de la même sphère.\n   Couture gauche/droite : entre les vues C et D (invisible dans les vues).\n\nMoins de 3 moodboards : garde au minimum le 1 et adapte les prompts 2 et 3.\nHDRI : sortie LDR. Blender : World = 360° final (force 1-2) + Sun lamp."
+   },
+   "color": "#432",
+   "bgcolor": "#653"
   }
  ],
  "links": [
@@ -3081,22 +4749,6 @@
    "IMAGE"
   ],
   [
-   19,
-   60,
-   0,
-   61,
-   1,
-   "INT"
-  ],
-  [
-   20,
-   60,
-   0,
-   61,
-   2,
-   "INT"
-  ],
-  [
    21,
    61,
    0,
@@ -3113,22 +4765,6 @@
    "IMAGE"
   ],
   [
-   23,
-   60,
-   0,
-   63,
-   1,
-   "INT"
-  ],
-  [
-   24,
-   60,
-   0,
-   63,
-   2,
-   "INT"
-  ],
-  [
    25,
    63,
    0,
@@ -3143,22 +4779,6 @@
    65,
    0,
    "IMAGE"
-  ],
-  [
-   27,
-   60,
-   0,
-   65,
-   1,
-   "INT"
-  ],
-  [
-   28,
-   60,
-   0,
-   65,
-   2,
-   "INT"
   ],
   [
    29,
@@ -3855,10 +5475,59 @@
    136,
    0,
    "IMAGE"
+  ],
+  [
+   19,
+   60,
+   0,
+   61,
+   2,
+   "INT"
+  ],
+  [
+   20,
+   60,
+   0,
+   61,
+   3,
+   "INT"
+  ],
+  [
+   23,
+   60,
+   0,
+   63,
+   2,
+   "INT"
+  ],
+  [
+   24,
+   60,
+   0,
+   63,
+   3,
+   "INT"
+  ],
+  [
+   27,
+   60,
+   0,
+   65,
+   2,
+   "INT"
+  ],
+  [
+   28,
+   60,
+   0,
+   65,
+   3,
+   "INT"
   ]
  ],
  "groups": [
   {
+   "id": 1,
    "title": "ÉTAPE 1 — Description → 360° (structure)",
    "bounding": [
     -1100,
@@ -3866,9 +5535,11 @@
     1880,
     1100
    ],
-   "color": "#335"
+   "color": "#335",
+   "flags": {}
   },
   {
+   "id": 2,
    "title": "MOODBOARDS + préparation",
    "bounding": [
     -1100,
@@ -3876,9 +5547,11 @@
     1760,
     1400
    ],
-   "color": "#3f789e"
+   "color": "#3f789e",
+   "flags": {}
   },
   {
+   "id": 3,
    "title": "ÉTAPE 2 — Restyle du 360° avec les moodboards",
    "bounding": [
     1280,
@@ -3886,9 +5559,11 @@
     1440,
     480
    ],
-   "color": "#3f6"
+   "color": "#3f6",
+   "flags": {}
   },
   {
+   "id": 4,
    "title": "ÉTAPE 3 — 4 vues découpées + redressées (A = héros)",
    "bounding": [
     880,
@@ -3896,16 +5571,17 @@
     1640,
     2160
    ],
-   "color": "#a1883f"
+   "color": "#a1883f",
+   "flags": {}
   }
  ],
  "config": {},
  "extra": {
   "ds": {
-   "scale": 0.45,
+   "scale": 1.7985878990921458,
    "offset": [
-    1600,
-    150
+    1030.4547479781481,
+    13.426930494091835
    ]
   }
  },

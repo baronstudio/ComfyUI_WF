@@ -33,3 +33,10 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# --- Secrets / assets Comfy Cloud ---
+.env
+.env.*
+!.env.example
+comfy_cloud_assets/
+*.part

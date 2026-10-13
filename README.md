@@ -1,6 +1,6 @@
 # ComfyUI_WF
 
-Workflows ComfyUI de **Jean-Baptiste BARON** (Baron Studio) — génération d'images, de model sheets, d'environnements 360, de vidéos et d'assets 3D (Qwen-Image-Edit, Z-Image, Flux, LTX-Video, MiniMax/Hailuo, Pixal3D, Tripo).
+Workflows ComfyUI de **Jean-Baptiste BARON** (Baron Studio) — génération d'images, de model sheets, d'environnements 360, de vidéos et d'assets 3D (Qwen-Image-Edit, Qwen Image 2.1, Z-Image, Flux, LTX-Video, MiniMax/Hailuo, Pixal3D, Tripo).
 
 Chaque workflow est versionné avec son **Prompt Set pour Claude** : un fichier `CONTEXT_prompt-set_*.md` à coller en début de conversation, qui transforme Claude en générateur de prompts calibré pour ce workflow précis (champ par champ, avec les contraintes du modèle et du pipeline).
 
@@ -34,6 +34,24 @@ Le dossier [_TEMPLATE_WF/](_TEMPLATE_WF/) fournit les gabarits de `README.md` et
 
 ---
 
+## Récupérer ses assets Comfy Cloud
+
+Le script [scripts/fetch_comfy_cloud_assets.py](scripts/fetch_comfy_cloud_assets.py) télécharge en local les assets du compte Comfy Cloud (sorties de rendu, images d'entrée…), sans dépendance Python.
+
+1. Générer une clé API sur <https://platform.comfy.org/profile/api-keys>.
+2. Copier [.env.example](.env.example) en `.env` (ignoré par git) et y coller la clé.
+3. Lancer :
+
+```bash
+python scripts/fetch_comfy_cloud_assets.py --list            # inventaire seulement
+python scripts/fetch_comfy_cloud_assets.py --tag output      # télécharge les sorties de rendu
+python scripts/fetch_comfy_cloud_assets.py --since 2026-10-01 --name qwen
+```
+
+Les fichiers arrivent dans `comfy_cloud_assets/<tag>/` (ignoré par git) avec un `manifest.json` (id, tags, prompt_id, date). Les fichiers déjà présents sont sautés, `--force` les ré-écrit.
+
+---
+
 ## Index des workflows
 
 ### Model sheet / character & prop design
@@ -46,6 +64,9 @@ Le dossier [_TEMPLATE_WF/](_TEMPLATE_WF/) fournit les gabarits de `README.md` et
 ### Image editing / intégration
 | Workflow | Prompt Set |
 |---|---|
+| [i2i_QwenImage21_v03.json](i2i_QwenImage21_v03.json) — changement de matière sur un rendu 3D : masque **pixel-perfect depuis une passe Object ID** (pipette / Color Select), références albedo + spéculaire + normale, recomposition à la **résolution d'origine**, 100 % natif, Cloud | [CONTEXT](i2i_QwenImage21_v03/CONTEXT_prompt-set_i2i_QwenImage21_v03.md) |
+| [i2i_QwenImage21_v02.json](i2i_QwenImage21_v02.json) — v01 **+ composite masqué** : pixels strictement identiques hors de la zone peinte (corrige la dérive 1–2 px des arêtes fines), 100 % natif, Cloud | [CONTEXT](i2i_QwenImage21_v02/CONTEXT_prompt-set_i2i_QwenImage21_v02.md) |
+| [i2i_QwenImage21_v01.json](i2i_QwenImage21_v01.json) — image → image Qwen Image 2.1, **sans décalage de pixels** (préparation multiple de 32 + latent à la taille de la source), switch édition / img2img + denoise, 100 % natif, Cloud | [CONTEXT](i2i_QwenImage21_v01/CONTEXT_prompt-set_i2i_QwenImage21_v01.md) |
 | [Image_Edit_Klein_v3_CropStitch_RefSujet.json](Image_Edit_Klein_v3_CropStitch_RefSujet.json) — édition 4 props, crop & stitch, référence sujet | [CONTEXT](Image_Edit_Klein_v3_CropStitch_RefSujet/CONTEXT_prompt-set_Klein_v3_CropStitch_RefSujet.md) |
 | [Image_Edit_4props_Klein_v2_CropStitch.json](Image_Edit_4props_Klein_v2_CropStitch.json) — v2 | — |
 | [Image_Edit_4props_Klein.json](Image_Edit_4props_Klein.json) — v1 | — |

@@ -16,15 +16,18 @@
     1300
    ],
    "flags": {},
-   "order": 1,
+   "order": 0,
    "mode": 0,
    "inputs": [],
    "outputs": [],
+   "title": "📖 Mode d'emploi",
    "properties": {},
    "widgets_values": [
-    "# i23d_Pixal3D — Multivue → modèle 3D (GLB)\n\n**Ce que fait le workflow**\n1. Prend **3 à 4 images** d'un même sujet : **face (obligatoire)**, **côté**, **dos**, et un **3/4** gardé en référence visuelle (non injecté : Pixal3D n'accepte que 0° / 90° / 180° / 270°).\n2. Détourage auto (BiRefNet), recadrage centré, mise au carré **1024 × 1024** : les images peuvent avoir des **tailles et ratios différents**.\n3. **Pixal3D** (Trellis.2, natif) génère la forme : structure → forme 512 → détail (upsample).\n4. Post-traitement : soudure, bouchage des petits trous, **remesh étanche UDF (SDF en option)**, **décimation au nombre de triangles cible**, normales lissées.\n5. Sortie : **GLB triangulé, manifold, sans UV, sans texture**, dans `output/i23d_Pixal3D/`. Le nom contient la hauteur et le poly count : `model_H180cm_20000tris_00001_.glb`.\n\n**Aucun custom node, aucun nœud API.** Compatible Comfy Cloud.\n\n---\n\n**À régler (🎛️ CONTRÔLES)**\n- *Poly count cible* : max de triangles (web 5–20k, jeu 20–80k).\n- *Hauteur cible (cm)* : écrite dans le nom du fichier, appliquée dans Blender par `blender_scale_to_height.py` (aucun nœud natif ne met un mesh à l'échelle — le scale de `Save 3D (Advanced)` ne sert qu'à l'aperçu).\n- *Vue de côté = gauche du perso* : ON si on voit le **flanc gauche** du sujet (il regarde vers la droite de l'image). OFF = flanc droit.\n- *Utiliser la vue de dos* : OFF si pas de dos.\n- *Seed* : changer si la forme déçoit.\n- *FOV* : 20 pour des vues de model sheet / rendus orthographiques.\n- *Résolution détail* : 1536 (1024 = plus rapide, 2048 = plus fin, plus de VRAM).\n- *Lissage* : 2 (0 = arêtes vives).\n- *Remesh SDF* : **OFF = UDF (défaut, meilleurs résultats testés)** — double paroi possible aux ouvertures (manches, bas de veste), coque interne retirée quand elle est détachée. ON = SDF paroi simple, expérimental (résultats médiocres sur Pixal3D).\n\n**Images d'entrée**\n- **≥ 1024 px** sur le petit côté conseillé (en dessous, le détourage et le détail s'appauvrissent).\n- Même sujet, même pose (A-pose), même échelle, cadrage complet, fond uni de préférence.\n- Pas de 3/4 dans les slots face / côté / dos : volume faussé.\n- Il manque des vues ? Les générer avec **Qwen_3Ref_ModelSheet_V1**.\n\n---\n\n**Modèles à télécharger** (Cloud : déjà présents)\n- `models/diffusion_models/pixal3d_multiview_int8_convrot.safetensors` (5,2 Go)\n- `models/vae/trellis_2_shape_vae_bf16.safetensors` (1,0 Go)\n- `models/clip_vision/dino_v3_L_naf_fp32.safetensors` (1,1 Go)\n- `models/background_removal/birefnet.safetensors` (0,4 Go)\nSource : huggingface.co/Comfy-Org/Pixal3D et Comfy-Org/BiRefNet.\n\n**Limites**\n- Triangles uniquement (glTF), pas de quad ni de symétrie.\n- Le poly count est un **maximum**.\n- Aperçu 3D vide = WebGL du navigateur ; fichier dans **Assets → Generated**.\n"
+    "# i23d_Pixal3D — Multivue → modèle 3D (GLB)\n\n**Ce que fait le workflow**\n1. Prend **3 à 4 images** d'un même sujet : **face (obligatoire)**, **côté**, **dos**, et un **3/4** gardé en référence visuelle (non injecté : Pixal3D n'accepte que 0° / 90° / 180° / 270°).\n2. Détourage auto (BiRefNet), recadrage centré, mise au carré **1024 × 1024** : les images peuvent avoir des **tailles et ratios différents**.\n3. **Pixal3D** (Trellis.2, natif) génère la forme : structure → forme 512 → détail (upsample).\n4. Post-traitement : soudure, bouchage des petits trous, **remesh SDF paroi simple (manifold)**, **décimation au nombre de triangles cible**, normales lissées.\n5. Sortie : **GLB triangulé, manifold, sans UV, sans texture**, dans `output/i23d_Pixal3D/`. Le nom contient la hauteur et le poly count : `model_H180cm_20000tris_00001_.glb`.\n\n**Aucun custom node, aucun nœud API.** Compatible Comfy Cloud.\n\n---\n\n**À régler (🎛️ CONTRÔLES)**\n- *Poly count cible* : max de triangles (web 5–20k, jeu 20–80k).\n- *Hauteur cible (cm)* : écrite dans le nom du fichier, appliquée dans Blender par `blender_scale_to_height.py` (aucun nœud natif ne met un mesh à l'échelle — le scale de `Save 3D (Advanced)` ne sert qu'à l'aperçu).\n- *Vue de côté = gauche du perso* : ON si on voit le **flanc gauche** du sujet (il regarde vers la droite de l'image). OFF = flanc droit.\n- *Utiliser la vue de dos* : OFF si pas de dos.\n- *Seed* : changer si la forme déçoit.\n- *FOV* : 20 pour des vues de model sheet / rendus orthographiques.\n- *Résolution détail* : 1536 (1024 = plus rapide, 2048 = plus fin, plus de VRAM).\n- *Lissage* : 2 (0 = arêtes vives).\n- *Remesh SDF* : ON = **paroi simple**, une seule surface fermée (défaut). OFF = UDF de secours si le SDF sort troué ou bruité : l'UDF crée par nature une double paroi, la coque interne est retirée quand elle est séparée.\n\n**Images d'entrée**\n- **≥ 1024 px** sur le petit côté conseillé (en dessous, le détourage et le détail s'appauvrissent).\n- Même sujet, même pose (A-pose), même échelle, cadrage complet, fond uni de préférence.\n- Pas de 3/4 dans les slots face / côté / dos : volume faussé.\n- Il manque des vues ? Les générer avec **Qwen_3Ref_ModelSheet_V1**.\n\n---\n\n**Modèles à télécharger** (Cloud : déjà présents)\n- `models/diffusion_models/pixal3d_multiview_int8_convrot.safetensors` (5,2 Go)\n- `models/vae/trellis_2_shape_vae_bf16.safetensors` (1,0 Go)\n- `models/clip_vision/dino_v3_L_naf_fp32.safetensors` (1,1 Go)\n- `models/background_removal/birefnet.safetensors` (0,4 Go)\nSource : huggingface.co/Comfy-Org/Pixal3D et Comfy-Org/BiRefNet.\n\n**Limites**\n- Triangles uniquement (glTF), pas de quad ni de symétrie.\n- Le poly count est un **maximum**.\n- Aperçu 3D vide = WebGL du navigateur ; fichier dans **Assets → Generated**.\n"
    ],
-   "title": "📖 Mode d'emploi",
+   "widgets_values_named": {
+    "text": "# i23d_Pixal3D — Multivue → modèle 3D (GLB)\n\n**Ce que fait le workflow**\n1. Prend **3 à 4 images** d'un même sujet : **face (obligatoire)**, **côté**, **dos**, et un **3/4** gardé en référence visuelle (non injecté : Pixal3D n'accepte que 0° / 90° / 180° / 270°).\n2. Détourage auto (BiRefNet), recadrage centré, mise au carré **1024 × 1024** : les images peuvent avoir des **tailles et ratios différents**.\n3. **Pixal3D** (Trellis.2, natif) génère la forme : structure → forme 512 → détail (upsample).\n4. Post-traitement : soudure, bouchage des petits trous, **remesh SDF paroi simple (manifold)**, **décimation au nombre de triangles cible**, normales lissées.\n5. Sortie : **GLB triangulé, manifold, sans UV, sans texture**, dans `output/i23d_Pixal3D/`. Le nom contient la hauteur et le poly count : `model_H180cm_20000tris_00001_.glb`.\n\n**Aucun custom node, aucun nœud API.** Compatible Comfy Cloud.\n\n---\n\n**À régler (🎛️ CONTRÔLES)**\n- *Poly count cible* : max de triangles (web 5–20k, jeu 20–80k).\n- *Hauteur cible (cm)* : écrite dans le nom du fichier, appliquée dans Blender par `blender_scale_to_height.py` (aucun nœud natif ne met un mesh à l'échelle — le scale de `Save 3D (Advanced)` ne sert qu'à l'aperçu).\n- *Vue de côté = gauche du perso* : ON si on voit le **flanc gauche** du sujet (il regarde vers la droite de l'image). OFF = flanc droit.\n- *Utiliser la vue de dos* : OFF si pas de dos.\n- *Seed* : changer si la forme déçoit.\n- *FOV* : 20 pour des vues de model sheet / rendus orthographiques.\n- *Résolution détail* : 1536 (1024 = plus rapide, 2048 = plus fin, plus de VRAM).\n- *Lissage* : 2 (0 = arêtes vives).\n- *Remesh SDF* : ON = **paroi simple**, une seule surface fermée (défaut). OFF = UDF de secours si le SDF sort troué ou bruité : l'UDF crée par nature une double paroi, la coque interne est retirée quand elle est séparée.\n\n**Images d'entrée**\n- **≥ 1024 px** sur le petit côté conseillé (en dessous, le détourage et le détail s'appauvrissent).\n- Même sujet, même pose (A-pose), même échelle, cadrage complet, fond uni de préférence.\n- Pas de 3/4 dans les slots face / côté / dos : volume faussé.\n- Il manque des vues ? Les générer avec **Qwen_3Ref_ModelSheet_V1**.\n\n---\n\n**Modèles à télécharger** (Cloud : déjà présents)\n- `models/diffusion_models/pixal3d_multiview_int8_convrot.safetensors` (5,2 Go)\n- `models/vae/trellis_2_shape_vae_bf16.safetensors` (1,0 Go)\n- `models/clip_vision/dino_v3_L_naf_fp32.safetensors` (1,1 Go)\n- `models/background_removal/birefnet.safetensors` (0,4 Go)\nSource : huggingface.co/Comfy-Org/Pixal3D et Comfy-Org/BiRefNet.\n\n**Limites**\n- Triangles uniquement (glTF), pas de quad ni de symétrie.\n- Le poly count est un **maximum**.\n- Aperçu 3D vide = WebGL du navigateur ; fichier dans **Assets → Generated**.\n"
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -40,11 +43,22 @@
     82
    ],
    "flags": {},
-   "order": 2,
+   "order": 1,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "INT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
@@ -54,6 +68,7 @@
      ]
     }
    ],
+   "title": "🎛️ Poly count cible (triangles)",
    "properties": {
     "Node name for S&R": "PrimitiveInt",
     "cnr_id": "comfy-core",
@@ -63,7 +78,10 @@
     20000,
     "fixed"
    ],
-   "title": "🎛️ Poly count cible (triangles)",
+   "widgets_values_named": {
+    "value": 90000,
+    "control_after_generate": "fixed"
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -79,11 +97,22 @@
     58
    ],
    "flags": {},
-   "order": 3,
+   "order": 2,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "FLOAT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "FLOAT",
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
@@ -91,15 +120,18 @@
      ]
     }
    ],
+   "title": "🎛️ Hauteur cible (cm)",
    "properties": {
     "Node name for S&R": "PrimitiveFloat",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    180.0
+    180
    ],
-   "title": "🎛️ Hauteur cible (cm)",
+   "widgets_values_named": {
+    "value": 180
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -115,11 +147,22 @@
     58
    ],
    "flags": {},
-   "order": 4,
+   "order": 3,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "BOOLEAN",
      "name": "BOOLEAN",
      "type": "BOOLEAN",
      "links": [
@@ -128,6 +171,7 @@
      ]
     }
    ],
+   "title": "🎛️ Vue de côté = gauche du perso",
    "properties": {
     "Node name for S&R": "PrimitiveBoolean",
     "cnr_id": "comfy-core",
@@ -136,7 +180,9 @@
    "widgets_values": [
     true
    ],
-   "title": "🎛️ Vue de côté = gauche du perso",
+   "widgets_values_named": {
+    "value": true
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -152,11 +198,22 @@
     58
    ],
    "flags": {},
-   "order": 5,
+   "order": 4,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "BOOLEAN",
      "name": "BOOLEAN",
      "type": "BOOLEAN",
      "links": [
@@ -164,6 +221,7 @@
      ]
     }
    ],
+   "title": "🎛️ Utiliser la vue de dos",
    "properties": {
     "Node name for S&R": "PrimitiveBoolean",
     "cnr_id": "comfy-core",
@@ -172,7 +230,9 @@
    "widgets_values": [
     true
    ],
-   "title": "🎛️ Utiliser la vue de dos",
+   "widgets_values_named": {
+    "value": true
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -188,11 +248,22 @@
     82
    ],
    "flags": {},
-   "order": 6,
+   "order": 5,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "INT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
@@ -202,6 +273,7 @@
      ]
     }
    ],
+   "title": "🎛️ Seed",
    "properties": {
     "Node name for S&R": "PrimitiveInt",
     "cnr_id": "comfy-core",
@@ -211,7 +283,10 @@
     42,
     "fixed"
    ],
-   "title": "🎛️ Seed",
+   "widgets_values_named": {
+    "value": 42,
+    "control_after_generate": "fixed"
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -227,11 +302,22 @@
     58
    ],
    "flags": {},
-   "order": 7,
+   "order": 6,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "FLOAT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "FLOAT",
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
@@ -239,15 +325,18 @@
      ]
     }
    ],
+   "title": "🎛️ FOV des vues (°)",
    "properties": {
     "Node name for S&R": "PrimitiveFloat",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    20.0
+    20
    ],
-   "title": "🎛️ FOV des vues (°)",
+   "widgets_values_named": {
+    "value": 20
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -263,11 +352,22 @@
     82
    ],
    "flags": {},
-   "order": 8,
+   "order": 7,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "INT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
@@ -275,6 +375,7 @@
      ]
     }
    ],
+   "title": "🎛️ Résolution détail (1024–2048)",
    "properties": {
     "Node name for S&R": "PrimitiveInt",
     "cnr_id": "comfy-core",
@@ -284,7 +385,10 @@
     1536,
     "fixed"
    ],
-   "title": "🎛️ Résolution détail (1024–2048)",
+   "widgets_values_named": {
+    "value": 1536,
+    "control_after_generate": "fixed"
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -300,11 +404,22 @@
     82
    ],
    "flags": {},
-   "order": 9,
+   "order": 8,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "INT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
@@ -313,6 +428,7 @@
      ]
     }
    ],
+   "title": "🎛️ Lissage (itérations, 0–20)",
    "properties": {
     "Node name for S&R": "PrimitiveInt",
     "cnr_id": "comfy-core",
@@ -322,7 +438,10 @@
     2,
     "fixed"
    ],
-   "title": "🎛️ Lissage (itérations, 0–20)",
+   "widgets_values_named": {
+    "value": 2,
+    "control_after_generate": "fixed"
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -334,15 +453,26 @@
     940
    ],
    "size": [
-    300,
+    319.1548828125,
     58
    ],
    "flags": {},
-   "order": 10,
+   "order": 9,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "BOOLEAN",
      "name": "BOOLEAN",
      "type": "BOOLEAN",
      "links": [
@@ -350,6 +480,7 @@
      ]
     }
    ],
+   "title": "🎛️ Remesh SDF paroi simple (OFF = UDF)",
    "properties": {
     "Node name for S&R": "PrimitiveBoolean",
     "cnr_id": "comfy-core",
@@ -358,7 +489,9 @@
    "widgets_values": [
     false
    ],
-   "title": "🎛️ Remesh SDF paroi simple (OFF = UDF)",
+   "widgets_values_named": {
+    "value": false
+   },
    "color": "#223",
    "bgcolor": "#335"
   },
@@ -374,11 +507,31 @@
     106
    ],
    "flags": {},
-   "order": 11,
+   "order": 10,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "unet_name",
+     "name": "unet_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "unet_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "weight_dtype",
+     "name": "weight_dtype",
+     "type": "COMBO",
+     "widget": {
+      "name": "weight_dtype"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -387,6 +540,7 @@
      ]
     }
    ],
+   "title": "Pixal3D multiview (diffusion)",
    "properties": {
     "Node name for S&R": "UNETLoader",
     "cnr_id": "comfy-core",
@@ -403,7 +557,10 @@
     "pixal3d_multiview_int8_convrot.safetensors",
     "default"
    ],
-   "title": "Pixal3D multiview (diffusion)",
+   "widgets_values_named": {
+    "unet_name": "pixal3d_multiview_int8_convrot.safetensors",
+    "weight_dtype": "default"
+   },
    "color": "#322",
    "bgcolor": "#533"
   },
@@ -419,11 +576,22 @@
     58
    ],
    "flags": {},
-   "order": 12,
+   "order": 11,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "vae_name",
+     "name": "vae_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "vae_name"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "VAE",
      "name": "VAE",
      "type": "VAE",
      "links": [
@@ -433,6 +601,7 @@
      ]
     }
    ],
+   "title": "VAE forme Trellis.2",
    "properties": {
     "Node name for S&R": "VAELoader",
     "cnr_id": "comfy-core",
@@ -448,7 +617,9 @@
    "widgets_values": [
     "trellis_2_shape_vae_bf16.safetensors"
    ],
-   "title": "VAE forme Trellis.2",
+   "widgets_values_named": {
+    "vae_name": "trellis_2_shape_vae_bf16.safetensors"
+   },
    "color": "#322",
    "bgcolor": "#533"
   },
@@ -464,11 +635,22 @@
     58
    ],
    "flags": {},
-   "order": 13,
+   "order": 12,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "clip_name",
+     "name": "clip_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "clip_name"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "CLIP_VISION",
      "name": "CLIP_VISION",
      "type": "CLIP_VISION",
      "links": [
@@ -476,6 +658,7 @@
      ]
     }
    ],
+   "title": "DINOv3 (clip vision)",
    "properties": {
     "Node name for S&R": "CLIPVisionLoader",
     "cnr_id": "comfy-core",
@@ -491,7 +674,9 @@
    "widgets_values": [
     "dino_v3_L_naf_fp32.safetensors"
    ],
-   "title": "DINOv3 (clip vision)",
+   "widgets_values_named": {
+    "clip_name": "dino_v3_L_naf_fp32.safetensors"
+   },
    "color": "#322",
    "bgcolor": "#533"
   },
@@ -507,11 +692,22 @@
     58
    ],
    "flags": {},
-   "order": 14,
+   "order": 13,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "bg_removal_name",
+     "name": "bg_removal_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "bg_removal_name"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "bg_model",
      "name": "bg_model",
      "type": "BACKGROUND_REMOVAL",
      "links": [
@@ -521,6 +717,7 @@
      ]
     }
    ],
+   "title": "BiRefNet (détourage)",
    "properties": {
     "Node name for S&R": "LoadBackgroundRemovalModel",
     "cnr_id": "comfy-core",
@@ -536,7 +733,9 @@
    "widgets_values": [
     "birefnet.safetensors"
    ],
-   "title": "BiRefNet (détourage)",
+   "widgets_values_named": {
+    "bg_removal_name": "birefnet.safetensors"
+   },
    "color": "#322",
    "bgcolor": "#533"
   },
@@ -552,11 +751,31 @@
     360
    ],
    "flags": {},
-   "order": 15,
+   "order": 14,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -565,21 +784,26 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "📥 Vue de FACE (obligatoire)",
    "properties": {
     "Node name for S&R": "LoadImage",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    "example.png",
+    "e4e97c4726c1df601faa7dd13dc8ac62af25f375642a2e841964b45bc128ba6b.png",
     "image"
    ],
-   "title": "📥 Vue de FACE (obligatoire)",
+   "widgets_values_named": {
+    "image": "e4e97c4726c1df601faa7dd13dc8ac62af25f375642a2e841964b45bc128ba6b.png",
+    "upload": "image"
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -595,15 +819,17 @@
     66
    ],
    "flags": {},
-   "order": 16,
+   "order": 23,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "bg_removal_model",
      "name": "bg_removal_model",
      "type": "BACKGROUND_REMOVAL",
      "link": 1
     },
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 2
@@ -611,6 +837,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "mask",
      "name": "mask",
      "type": "MASK",
      "links": [
@@ -618,13 +845,12 @@
      ]
     }
    ],
+   "title": "✂️ Détourage front",
    "properties": {
     "Node name for S&R": "RemoveBackground",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
-   "widgets_values": [],
-   "title": "✂️ Détourage front",
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -640,22 +866,70 @@
     200
    ],
    "flags": {},
-   "order": 17,
+   "order": 28,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 3
     },
     {
+     "localized_name": "masks",
      "name": "masks",
      "type": "MASK",
      "link": 4
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "pad_factor",
+     "name": "pad_factor",
+     "type": "FLOAT",
+     "widget": {
+      "name": "pad_factor"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "grow_mask",
+     "name": "grow_mask",
+     "type": "INT",
+     "widget": {
+      "name": "grow_mask"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "background",
+     "name": "background",
+     "type": "COLOR",
+     "widget": {
+      "name": "background"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "links": [
@@ -664,6 +938,7 @@
      ]
     }
    ],
+   "title": "⬛ Recadrage 1024² front",
    "properties": {
     "Node name for S&R": "ImageCropToMask",
     "cnr_id": "comfy-core",
@@ -676,7 +951,13 @@
     0,
     "#000000"
    ],
-   "title": "⬛ Recadrage 1024² front",
+   "widgets_values_named": {
+    "width": 1024,
+    "height": 1024,
+    "pad_factor": 1.1,
+    "grow_mask": 0,
+    "background": "#000000"
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -692,23 +973,30 @@
     300
    ],
    "flags": {},
-   "order": 18,
+   "order": 32,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 5
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "👁️ Contrôle front",
    "properties": {
     "Node name for S&R": "PreviewImage",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
-   "widgets_values": [],
-   "title": "👁️ Contrôle front",
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -724,11 +1012,31 @@
     360
    ],
    "flags": {},
-   "order": 19,
+   "order": 15,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -737,21 +1045,26 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "📥 Vue de CÔTÉ",
    "properties": {
     "Node name for S&R": "LoadImage",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    "example.png",
+    "3b4cd1058fd512b0cc9bf535374349a70e07b25c2bdc7a35a7fc0eb759e3c3cc.png",
     "image"
    ],
-   "title": "📥 Vue de CÔTÉ",
+   "widgets_values_named": {
+    "image": "3b4cd1058fd512b0cc9bf535374349a70e07b25c2bdc7a35a7fc0eb759e3c3cc.png",
+    "upload": "image"
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -767,15 +1080,17 @@
     66
    ],
    "flags": {},
-   "order": 20,
+   "order": 24,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "bg_removal_model",
      "name": "bg_removal_model",
      "type": "BACKGROUND_REMOVAL",
      "link": 6
     },
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 7
@@ -783,6 +1098,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "mask",
      "name": "mask",
      "type": "MASK",
      "links": [
@@ -790,13 +1106,12 @@
      ]
     }
    ],
+   "title": "✂️ Détourage side",
    "properties": {
     "Node name for S&R": "RemoveBackground",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
-   "widgets_values": [],
-   "title": "✂️ Détourage side",
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -812,22 +1127,70 @@
     200
    ],
    "flags": {},
-   "order": 21,
+   "order": 29,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 8
     },
     {
+     "localized_name": "masks",
      "name": "masks",
      "type": "MASK",
      "link": 9
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "pad_factor",
+     "name": "pad_factor",
+     "type": "FLOAT",
+     "widget": {
+      "name": "pad_factor"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "grow_mask",
+     "name": "grow_mask",
+     "type": "INT",
+     "widget": {
+      "name": "grow_mask"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "background",
+     "name": "background",
+     "type": "COLOR",
+     "widget": {
+      "name": "background"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "links": [
@@ -837,6 +1200,7 @@
      ]
     }
    ],
+   "title": "⬛ Recadrage 1024² side",
    "properties": {
     "Node name for S&R": "ImageCropToMask",
     "cnr_id": "comfy-core",
@@ -849,7 +1213,13 @@
     0,
     "#000000"
    ],
-   "title": "⬛ Recadrage 1024² side",
+   "widgets_values_named": {
+    "width": 1024,
+    "height": 1024,
+    "pad_factor": 1.1,
+    "grow_mask": 0,
+    "background": "#000000"
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -865,23 +1235,30 @@
     300
    ],
    "flags": {},
-   "order": 22,
+   "order": 33,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 10
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "👁️ Contrôle side",
    "properties": {
     "Node name for S&R": "PreviewImage",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
-   "widgets_values": [],
-   "title": "👁️ Contrôle side",
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -897,11 +1274,31 @@
     360
    ],
    "flags": {},
-   "order": 23,
+   "order": 16,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -910,21 +1307,26 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "📥 Vue de DOS",
    "properties": {
     "Node name for S&R": "LoadImage",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    "example.png",
+    "7c037d604ecffa077abe7552f0b383385cc28ce45c60fed7bf084127c8b75a6f.png",
     "image"
    ],
-   "title": "📥 Vue de DOS",
+   "widgets_values_named": {
+    "image": "7c037d604ecffa077abe7552f0b383385cc28ce45c60fed7bf084127c8b75a6f.png",
+    "upload": "image"
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -940,15 +1342,17 @@
     66
    ],
    "flags": {},
-   "order": 24,
+   "order": 25,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "bg_removal_model",
      "name": "bg_removal_model",
      "type": "BACKGROUND_REMOVAL",
      "link": 11
     },
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 12
@@ -956,6 +1360,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "mask",
      "name": "mask",
      "type": "MASK",
      "links": [
@@ -963,13 +1368,12 @@
      ]
     }
    ],
+   "title": "✂️ Détourage back",
    "properties": {
     "Node name for S&R": "RemoveBackground",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
-   "widgets_values": [],
-   "title": "✂️ Détourage back",
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -985,22 +1389,70 @@
     200
    ],
    "flags": {},
-   "order": 25,
+   "order": 30,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 13
     },
     {
+     "localized_name": "masks",
      "name": "masks",
      "type": "MASK",
      "link": 14
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "pad_factor",
+     "name": "pad_factor",
+     "type": "FLOAT",
+     "widget": {
+      "name": "pad_factor"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "grow_mask",
+     "name": "grow_mask",
+     "type": "INT",
+     "widget": {
+      "name": "grow_mask"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "background",
+     "name": "background",
+     "type": "COLOR",
+     "widget": {
+      "name": "background"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "links": [
@@ -1009,6 +1461,7 @@
      ]
     }
    ],
+   "title": "⬛ Recadrage 1024² back",
    "properties": {
     "Node name for S&R": "ImageCropToMask",
     "cnr_id": "comfy-core",
@@ -1021,7 +1474,13 @@
     0,
     "#000000"
    ],
-   "title": "⬛ Recadrage 1024² back",
+   "widgets_values_named": {
+    "width": 1024,
+    "height": 1024,
+    "pad_factor": 1.1,
+    "grow_mask": 0,
+    "background": "#000000"
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -1037,23 +1496,30 @@
     300
    ],
    "flags": {},
-   "order": 26,
+   "order": 36,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 15
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "👁️ Contrôle back",
    "properties": {
     "Node name for S&R": "PreviewImage",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
-   "widgets_values": [],
-   "title": "👁️ Contrôle back",
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -1069,31 +1535,56 @@
     360
    ],
    "flags": {},
-   "order": 27,
+   "order": 17,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": []
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "📥 Vue 3/4 (référence, non injectée)",
    "properties": {
     "Node name for S&R": "LoadImage",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    "example.png",
+    "0520c77dfde6adbd11fefd7029874ae8ff53fb0f83fce3f851b4979db03f2e9b.png",
     "image"
    ],
-   "title": "📥 Vue 3/4 (référence, non injectée)",
+   "widgets_values_named": {
+    "image": "0520c77dfde6adbd11fefd7029874ae8ff53fb0f83fce3f851b4979db03f2e9b.png",
+    "upload": "image"
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -1109,32 +1600,36 @@
     100
    ],
    "flags": {},
-   "order": 28,
+   "order": 34,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "on_false",
      "name": "on_false",
+     "shape": 7,
      "type": "IMAGE",
-     "link": null,
-     "shape": 7
+     "link": null
     },
     {
+     "localized_name": "on_true",
      "name": "on_true",
-     "type": "IMAGE",
-     "link": 16,
-     "shape": 7
+     "shape": 7,
+     "type": "*",
+     "link": 16
     },
     {
+     "localized_name": "switch",
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 17,
      "widget": {
       "name": "switch"
-     }
+     },
+     "link": 17
     }
    ],
    "outputs": [
     {
+     "localized_name": "output",
      "name": "output",
      "type": "IMAGE",
      "links": [
@@ -1142,6 +1637,7 @@
      ]
     }
    ],
+   "title": "🔀 → slot left (si ON)",
    "properties": {
     "Node name for S&R": "ComfySwitchNode",
     "cnr_id": "comfy-core",
@@ -1150,7 +1646,9 @@
    "widgets_values": [
     true
    ],
-   "title": "🔀 → slot left (si ON)",
+   "widgets_values_named": {
+    "switch": true
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -1166,32 +1664,36 @@
     100
    ],
    "flags": {},
-   "order": 29,
+   "order": 35,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "on_false",
      "name": "on_false",
-     "type": "IMAGE",
-     "link": 18,
-     "shape": 7
+     "shape": 7,
+     "type": "*",
+     "link": 18
     },
     {
+     "localized_name": "on_true",
      "name": "on_true",
+     "shape": 7,
      "type": "IMAGE",
-     "link": null,
-     "shape": 7
+     "link": null
     },
     {
+     "localized_name": "switch",
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 19,
      "widget": {
       "name": "switch"
-     }
+     },
+     "link": 19
     }
    ],
    "outputs": [
     {
+     "localized_name": "output",
      "name": "output",
      "type": "IMAGE",
      "links": [
@@ -1199,6 +1701,7 @@
      ]
     }
    ],
+   "title": "🔀 → slot right (si OFF)",
    "properties": {
     "Node name for S&R": "ComfySwitchNode",
     "cnr_id": "comfy-core",
@@ -1207,7 +1710,9 @@
    "widgets_values": [
     true
    ],
-   "title": "🔀 → slot right (si OFF)",
+   "widgets_values_named": {
+    "switch": true
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -1223,32 +1728,36 @@
     100
    ],
    "flags": {},
-   "order": 30,
+   "order": 37,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "on_false",
      "name": "on_false",
+     "shape": 7,
      "type": "IMAGE",
-     "link": null,
-     "shape": 7
+     "link": null
     },
     {
+     "localized_name": "on_true",
      "name": "on_true",
-     "type": "IMAGE",
-     "link": 20,
-     "shape": 7
+     "shape": 7,
+     "type": "*",
+     "link": 20
     },
     {
+     "localized_name": "switch",
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 21,
      "widget": {
       "name": "switch"
-     }
+     },
+     "link": 21
     }
    ],
    "outputs": [
     {
+     "localized_name": "output",
      "name": "output",
      "type": "IMAGE",
      "links": [
@@ -1256,6 +1765,7 @@
      ]
     }
    ],
+   "title": "🔀 Dos ON / OFF",
    "properties": {
     "Node name for S&R": "ComfySwitchNode",
     "cnr_id": "comfy-core",
@@ -1264,7 +1774,9 @@
    "widgets_values": [
     true
    ],
-   "title": "🔀 Dos ON / OFF",
+   "widgets_values_named": {
+    "switch": true
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -1280,49 +1792,56 @@
     190
    ],
    "flags": {},
-   "order": 31,
+   "order": 38,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "clip_vision_model",
      "name": "clip_vision_model",
      "type": "CLIP_VISION",
      "link": 22
     },
     {
+     "localized_name": "front",
      "name": "front",
+     "shape": 7,
      "type": "IMAGE",
-     "link": 23,
-     "shape": 7
+     "link": 23
     },
     {
+     "localized_name": "left",
      "name": "left",
+     "shape": 7,
      "type": "IMAGE",
-     "link": 24,
-     "shape": 7
+     "link": 24
     },
     {
+     "localized_name": "back",
      "name": "back",
+     "shape": 7,
      "type": "IMAGE",
-     "link": 25,
-     "shape": 7
+     "link": 25
     },
     {
+     "localized_name": "right",
      "name": "right",
+     "shape": 7,
      "type": "IMAGE",
-     "link": 26,
-     "shape": 7
+     "link": 26
     },
     {
+     "localized_name": "fov",
      "name": "fov",
      "type": "FLOAT",
-     "link": 27,
      "widget": {
       "name": "fov"
-     }
+     },
+     "link": 27
     }
    ],
    "outputs": [
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "links": [
@@ -1331,6 +1850,7 @@
      ]
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "links": [
@@ -1339,15 +1859,18 @@
      ]
     }
    ],
+   "title": "🧭 Conditionnement multivue",
    "properties": {
     "Node name for S&R": "Pixal3DMultiViewConditioning",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    20.0
+    20
    ],
-   "title": "🧭 Conditionnement multivue",
+   "widgets_values_named": {
+    "fov": 20
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1363,17 +1886,46 @@
     106
    ],
    "flags": {},
-   "order": 32,
+   "order": 21,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 28
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "start_percent",
+     "name": "start_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "start_percent"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "end_percent",
+     "name": "end_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "end_percent"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -1381,6 +1933,7 @@
      ]
     }
    ],
+   "title": "CFG override (structure)",
    "properties": {
     "Node name for S&R": "CFGOverride",
     "cnr_id": "comfy-core",
@@ -1391,7 +1944,11 @@
     0.667,
     1
    ],
-   "title": "CFG override (structure)",
+   "widgets_values_named": {
+    "cfg": 1,
+    "start_percent": 0.667,
+    "end_percent": 1
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1407,17 +1964,28 @@
     58
    ],
    "flags": {},
-   "order": 33,
+   "order": 26,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 29
+    },
+    {
+     "localized_name": "multiplier",
+     "name": "multiplier",
+     "type": "FLOAT",
+     "widget": {
+      "name": "multiplier"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -1425,6 +1993,7 @@
      ]
     }
    ],
+   "title": "Rescale CFG 0.7",
    "properties": {
     "Node name for S&R": "RescaleCFG",
     "cnr_id": "comfy-core",
@@ -1433,7 +2002,9 @@
    "widgets_values": [
     0.7
    ],
-   "title": "Rescale CFG 0.7",
+   "widgets_values_named": {
+    "multiplier": 0.7
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1449,17 +2020,28 @@
     58
    ],
    "flags": {},
-   "order": 34,
+   "order": 31,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 30
+    },
+    {
+     "localized_name": "shift",
+     "name": "shift",
+     "type": "FLOAT",
+     "widget": {
+      "name": "shift"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -1467,15 +2049,18 @@
      ]
     }
    ],
+   "title": "Shift 5",
    "properties": {
     "Node name for S&R": "ModelSamplingSD3",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    5.0
+    5
    ],
-   "title": "Shift 5",
+   "widgets_values_named": {
+    "shift": 5
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1491,17 +2076,46 @@
     106
    ],
    "flags": {},
-   "order": 35,
+   "order": 22,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 31
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "start_percent",
+     "name": "start_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "start_percent"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "end_percent",
+     "name": "end_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "end_percent"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -1509,6 +2123,7 @@
      ]
     }
    ],
+   "title": "CFG override (forme)",
    "properties": {
     "Node name for S&R": "CFGOverride",
     "cnr_id": "comfy-core",
@@ -1519,7 +2134,11 @@
     0.769,
     1
    ],
-   "title": "CFG override (forme)",
+   "widgets_values_named": {
+    "cfg": 1,
+    "start_percent": 0.769,
+    "end_percent": 1
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1535,17 +2154,28 @@
     58
    ],
    "flags": {},
-   "order": 36,
+   "order": 27,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 32
+    },
+    {
+     "localized_name": "multiplier",
+     "name": "multiplier",
+     "type": "FLOAT",
+     "widget": {
+      "name": "multiplier"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -1554,6 +2184,7 @@
      ]
     }
    ],
+   "title": "Rescale CFG 0.5",
    "properties": {
     "Node name for S&R": "RescaleCFG",
     "cnr_id": "comfy-core",
@@ -1562,7 +2193,9 @@
    "widgets_values": [
     0.5
    ],
-   "title": "Rescale CFG 0.5",
+   "widgets_values_named": {
+    "multiplier": 0.5
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1578,11 +2211,22 @@
     58
    ],
    "flags": {},
-   "order": 37,
+   "order": 18,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "batch_size",
+     "name": "batch_size",
+     "type": "INT",
+     "widget": {
+      "name": "batch_size"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1590,6 +2234,7 @@
      ]
     }
    ],
+   "title": "Latent structure",
    "properties": {
     "Node name for S&R": "EmptyTrellis2LatentStructure",
     "cnr_id": "comfy-core",
@@ -1598,7 +2243,9 @@
    "widgets_values": [
     1
    ],
-   "title": "Latent structure",
+   "widgets_values_named": {
+    "batch_size": 1
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1614,40 +2261,91 @@
     262
    ],
    "flags": {},
-   "order": 38,
+   "order": 39,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 33
     },
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 34
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 35
     },
     {
+     "localized_name": "latent_image",
      "name": "latent_image",
      "type": "LATENT",
      "link": 36
     },
     {
+     "localized_name": "seed",
      "name": "seed",
      "type": "INT",
-     "link": 37,
      "widget": {
       "name": "seed"
-     }
+     },
+     "link": 37
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1655,6 +2353,7 @@
      ]
     }
    ],
+   "title": "① KSampler structure",
    "properties": {
     "Node name for S&R": "KSampler",
     "cnr_id": "comfy-core",
@@ -1669,7 +2368,15 @@
     "normal",
     1
    ],
-   "title": "① KSampler structure",
+   "widgets_values_named": {
+    "seed": 42,
+    "control_after_generate": "fixed",
+    "steps": 12,
+    "cfg": 7.5,
+    "sampler_name": "euler",
+    "scheduler": "normal",
+    "denoise": 1
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1685,22 +2392,34 @@
     82
    ],
    "flags": {},
-   "order": 39,
+   "order": 40,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "samples",
      "name": "samples",
      "type": "LATENT",
      "link": 38
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 39
+    },
+    {
+     "localized_name": "resolution",
+     "name": "resolution",
+     "type": "COMBO",
+     "widget": {
+      "name": "resolution"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "voxel",
      "name": "voxel",
      "type": "VOXEL",
      "links": [
@@ -1708,6 +2427,7 @@
      ]
     }
    ],
+   "title": "Décodage structure",
    "properties": {
     "Node name for S&R": "VaeDecodeStructureTrellis2",
     "cnr_id": "comfy-core",
@@ -1716,7 +2436,9 @@
    "widgets_values": [
     "32"
    ],
-   "title": "Décodage structure",
+   "widgets_values_named": {
+    "resolution": "32"
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1732,20 +2454,23 @@
     86
    ],
    "flags": {},
-   "order": 40,
+   "order": 41,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 40
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 41
     },
     {
+     "localized_name": "voxel",
      "name": "voxel",
      "type": "VOXEL",
      "link": 42
@@ -1753,6 +2478,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "links": [
@@ -1761,6 +2487,7 @@
      ]
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "links": [
@@ -1769,6 +2496,7 @@
      ]
     },
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1776,13 +2504,12 @@
      ]
     }
    ],
+   "title": "Étape forme",
    "properties": {
     "Node name for S&R": "Trellis2ShapeStage",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
-   "widgets_values": [],
-   "title": "Étape forme",
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1798,40 +2525,91 @@
     262
    ],
    "flags": {},
-   "order": 41,
+   "order": 42,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 43
     },
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 44
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 45
     },
     {
+     "localized_name": "latent_image",
      "name": "latent_image",
      "type": "LATENT",
      "link": 46
     },
     {
+     "localized_name": "seed",
      "name": "seed",
      "type": "INT",
-     "link": 47,
      "widget": {
       "name": "seed"
-     }
+     },
+     "link": 47
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1839,6 +2617,7 @@
      ]
     }
    ],
+   "title": "② KSampler forme 512",
    "properties": {
     "Node name for S&R": "KSampler",
     "cnr_id": "comfy-core",
@@ -1853,7 +2632,15 @@
     "normal",
     1
    ],
-   "title": "② KSampler forme 512",
+   "widgets_values_named": {
+    "seed": 42,
+    "control_after_generate": "fixed",
+    "steps": 20,
+    "cfg": 7.5,
+    "sampler_name": "euler",
+    "scheduler": "normal",
+    "denoise": 1
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1869,40 +2656,46 @@
     130
    ],
    "flags": {},
-   "order": 42,
+   "order": 43,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 48
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 49
     },
     {
+     "localized_name": "shape_latent",
      "name": "shape_latent",
      "type": "LATENT",
      "link": 50
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 51
     },
     {
+     "localized_name": "target_resolution",
      "name": "target_resolution",
      "type": "INT",
-     "link": 52,
      "widget": {
       "name": "target_resolution"
-     }
+     },
+     "link": 52
     }
    ],
    "outputs": [
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "links": [
@@ -1910,6 +2703,7 @@
      ]
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "links": [
@@ -1917,6 +2711,7 @@
      ]
     },
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1924,6 +2719,7 @@
      ]
     }
    ],
+   "title": "Étape détail (upsample)",
    "properties": {
     "Node name for S&R": "Trellis2UpsampleStage",
     "cnr_id": "comfy-core",
@@ -1932,7 +2728,9 @@
    "widgets_values": [
     1536
    ],
-   "title": "Étape détail (upsample)",
+   "widgets_values_named": {
+    "target_resolution": 1536
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -1948,40 +2746,91 @@
     262
    ],
    "flags": {},
-   "order": 43,
+   "order": 44,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 53
     },
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "link": 54
     },
     {
+     "localized_name": "negative",
      "name": "negative",
      "type": "CONDITIONING",
      "link": 55
     },
     {
+     "localized_name": "latent_image",
      "name": "latent_image",
      "type": "LATENT",
      "link": 56
     },
     {
+     "localized_name": "seed",
      "name": "seed",
      "type": "INT",
-     "link": 57,
      "widget": {
       "name": "seed"
-     }
+     },
+     "link": 57
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1989,6 +2838,7 @@
      ]
     }
    ],
+   "title": "③ KSampler détail",
    "properties": {
     "Node name for S&R": "KSampler",
     "cnr_id": "comfy-core",
@@ -2003,7 +2853,15 @@
     "simple",
     1
    ],
-   "title": "③ KSampler détail",
+   "widgets_values_named": {
+    "seed": 42,
+    "control_after_generate": "fixed",
+    "steps": 12,
+    "cfg": 7.5,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 1
+   },
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -2019,15 +2877,17 @@
     66
    ],
    "flags": {},
-   "order": 44,
+   "order": 45,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "samples",
      "name": "samples",
      "type": "LATENT",
      "link": 58
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 59
@@ -2035,6 +2895,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "links": [
@@ -2042,18 +2903,18 @@
      ]
     },
     {
+     "localized_name": "shape_subdivides",
      "name": "shape_subdivides",
      "type": "SHAPE_SUBDIVIDES",
      "links": []
     }
    ],
+   "title": "Décodage mesh",
    "properties": {
     "Node name for S&R": "VaeDecodeShapeTrellis",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
-   "widgets_values": [],
-   "title": "Décodage mesh",
    "color": "#323",
    "bgcolor": "#535"
   },
@@ -2069,10 +2930,11 @@
     150
    ],
    "flags": {},
-   "order": 45,
+   "order": 46,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "link": 60
@@ -2080,6 +2942,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "links": [
@@ -2087,18 +2950,18 @@
      ]
     },
     {
+     "localized_name": "info",
      "name": "info",
      "type": "STRING",
      "links": []
     }
    ],
+   "title": "ℹ️ Stats brutes",
    "properties": {
     "Node name for S&R": "GetMeshInfo",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
-   "widgets_values": [],
-   "title": "ℹ️ Stats brutes",
    "color": "#332922",
    "bgcolor": "#593930"
   },
@@ -2114,17 +2977,37 @@
     82
    ],
    "flags": {},
-   "order": 46,
+   "order": 47,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "link": 61
+    },
+    {
+     "localized_name": "epsilon_rel",
+     "name": "epsilon_rel",
+     "type": "FLOAT",
+     "widget": {
+      "name": "epsilon_rel"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "epsilon_abs",
+     "name": "epsilon_abs",
+     "type": "FLOAT",
+     "widget": {
+      "name": "epsilon_abs"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "links": [
@@ -2132,6 +3015,7 @@
      ]
     }
    ],
+   "title": "🧲 Souder les vertices",
    "properties": {
     "Node name for S&R": "WeldVertices",
     "cnr_id": "comfy-core",
@@ -2139,9 +3023,12 @@
    },
    "widgets_values": [
     1e-05,
-    0.0
+    0
    ],
-   "title": "🧲 Souder les vertices",
+   "widgets_values_named": {
+    "epsilon_rel": 1e-05,
+    "epsilon_abs": 0
+   },
    "color": "#332922",
    "bgcolor": "#593930"
   },
@@ -2157,17 +3044,55 @@
     130
    ],
    "flags": {},
-   "order": 47,
+   "order": 48,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "link": 62
+    },
+    {
+     "localized_name": "max_perimeter",
+     "name": "max_perimeter",
+     "type": "FLOAT",
+     "widget": {
+      "name": "max_perimeter"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "weld_epsilon_rel",
+     "name": "weld_epsilon_rel",
+     "type": "FLOAT",
+     "widget": {
+      "name": "weld_epsilon_rel"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "max_vertices",
+     "name": "max_vertices",
+     "type": "INT",
+     "widget": {
+      "name": "max_vertices"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "fill_chains",
+     "name": "fill_chains",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "fill_chains"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "links": [
@@ -2176,6 +3101,7 @@
      ]
     }
    ],
+   "title": "🩹 Boucher les petits trous",
    "properties": {
     "Node name for S&R": "FillHoles",
     "cnr_id": "comfy-core",
@@ -2187,7 +3113,12 @@
     16,
     false
    ],
-   "title": "🩹 Boucher les petits trous",
+   "widgets_values_named": {
+    "max_perimeter": 0.03,
+    "weld_epsilon_rel": 1e-05,
+    "max_vertices": 16,
+    "fill_chains": false
+   },
    "color": "#332922",
    "bgcolor": "#593930"
   },
@@ -2203,30 +3134,42 @@
     150
    ],
    "flags": {},
-   "order": 48,
+   "order": 19,
    "mode": 0,
    "inputs": [
     {
+     "label": "a",
+     "localized_name": "a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 63,
-     "label": "a"
+     "link": 63
     },
     {
+     "localized_name": "b",
      "name": "values.b",
+     "shape": 7,
      "type": "FLOAT,INT,BOOLEAN",
-     "link": null,
-     "label": "b",
-     "shape": 7
+     "link": null
+    },
+    {
+     "localized_name": "expression",
+     "name": "expression",
+     "type": "STRING",
+     "widget": {
+      "name": "expression"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "FLOAT",
      "name": "FLOAT",
      "type": "FLOAT",
      "links": []
     },
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
@@ -2235,11 +3178,13 @@
      ]
     },
     {
+     "localized_name": "BOOL",
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": []
     }
    ],
+   "title": "🧮 Résolution remesh auto",
    "properties": {
     "Node name for S&R": "ComfyMathExpression",
     "cnr_id": "comfy-core",
@@ -2248,7 +3193,9 @@
    "widgets_values": [
     "max(128, min(1024, round(sqrt(a * 2.7) / 32) * 32))"
    ],
-   "title": "🧮 Résolution remesh auto",
+   "widgets_values_named": {
+    "expression": "max(128, min(1024, round(sqrt(a * 2.7) / 32) * 32))"
+   },
    "color": "#332922",
    "bgcolor": "#593930"
   },
@@ -2268,29 +3215,105 @@
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "link": 64
     },
     {
+     "localized_name": "resolution",
      "name": "resolution",
      "type": "INT",
-     "link": 65,
      "widget": {
       "name": "resolution"
-     }
+     },
+     "link": 65
     },
     {
+     "localized_name": "sign_mode",
+     "name": "sign_mode",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "sign_mode"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "qef",
+     "name": "sign_mode.qef",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "sign_mode.qef"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "manifold",
+     "name": "sign_mode.manifold",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "sign_mode.manifold"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "band",
+     "name": "band",
+     "type": "FLOAT",
+     "widget": {
+      "name": "band"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "project_back",
+     "name": "project_back",
+     "type": "FLOAT",
+     "widget": {
+      "name": "project_back"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "fix_poles",
+     "name": "fix_poles",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "fix_poles"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "smooth_iters",
      "name": "smooth_iters",
      "type": "INT",
-     "link": 66,
      "widget": {
       "name": "smooth_iters"
-     }
+     },
+     "link": 66
+    },
+    {
+     "localized_name": "drop_small_components",
+     "name": "drop_small_components",
+     "type": "FLOAT",
+     "widget": {
+      "name": "drop_small_components"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "precluster_max_verts",
+     "name": "precluster_max_verts",
+     "type": "INT",
+     "widget": {
+      "name": "precluster_max_verts"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "links": [
@@ -2298,6 +3321,7 @@
      ]
     }
    ],
+   "title": "♻️ Remesh SDF — paroi simple, manifold",
    "properties": {
     "Node name for S&R": "RemeshMesh",
     "cnr_id": "comfy-core",
@@ -2308,14 +3332,25 @@
     "sdf",
     true,
     true,
-    1.0,
-    0.0,
+    1,
+    0,
     true,
     2,
     0.01,
     20000000
    ],
-   "title": "♻️ Remesh SDF — paroi simple, manifold",
+   "widgets_values_named": {
+    "resolution": 256,
+    "sign_mode": "sdf",
+    "sign_mode.qef": true,
+    "sign_mode.manifold": true,
+    "band": 1,
+    "project_back": 0,
+    "fix_poles": true,
+    "smooth_iters": 2,
+    "drop_small_components": 0.01,
+    "precluster_max_verts": 20000000
+   },
    "color": "#332922",
    "bgcolor": "#593930"
   },
@@ -2335,29 +3370,114 @@
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "link": 67
     },
     {
+     "localized_name": "resolution",
      "name": "resolution",
      "type": "INT",
-     "link": 68,
      "widget": {
       "name": "resolution"
-     }
+     },
+     "link": 68
     },
     {
+     "localized_name": "sign_mode",
+     "name": "sign_mode",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "sign_mode"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "qef",
+     "name": "sign_mode.qef",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "sign_mode.qef"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "drop_inverted_components",
+     "name": "sign_mode.drop_inverted_components",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "sign_mode.drop_inverted_components"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "drop_enclosed_components",
+     "name": "sign_mode.drop_enclosed_components",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "sign_mode.drop_enclosed_components"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "band",
+     "name": "band",
+     "type": "FLOAT",
+     "widget": {
+      "name": "band"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "project_back",
+     "name": "project_back",
+     "type": "FLOAT",
+     "widget": {
+      "name": "project_back"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "fix_poles",
+     "name": "fix_poles",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "fix_poles"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "smooth_iters",
      "name": "smooth_iters",
      "type": "INT",
-     "link": 69,
      "widget": {
       "name": "smooth_iters"
-     }
+     },
+     "link": 69
+    },
+    {
+     "localized_name": "drop_small_components",
+     "name": "drop_small_components",
+     "type": "FLOAT",
+     "widget": {
+      "name": "drop_small_components"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "precluster_max_verts",
+     "name": "precluster_max_verts",
+     "type": "INT",
+     "widget": {
+      "name": "precluster_max_verts"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "links": [
@@ -2365,6 +3485,7 @@
      ]
     }
    ],
+   "title": "♻️ Remesh UDF — secours (si SDF troué)",
    "properties": {
     "Node name for S&R": "RemeshMesh",
     "cnr_id": "comfy-core",
@@ -2376,14 +3497,26 @@
     false,
     true,
     true,
-    1.0,
-    0.0,
+    1,
+    0,
     true,
     2,
     0.01,
     20000000
    ],
-   "title": "♻️ Remesh UDF — secours (si SDF troué)",
+   "widgets_values_named": {
+    "resolution": 256,
+    "sign_mode": "udf",
+    "sign_mode.qef": false,
+    "sign_mode.drop_inverted_components": true,
+    "sign_mode.drop_enclosed_components": true,
+    "band": 1,
+    "project_back": 0,
+    "fix_poles": true,
+    "smooth_iters": 2,
+    "drop_small_components": 0.01,
+    "precluster_max_verts": 20000000
+   },
    "color": "#332922",
    "bgcolor": "#593930"
   },
@@ -2403,28 +3536,32 @@
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "on_false",
      "name": "on_false",
+     "shape": 7,
      "type": "MESH",
-     "link": 70,
-     "shape": 7
+     "link": 70
     },
     {
+     "localized_name": "on_true",
      "name": "on_true",
+     "shape": 7,
      "type": "MESH",
-     "link": 71,
-     "shape": 7
+     "link": 71
     },
     {
+     "localized_name": "switch",
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 72,
      "widget": {
       "name": "switch"
-     }
+     },
+     "link": 72
     }
    ],
    "outputs": [
     {
+     "localized_name": "output",
      "name": "output",
      "type": "MESH",
      "links": [
@@ -2432,15 +3569,18 @@
      ]
     }
    ],
+   "title": "🔀 SDF ON / UDF OFF",
    "properties": {
     "Node name for S&R": "ComfySwitchNode",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    false
+    true
    ],
-   "title": "🔀 SDF ON / UDF OFF",
+   "widgets_values_named": {
+    "switch": true
+   },
    "color": "#332922",
    "bgcolor": "#593930"
   },
@@ -2460,21 +3600,33 @@
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "link": 73
     },
     {
+     "localized_name": "target_face_count",
      "name": "target_face_count",
      "type": "INT",
-     "link": 74,
      "widget": {
       "name": "target_face_count"
-     }
+     },
+     "link": 74
+    },
+    {
+     "localized_name": "placement_mode",
+     "name": "placement_mode",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "placement_mode"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "links": [
@@ -2482,6 +3634,7 @@
      ]
     }
    ],
+   "title": "📉 Décimation au poly count",
    "properties": {
     "Node name for S&R": "DecimateMesh",
     "cnr_id": "comfy-core",
@@ -2491,7 +3644,10 @@
     20000,
     "midpoint"
    ],
-   "title": "📉 Décimation au poly count",
+   "widgets_values_named": {
+    "target_face_count": 20000,
+    "placement_mode": "midpoint"
+   },
    "color": "#332922",
    "bgcolor": "#593930"
   },
@@ -2511,13 +3667,24 @@
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "link": 75
+    },
+    {
+     "localized_name": "crease_angle",
+     "name": "crease_angle",
+     "type": "FLOAT",
+     "widget": {
+      "name": "crease_angle"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "links": [
@@ -2525,15 +3692,18 @@
      ]
     }
    ],
+   "title": "✨ Normales lissées",
    "properties": {
     "Node name for S&R": "MeshSmoothNormals",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    180.0
+    180
    ],
-   "title": "✨ Normales lissées",
+   "widgets_values_named": {
+    "crease_angle": 180
+   },
    "color": "#332922",
    "bgcolor": "#593930"
   },
@@ -2553,6 +3723,7 @@
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "link": 76
@@ -2560,6 +3731,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
      "type": "MESH",
      "links": [
@@ -2567,18 +3739,18 @@
      ]
     },
     {
+     "localized_name": "info",
      "name": "info",
      "type": "STRING",
      "links": []
     }
    ],
+   "title": "ℹ️ Stats finales",
    "properties": {
     "Node name for S&R": "GetMeshInfo",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
-   "widgets_values": [],
-   "title": "ℹ️ Stats finales",
    "color": "#332922",
    "bgcolor": "#593930"
   },
@@ -2594,33 +3766,44 @@
     160
    ],
    "flags": {},
-   "order": 55,
+   "order": 20,
    "mode": 0,
    "inputs": [
     {
-     "name": "values.a",
-     "type": "*",
-     "link": 77,
      "label": "a",
-     "shape": 7
+     "localized_name": "a",
+     "name": "values.a",
+     "shape": 7,
+     "type": "*",
+     "link": 77
     },
     {
+     "localized_name": "b",
      "name": "values.b",
+     "shape": 7,
      "type": "*",
-     "link": 78,
-     "label": "b",
-     "shape": 7
+     "link": 78
     },
     {
+     "localized_name": "c",
      "name": "values.c",
+     "shape": 7,
      "type": "*",
-     "link": null,
-     "label": "c",
-     "shape": 7
+     "link": null
+    },
+    {
+     "localized_name": "f_string",
+     "name": "f_string",
+     "type": "STRING",
+     "widget": {
+      "name": "f_string"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -2628,6 +3811,7 @@
      ]
     }
    ],
+   "title": "🏷️ Nom du fichier (hauteur + tris)",
    "properties": {
     "Node name for S&R": "StringFormat",
     "cnr_id": "comfy-core",
@@ -2636,7 +3820,9 @@
    "widgets_values": [
     "i23d_Pixal3D/model_H{a:g}cm_{b}tris"
    ],
-   "title": "🏷️ Nom du fichier (hauteur + tris)",
+   "widgets_values_named": {
+    "f_string": "i23d_Pixal3D/model_H{a:g}cm_{b}tris"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -2652,33 +3838,145 @@
     700
    ],
    "flags": {},
-   "order": 56,
+   "order": 55,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "mesh",
      "name": "mesh",
-     "type": "MESH,FILE_3D_GLB,FILE_3D_GLTF,FILE_3D_OBJ,FILE_3D_FBX,FILE_3D_STL,FILE_3D_USDZ,FILE_3D_PLY,FILE_3D_SPLAT,FILE_3D_SPZ,FILE_3D_KSPLAT,FILE_3D_SPLAT_ANY,FILE_3D_POINTCLOUD_ANY,FILE_3D",
+     "type": "MESH,FILE_3D_GLB,FILE_3D_GLTF,FILE_3D_OBJ,FILE_3D_FBX,FILE_3D_STL,FILE_3D_USDZ,FILE_3D_PLY,FILE_3D_SPLAT,FILE_3D_SPZ,FILE_3D_KSPLAT,FILE_3D_SPLAT_ANY,FILE_3D_POINT_CLOUD_ANY,FILE_3D",
      "link": 79
     },
     {
+     "localized_name": "filename_prefix",
      "name": "filename_prefix",
      "type": "STRING",
-     "link": 80,
      "widget": {
       "name": "filename_prefix"
-     }
+     },
+     "link": 80
+    },
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "PREVIEW_3D",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
     }
    ],
    "outputs": [],
+   "title": "💾 GLB final + aperçu 3D",
    "properties": {
     "Node name for S&R": "SaveGLB",
     "cnr_id": "comfy-core",
-    "ver": "0.33.0"
+    "ver": "0.33.0",
+    "Last Time Model File": "i23d_Pixal3D/034062da837cf3157d2193a87e941c4c6ad53ba709866585315e51145dd713e4.glb",
+    "Last Time Model Folder": "output",
+    "Camera Config": {
+     "cameraType": "perspective",
+     "fov": 35,
+     "hasCustomUp": false,
+     "state": {
+      "position": {
+       "x": 2.190746267740991,
+       "y": 0.9914309090222198,
+       "z": 2.1124005789970326
+      },
+      "target": {
+       "x": -5.397200584411621e-05,
+       "y": -0.005576148629188536,
+       "z": -0.0019471645355224607
+      },
+      "zoom": 1,
+      "cameraType": "perspective",
+      "quaternion": {
+       "x": -0.14503249706860538,
+       "y": 0.3859880032982214,
+       "z": 0.06158859535959727,
+       "w": 0.9089475678087978
+      },
+      "fov": 35,
+      "aspect": 0.7603833865814696,
+      "near": 0.01,
+      "far": 10000,
+      "frustum": {
+       "left": -5,
+       "right": 5,
+       "top": 5,
+       "bottom": -5
+      }
+     }
+    },
+    "Light Config": {
+     "intensity": 3,
+     "hdri": {
+      "enabled": false,
+      "hdriPath": "",
+      "showAsBackground": false,
+      "intensity": 1
+     }
+    },
+    "Scene Config": {
+     "showGrid": true,
+     "backgroundColor": "#282828",
+     "backgroundImage": "",
+     "backgroundRenderMode": "tiled",
+     "models": [
+      {
+       "position": {
+        "x": 0.0004405508392477664,
+        "y": 2.452514012479013,
+        "z": -0.023754805080407948
+       },
+       "quaternion": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+       },
+       "scale": {
+        "x": 5.097390751063528,
+        "y": 5.097390751063528,
+        "z": 5.097390751063528
+       }
+      }
+     ]
+    },
+    "Model Config": {
+     "upDirection": "original",
+     "materialMode": "original",
+     "showSkeleton": false,
+     "gizmo": {
+      "enabled": false,
+      "mode": "translate",
+      "position": {
+       "x": 0.0004405508392477664,
+       "y": 2.452514012479013,
+       "z": -0.023754805080407948
+      },
+      "rotation": {
+       "x": 0,
+       "y": 0,
+       "z": 0
+      },
+      "scale": {
+       "x": 5.097390751063528,
+       "y": 5.097390751063528,
+       "z": 5.097390751063528
+      }
+     }
+    }
    },
    "widgets_values": [
-    "i23d_Pixal3D/model"
+    "i23d_Pixal3D/model",
+    ""
    ],
-   "title": "💾 GLB final + aperçu 3D",
+   "widgets_values_named": {
+    "filename_prefix": "i23d_Pixal3D/model",
+    "image": ""
+   },
    "color": "#233",
    "bgcolor": "#355"
   }
@@ -3181,6 +4479,62 @@
    "MESH"
   ],
   [
+   70,
+   50,
+   0,
+   51,
+   0,
+   "MESH"
+  ],
+  [
+   71,
+   49,
+   0,
+   51,
+   1,
+   "MESH"
+  ],
+  [
+   72,
+   10,
+   0,
+   51,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   75,
+   52,
+   0,
+   53,
+   0,
+   "MESH"
+  ],
+  [
+   76,
+   53,
+   0,
+   54,
+   0,
+   "MESH"
+  ],
+  [
+   79,
+   54,
+   0,
+   56,
+   0,
+   "MESH"
+  ],
+  [
+   80,
+   55,
+   0,
+   56,
+   1,
+   "STRING"
+  ],
+  [
    63,
    2,
    0,
@@ -3209,7 +4563,7 @@
    9,
    0,
    49,
-   2,
+   8,
    "INT"
   ],
   [
@@ -3233,32 +4587,8 @@
    9,
    0,
    50,
-   2,
+   9,
    "INT"
-  ],
-  [
-   70,
-   50,
-   0,
-   51,
-   0,
-   "MESH"
-  ],
-  [
-   71,
-   49,
-   0,
-   51,
-   1,
-   "MESH"
-  ],
-  [
-   72,
-   10,
-   0,
-   51,
-   2,
-   "BOOLEAN"
   ],
   [
    73,
@@ -3277,22 +4607,6 @@
    "INT"
   ],
   [
-   75,
-   52,
-   0,
-   53,
-   0,
-   "MESH"
-  ],
-  [
-   76,
-   53,
-   0,
-   54,
-   0,
-   "MESH"
-  ],
-  [
    77,
    3,
    0,
@@ -3307,22 +4621,6 @@
    55,
    1,
    "INT"
-  ],
-  [
-   79,
-   54,
-   0,
-   56,
-   0,
-   "MESH"
-  ],
-  [
-   80,
-   55,
-   0,
-   56,
-   1,
-   "STRING"
   ]
  ],
  "groups": [
@@ -3336,7 +4634,6 @@
     1028
    ],
    "color": "#335",
-   "font_size": 24,
    "flags": {}
   },
   {
@@ -3349,7 +4646,6 @@
     468
    ],
    "color": "#533",
-   "font_size": 24,
    "flags": {}
   },
   {
@@ -3362,7 +4658,6 @@
     1650
    ],
    "color": "#353",
-   "font_size": 24,
    "flags": {}
   },
   {
@@ -3375,7 +4670,6 @@
     1232
    ],
    "color": "#535",
-   "font_size": 24,
    "flags": {}
   },
   {
@@ -3388,7 +4682,6 @@
     1350
    ],
    "color": "#593930",
-   "font_size": 24,
    "flags": {}
   },
   {
@@ -3401,17 +4694,16 @@
     995
    ],
    "color": "#355",
-   "font_size": 24,
    "flags": {}
   }
  ],
  "config": {},
  "extra": {
   "ds": {
-   "scale": 0.5,
+   "scale": 0.5500000000000026,
    "offset": [
-    0,
-    120
+    -578.7650848508849,
+    299.83802526644763
    ]
   },
   "workflow_name": "i23d_Pixal3D_v02"

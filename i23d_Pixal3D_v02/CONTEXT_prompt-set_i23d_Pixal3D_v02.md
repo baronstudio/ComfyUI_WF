@@ -12,7 +12,7 @@ Pipeline, in order:
 2. **Preparation** — BiRefNet background removal → crop to the mask bbox, centred square 1024 × 1024, pad 1.1. Different image sizes and ratios are accepted.
 3. **Routing** — SIDE goes to `left` or `right` depending on the toggle; BACK can be switched off. The first connected slot (front) defines the front of the mesh.
 4. **Generation** — ① structure sampler (12 steps) → ② shape 512 (20 steps) → ③ detail upsample (target resolution, 12 steps) → mesh decode. One seed shared by the 3 samplers.
-5. **Mesh** — weld → fill small holes → watertight remesh, **UDF mode by default** (double wall by construction where the raw mesh is open, inner shell dropped only when detached) or SDF option (single wall, experimental: poor results on Pixal3D in tests), resolution auto-computed from the polycount, Taubin smoothing → QEM decimation to the target → smooth normals.
+5. **Mesh** — weld → fill small holes → watertight remesh, **SDF single-wall mode by default** (one closed surface) or UDF fallback (if the SDF output is holed or noisy; UDF builds a double wall by construction where the raw mesh is open, inner shell dropped only when detached), resolution auto-computed from the polycount, Taubin smoothing → QEM decimation to the target → smooth normals.
 6. **Output** — GLB, triangles only, no UV, no texture, normalised (~1 unit, centred), named `model_H<height>cm_<tris>tris_00001_.glb` in `output/i23d_Pixal3D/`.
 7. **Post-production outside ComfyUI** (never ask the workflow for it): real-world scale (my script `blender_scale_to_height.py` reads `_H<height>cm` in the file name), quad retopology, symmetry, UV unwrap (my WF `3D2UV_UnwrapMesh_v01`), texturing, rigging. Missing views are generated beforehand with my WF `Qwen_3Ref_ModelSheet_V1`.
 
@@ -32,7 +32,7 @@ Fields you must fill:
 | C6 | 🎛️ FOV des vues (°) | FLOAT | 1–170 | 20 |
 | C7 | 🎛️ Résolution détail (1024–2048) | INT | step 128 | 1536 |
 | C8 | 🎛️ Lissage (itérations, 0–20) | INT | 0–20 | 2 |
-| C9 | 🎛️ Remesh SDF paroi simple (OFF = UDF) | BOOLEAN | true = SDF single wall (experimental) / false = UDF | false |
+| C9 | 🎛️ Remesh SDF paroi simple (OFF = UDF) | BOOLEAN | true = SDF single wall / false = UDF fallback | true |
 | F1 | 🩹 Boucher les petits trous → max_perimeter | FLOAT | ≥ 0 (0 = off) | 0.03 |
 | K1 | ①②③ KSampler → steps | INT | — | 12 / 20 / 12 |
 | R1 | ♻️ Remesh → drop_small_components (advanced) | FLOAT | 0–0.5 | 0.01 |
@@ -58,7 +58,7 @@ Fields you must fill:
 - **C6** : 20 for renders, turnarounds, model sheets; photos → real lens FOV (50 mm full frame ≈ 40°).
 - **C7** : 1024 for quick tests or low polycount (< 10k), 1536 default, 2048 for fine detail (hair, fingers, ornaments) and high polycount.
 - **C8** : organic 2–4, hard-surface 0–1.
-- **C9** : false (UDF) by default — best results in my tests. Suggest true only as an experiment; warn that UDF can leave a double wall where the raw mesh is open (sleeves, hems) and that the cleanup is done in Blender.
+- **C9** : true (SDF single wall) by default. Suggest false (UDF) only as a fallback when the SDF result is holed or noisy; warn that UDF can leave a double wall where the raw mesh is open (sleeves, hems) and that the cleanup is done in Blender.
 - **F1** : 0.03 by default; raise to 0.05–0.1 if the SDF result shows holes; 0 to disable.
 - **K1** : leave defaults unless I ask for speed (②: 12) or quality (②: 28).
 - **R1** : 0 if small separate parts must stay (buttons, eyes, antennas).

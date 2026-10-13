@@ -1,0 +1,2190 @@
+{
+ "id": "i2i-qwenimage21-v02",
+ "revision": 0,
+ "last_node_id": 57,
+ "last_link_id": 48,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "MarkdownNote",
+   "pos": [
+    40,
+    40
+   ],
+   "size": [
+    460,
+    900
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote"
+   },
+   "title": "📖 Mode d'emploi",
+   "widgets_values": [
+    "# i2i_QwenImage21_v02 — Mode d'emploi\n\n**Image → image avec Qwen Image 2.1, sans décalage de pixels (v02 : + composite masqué).** 100 % nœuds natifs (comfy-core), aucun nœud Partner / API. Comfy Cloud.\n\n## Pourquoi pas de décalage (pixel shift)\n1. L'image source est mise à l'échelle **uniformément** (mégapixels), puis recadrée au centre sur un **multiple de 32** (« scale to multiple », jamais d'étirement).\n2. L'encodeur Qwen 2.1 tourne en **resolution = 0** : l'image, déjà multiple de 32, n'est **pas** redimensionnée une 2ᵉ fois.\n3. Le KSampler échantillonne sur le **latent de l'encodeur** (taille exacte de image_1) ou sur le **VAE Encode de la même image** → sortie = même taille, au pixel près, que la *source préparée*.\n4. Contrôle : nœud **Comparer** (curseur avant/après). Pour superposer dans un logiciel, utiliser **💾 Source préparée** (pas l'originale, qui peut avoir quelques px de recadrage en plus).\n\n⚠️ Ne pas toucher `resolution` (0) sur l'encodeur.\n\n## 🧩 Composite masqué = pixel-perfect garanti (v02)\nMême à taille exacte, le modèle **régénère** toute l'image par patchs de 16 px : les arêtes fines (moulures, cadres) bougent de 1–2 px et s'adoucissent. Seule solution fiable : ne garder du résultat **que la zone éditée**.\n1. Clic droit sur **📥 Image source** → *Open in Mask Editor* → peindre la zone à modifier avec le **pinceau de masque** (pas le Paint Pen) → Save.\n2. **🎛️ Composite masqué** = ON.\n3. **🎛️ Marge du masque** (8 px) agrandit la zone ; **🎛️ Adoucissement du bord** (8) fond la jointure.\nHors masque : pixels de la *Source préparée*, à l'identique. Contrôle : **👁️ Aperçu du masque**.\n⚠️ Composite ON sans masque peint = la source ressort inchangée.\n\n## Modes (🎛️ Mode img2img)\n- **OFF = Édition** (chemin officiel) : latent vide, denoise 1.0 forcé. L'instruction transforme l'image, le reste est conservé.\n- **ON = img2img** : latent de l'image source + **🎛️ Denoise img2img** (0.3 = retouche légère, 0.6 = restyle, 0.9 ≈ édition). Plus fidèle à la composition.\n\n## Réglages\n- Steps 25 (4–8 pour une petite retouche locale, 30–40 pour mains/détails fins).\n- CFG **1** = chemin publié : le prompt négatif est ignoré. CFG 2 suit mieux les textes denses (bords plus durs). Jamais > 3.\n- Taille de travail : 2.0 MP par défaut (natif jusqu'à ~4 MP = 2048²). Au-delà, perte d'adhérence au prompt.\n- Prompt en anglais, à l'impératif, en disant ce qui change ET ce qui reste. Pas de résolution ni de ratio dans le prompt.\n\n## Modèles (Comfy-Org/Qwen-Image-2.1)\n- `models/diffusion_models/qwen_image_2.1_bf16.safetensors`\n- `models/text_encoders/qwen3vl_8b_bf16.safetensors`\n- `models/vae/qwen_image_2.1_vae_bf16.safetensors`\nVariante légère : `qwen_image_2.1_int8_convrot.safetensors` + `qwen3vl_8b_int8_convrot.safetensors`.\n\n## Limites\n- Licence Qwen Research License : vérifier avant usage commercial.\n- ComfyUI ≥ 0.37.0 (nœuds Qwen 2.1).\n- Le recadrage multiple de 32 enlève au plus 31 px par axe.\n"
+   ]
+  },
+  {
+   "id": 2,
+   "type": "PrimitiveBoolean",
+   "pos": [
+    550,
+    60
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "BOOLEAN",
+     "name": "BOOLEAN",
+     "type": "BOOLEAN",
+     "links": [
+      17,
+      20
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveBoolean"
+   },
+   "title": "🎛️ Mode img2img (OFF = édition)",
+   "widgets_values": [
+    false
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 3,
+   "type": "PrimitiveFloat",
+   "pos": [
+    550,
+    150
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      19
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat"
+   },
+   "title": "🎛️ Denoise img2img (si mode ON)",
+   "widgets_values": [
+    0.6
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 4,
+   "type": "PrimitiveBoolean",
+   "pos": [
+    550,
+    240
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "BOOLEAN",
+     "name": "BOOLEAN",
+     "type": "BOOLEAN",
+     "links": [
+      5
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveBoolean"
+   },
+   "title": "🎛️ Redimensionner la source",
+   "widgets_values": [
+    true
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 5,
+   "type": "ResizeImageMaskNode",
+   "pos": [
+    550,
+    330
+   ],
+   "size": [
+    300,
+    130
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "input",
+     "name": "input",
+     "type": "IMAGE,MASK",
+     "link": 3
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "resized",
+     "name": "resized",
+     "type": "IMAGE",
+     "links": [
+      4
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ResizeImageMaskNode"
+   },
+   "title": "🎛️ Taille de travail (mégapixels)",
+   "widgets_values": [
+    "scale total pixels",
+    2.0,
+    "lanczos"
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 6,
+   "type": "PrimitiveInt",
+   "pos": [
+    550,
+    490
+   ],
+   "size": [
+    300,
+    82
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      26
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "title": "🎛️ Steps",
+   "widgets_values": [
+    25,
+    "fixed"
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 7,
+   "type": "PrimitiveFloat",
+   "pos": [
+    550,
+    600
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      27
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat"
+   },
+   "title": "🎛️ CFG (1 = officiel)",
+   "widgets_values": [
+    1.0
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 8,
+   "type": "PrimitiveInt",
+   "pos": [
+    550,
+    690
+   ],
+   "size": [
+    300,
+    82
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      25
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "title": "🎛️ Seed",
+   "widgets_values": [
+    0,
+    "randomize"
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 9,
+   "type": "PrimitiveBoolean",
+   "pos": [
+    550,
+    800
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "BOOLEAN",
+     "name": "BOOLEAN",
+     "type": "BOOLEAN",
+     "links": [
+      45
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveBoolean"
+   },
+   "title": "🎛️ Composite masqué (pixel-perfect hors masque)",
+   "widgets_values": [
+    false
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 14,
+   "type": "PrimitiveInt",
+   "pos": [
+    550,
+    890
+   ],
+   "size": [
+    300,
+    82
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      34
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "title": "🎛️ Marge du masque (px)",
+   "widgets_values": [
+    8,
+    "fixed"
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 15,
+   "type": "PrimitiveInt",
+   "pos": [
+    550,
+    1000
+   ],
+   "size": [
+    300,
+    82
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      37
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "title": "🎛️ Adoucissement du bord (1–31)",
+   "widgets_values": [
+    8,
+    "fixed"
+   ],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 10,
+   "type": "UNETLoader",
+   "pos": [
+    920,
+    60
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "title": "Qwen Image 2.1 (diffusion)",
+   "widgets_values": [
+    "qwen_image_2.1_bf16.safetensors",
+    "default"
+   ],
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 11,
+   "type": "QwenImage21Cache",
+   "pos": [
+    920,
+    180
+   ],
+   "size": [
+    340,
+    82
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 1
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      21
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "QwenImage21Cache"
+   },
+   "title": "Cache KV Qwen 2.1",
+   "widgets_values": [
+    "auto",
+    "default"
+   ],
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 12,
+   "type": "CLIPLoader",
+   "pos": [
+    920,
+    300
+   ],
+   "size": [
+    340,
+    106
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "CLIP",
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      8
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader"
+   },
+   "title": "Encodeur texte Qwen3-VL 8B",
+   "widgets_values": [
+    "qwen3vl_8b_bf16.safetensors",
+    "qwen_image",
+    "default"
+   ],
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 13,
+   "type": "VAELoader",
+   "pos": [
+    920,
+    440
+   ],
+   "size": [
+    340,
+    58
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "VAE",
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      10,
+      14,
+      30
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "title": "VAE Qwen Image 2.1",
+   "widgets_values": [
+    "qwen_image_2.1_vae_bf16.safetensors"
+   ],
+   "color": "#323",
+   "bgcolor": "#535"
+  },
+  {
+   "id": 20,
+   "type": "LoadImage",
+   "pos": [
+    1330,
+    60
+   ],
+   "size": [
+    340,
+    380
+   ],
+   "flags": {},
+   "order": 20,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      2,
+      3
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": [
+      31
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "title": "📥 Image source",
+   "widgets_values": [
+    "example.png",
+    "image"
+   ],
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 21,
+   "type": "ComfySwitchNode",
+   "pos": [
+    1330,
+    470
+   ],
+   "size": [
+    340,
+    80
+   ],
+   "flags": {},
+   "order": 21,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "on_false",
+     "name": "on_false",
+     "type": "IMAGE",
+     "link": 2,
+     "shape": 7
+    },
+    {
+     "localized_name": "on_true",
+     "name": "on_true",
+     "type": "IMAGE",
+     "link": 4,
+     "shape": 7
+    },
+    {
+     "localized_name": "switch",
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 5,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "output",
+     "name": "output",
+     "type": "IMAGE",
+     "links": [
+      6
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Redimensionnée ? (switch)",
+   "widgets_values": [
+    true
+   ],
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 22,
+   "type": "ResizeImageMaskNode",
+   "pos": [
+    1330,
+    580
+   ],
+   "size": [
+    340,
+    110
+   ],
+   "flags": {},
+   "order": 22,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "input",
+     "name": "input",
+     "type": "IMAGE,MASK",
+     "link": 6
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "resized",
+     "name": "resized",
+     "type": "IMAGE",
+     "links": [
+      7,
+      9,
+      13,
+      32,
+      40,
+      47
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ResizeImageMaskNode"
+   },
+   "title": "📐 Recadrage multiple de 32 (anti-décalage)",
+   "widgets_values": [
+    "scale to multiple",
+    32,
+    "lanczos"
+   ],
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 23,
+   "type": "SaveImage",
+   "pos": [
+    1330,
+    720
+   ],
+   "size": [
+    340,
+    300
+   ],
+   "flags": {},
+   "order": 23,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 7
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "title": "💾 Source préparée (alignée)",
+   "widgets_values": [
+    "i2i_QwenImage21_v02/src"
+   ],
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 30,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    1740,
+    60
+   ],
+   "size": [
+    420,
+    220
+   ],
+   "flags": {},
+   "order": 30,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      11
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "title": "✏️ Prompt (instruction, EN)",
+   "widgets_values": [
+    "Keep the composition, framing, subject identity and every element of the image unchanged. Change only: <describe the edit here>."
+   ],
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 31,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    1740,
+    310
+   ],
+   "size": [
+    420,
+    120
+   ],
+   "flags": {},
+   "order": 31,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      12
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "title": "✏️ Prompt négatif (actif seulement si CFG > 1)",
+   "widgets_values": [
+    ""
+   ],
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 32,
+   "type": "TextEncodeQwenImage21",
+   "pos": [
+    1740,
+    460
+   ],
+   "size": [
+    420,
+    200
+   ],
+   "flags": {},
+   "order": 32,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 8
+    },
+    {
+     "localized_name": "image_1",
+     "name": "images.image_1",
+     "type": "IMAGE",
+     "link": 9,
+     "shape": 7
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 10,
+     "shape": 7
+    },
+    {
+     "localized_name": "prompt",
+     "name": "prompt",
+     "type": "STRING",
+     "link": 11,
+     "widget": {
+      "name": "prompt"
+     }
+    },
+    {
+     "localized_name": "negative_prompt",
+     "name": "negative_prompt",
+     "type": "STRING",
+     "link": 12,
+     "widget": {
+      "name": "negative_prompt"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "links": [
+      22
+     ]
+    },
+    {
+     "localized_name": "negative",
+     "name": "negative",
+     "type": "CONDITIONING",
+     "links": [
+      23
+     ]
+    },
+    {
+     "localized_name": "latent",
+     "name": "latent",
+     "type": "LATENT",
+     "links": [
+      15
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImage21"
+   },
+   "title": "Encodage Qwen 2.1 (resolution 0 = ne pas toucher)",
+   "widgets_values": [
+    "",
+    "",
+    0
+   ],
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 40,
+   "type": "VAEEncode",
+   "pos": [
+    2230,
+    60
+   ],
+   "size": [
+    300,
+    50
+   ],
+   "flags": {},
+   "order": 40,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "pixels",
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 13
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 14
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      16
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "title": "Latent de la source (img2img)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 41,
+   "type": "ComfySwitchNode",
+   "pos": [
+    2230,
+    150
+   ],
+   "size": [
+    300,
+    80
+   ],
+   "flags": {},
+   "order": 41,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "on_false",
+     "name": "on_false",
+     "type": "LATENT",
+     "link": 15,
+     "shape": 7
+    },
+    {
+     "localized_name": "on_true",
+     "name": "on_true",
+     "type": "LATENT",
+     "link": 16,
+     "shape": 7
+    },
+    {
+     "localized_name": "switch",
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 17,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "output",
+     "name": "output",
+     "type": "LATENT",
+     "links": [
+      24
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Latent : vide (édition) / source (img2img)",
+   "widgets_values": [
+    false
+   ],
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 42,
+   "type": "PrimitiveFloat",
+   "pos": [
+    2230,
+    270
+   ],
+   "size": [
+    300,
+    58
+   ],
+   "flags": {},
+   "order": 42,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      18
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat"
+   },
+   "title": "Denoise édition (fixe = 1.0)",
+   "widgets_values": [
+    1.0
+   ],
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 43,
+   "type": "ComfySwitchNode",
+   "pos": [
+    2230,
+    360
+   ],
+   "size": [
+    300,
+    80
+   ],
+   "flags": {},
+   "order": 43,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "on_false",
+     "name": "on_false",
+     "type": "FLOAT",
+     "link": 18,
+     "shape": 7
+    },
+    {
+     "localized_name": "on_true",
+     "name": "on_true",
+     "type": "FLOAT",
+     "link": 19,
+     "shape": 7
+    },
+    {
+     "localized_name": "switch",
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 20,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "output",
+     "name": "output",
+     "type": "FLOAT",
+     "links": [
+      28
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Denoise : 1.0 (édition) / réglé (img2img)",
+   "widgets_values": [
+    false
+   ],
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 44,
+   "type": "KSampler",
+   "pos": [
+    2230,
+    480
+   ],
+   "size": [
+    300,
+    262
+   ],
+   "flags": {},
+   "order": 44,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 21
+    },
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 22
+    },
+    {
+     "localized_name": "negative",
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 23
+    },
+    {
+     "localized_name": "latent_image",
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 24
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "link": 25,
+     "widget": {
+      "name": "seed"
+     }
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "link": 26,
+     "widget": {
+      "name": "steps"
+     }
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "link": 27,
+     "widget": {
+      "name": "cfg"
+     }
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "link": 28,
+     "widget": {
+      "name": "denoise"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      29
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "title": "KSampler (euler / simple)",
+   "widgets_values": [
+    0,
+    "randomize",
+    25,
+    1.0,
+    "euler",
+    "simple",
+    1.0
+   ],
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 45,
+   "type": "VAEDecode",
+   "pos": [
+    2230,
+    780
+   ],
+   "size": [
+    300,
+    50
+   ],
+   "flags": {},
+   "order": 45,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "samples",
+     "name": "samples",
+     "type": "LATENT",
+     "link": 29
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 30
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      41,
+      43
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "title": "Décodage",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 50,
+   "type": "ResizeImageMaskNode",
+   "pos": [
+    2590,
+    60
+   ],
+   "size": [
+    320,
+    130
+   ],
+   "flags": {},
+   "order": 50,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "input",
+     "name": "input",
+     "type": "IMAGE,MASK",
+     "link": 31
+    },
+    {
+     "localized_name": "match",
+     "name": "resize_type.match",
+     "type": "IMAGE,MASK",
+     "link": 32
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "resized",
+     "name": "resized",
+     "type": "MASK",
+     "links": [
+      33
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ResizeImageMaskNode"
+   },
+   "title": "Masque → taille de la source préparée",
+   "widgets_values": [
+    "match size",
+    "center",
+    "bilinear"
+   ],
+   "color": "#322",
+   "bgcolor": "#544"
+  },
+  {
+   "id": 51,
+   "type": "GrowMask",
+   "pos": [
+    2590,
+    220
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 51,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "mask",
+     "name": "mask",
+     "type": "MASK",
+     "link": 33
+    },
+    {
+     "localized_name": "expand",
+     "name": "expand",
+     "type": "INT",
+     "link": 34,
+     "widget": {
+      "name": "expand"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": [
+      35
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "GrowMask"
+   },
+   "title": "Marge du masque",
+   "widgets_values": [
+    8,
+    true
+   ],
+   "color": "#322",
+   "bgcolor": "#544"
+  },
+  {
+   "id": 52,
+   "type": "MaskToImage",
+   "pos": [
+    2590,
+    330
+   ],
+   "size": [
+    320,
+    50
+   ],
+   "flags": {},
+   "order": 52,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "mask",
+     "name": "mask",
+     "type": "MASK",
+     "link": 35
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      36
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "MaskToImage"
+   },
+   "title": "Masque → image",
+   "color": "#322",
+   "bgcolor": "#544"
+  },
+  {
+   "id": 53,
+   "type": "ImageBlur",
+   "pos": [
+    2590,
+    410
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 53,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "IMAGE",
+     "link": 36
+    },
+    {
+     "localized_name": "blur_radius",
+     "name": "blur_radius",
+     "type": "INT",
+     "link": 37,
+     "widget": {
+      "name": "blur_radius"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      38,
+      39
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageBlur"
+   },
+   "title": "Adoucissement du bord",
+   "widgets_values": [
+    8,
+    4.0
+   ],
+   "color": "#322",
+   "bgcolor": "#544"
+  },
+  {
+   "id": 54,
+   "type": "ImageToMask",
+   "pos": [
+    2590,
+    520
+   ],
+   "size": [
+    320,
+    58
+   ],
+   "flags": {},
+   "order": 54,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "IMAGE",
+     "link": 38
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": [
+      42
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageToMask"
+   },
+   "title": "Image → masque",
+   "widgets_values": [
+    "red"
+   ],
+   "color": "#322",
+   "bgcolor": "#544"
+  },
+  {
+   "id": 55,
+   "type": "ImageCompositeMasked",
+   "pos": [
+    2590,
+    610
+   ],
+   "size": [
+    320,
+    140
+   ],
+   "flags": {},
+   "order": 55,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "destination",
+     "name": "destination",
+     "type": "IMAGE",
+     "link": 40
+    },
+    {
+     "localized_name": "source",
+     "name": "source",
+     "type": "IMAGE",
+     "link": 41
+    },
+    {
+     "localized_name": "mask",
+     "name": "mask",
+     "type": "MASK",
+     "link": 42,
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      44
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageCompositeMasked"
+   },
+   "title": "Composite : résultat dans le masque, source ailleurs",
+   "widgets_values": [
+    0,
+    0,
+    false
+   ],
+   "color": "#322",
+   "bgcolor": "#544"
+  },
+  {
+   "id": 56,
+   "type": "ComfySwitchNode",
+   "pos": [
+    2590,
+    780
+   ],
+   "size": [
+    320,
+    80
+   ],
+   "flags": {},
+   "order": 56,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "on_false",
+     "name": "on_false",
+     "type": "IMAGE",
+     "link": 43,
+     "shape": 7
+    },
+    {
+     "localized_name": "on_true",
+     "name": "on_true",
+     "type": "IMAGE",
+     "link": 44,
+     "shape": 7
+    },
+    {
+     "localized_name": "switch",
+     "name": "switch",
+     "type": "BOOLEAN",
+     "link": 45,
+     "widget": {
+      "name": "switch"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "output",
+     "name": "output",
+     "type": "IMAGE",
+     "links": [
+      46,
+      48
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfySwitchNode"
+   },
+   "title": "Sortie : brute / composite",
+   "widgets_values": [
+    false
+   ],
+   "color": "#322",
+   "bgcolor": "#544"
+  },
+  {
+   "id": 57,
+   "type": "PreviewImage",
+   "pos": [
+    2590,
+    890
+   ],
+   "size": [
+    320,
+    300
+   ],
+   "flags": {},
+   "order": 57,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 39
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage"
+   },
+   "title": "👁️ Aperçu du masque",
+   "widgets_values": [],
+   "color": "#322",
+   "bgcolor": "#544"
+  },
+  {
+   "id": 46,
+   "type": "SaveImage",
+   "pos": [
+    2980,
+    60
+   ],
+   "size": [
+    440,
+    420
+   ],
+   "flags": {},
+   "order": 46,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 46
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "title": "💾 Résultat",
+   "widgets_values": [
+    "i2i_QwenImage21_v02/out"
+   ],
+   "color": "#223",
+   "bgcolor": "#346"
+  },
+  {
+   "id": 47,
+   "type": "ImageCompare",
+   "pos": [
+    2980,
+    510
+   ],
+   "size": [
+    440,
+    460
+   ],
+   "flags": {},
+   "order": 47,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "image_a",
+     "name": "image_a",
+     "type": "IMAGE",
+     "link": 47,
+     "shape": 7
+    },
+    {
+     "localized_name": "image_b",
+     "name": "image_b",
+     "type": "IMAGE",
+     "link": 48,
+     "shape": 7
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "ImageCompare"
+   },
+   "title": "🔍 Comparer source préparée / résultat",
+   "widgets_values": [],
+   "color": "#223",
+   "bgcolor": "#346"
+  }
+ ],
+ "links": [
+  [
+   1,
+   10,
+   0,
+   11,
+   0,
+   "MODEL"
+  ],
+  [
+   2,
+   20,
+   0,
+   21,
+   0,
+   "IMAGE"
+  ],
+  [
+   3,
+   20,
+   0,
+   5,
+   0,
+   "IMAGE"
+  ],
+  [
+   4,
+   5,
+   0,
+   21,
+   1,
+   "IMAGE"
+  ],
+  [
+   5,
+   4,
+   0,
+   21,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   6,
+   21,
+   0,
+   22,
+   0,
+   "IMAGE"
+  ],
+  [
+   7,
+   22,
+   0,
+   23,
+   0,
+   "IMAGE"
+  ],
+  [
+   8,
+   12,
+   0,
+   32,
+   0,
+   "CLIP"
+  ],
+  [
+   9,
+   22,
+   0,
+   32,
+   1,
+   "IMAGE"
+  ],
+  [
+   10,
+   13,
+   0,
+   32,
+   2,
+   "VAE"
+  ],
+  [
+   11,
+   30,
+   0,
+   32,
+   3,
+   "STRING"
+  ],
+  [
+   12,
+   31,
+   0,
+   32,
+   4,
+   "STRING"
+  ],
+  [
+   13,
+   22,
+   0,
+   40,
+   0,
+   "IMAGE"
+  ],
+  [
+   14,
+   13,
+   0,
+   40,
+   1,
+   "VAE"
+  ],
+  [
+   15,
+   32,
+   2,
+   41,
+   0,
+   "LATENT"
+  ],
+  [
+   16,
+   40,
+   0,
+   41,
+   1,
+   "LATENT"
+  ],
+  [
+   17,
+   2,
+   0,
+   41,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   18,
+   42,
+   0,
+   43,
+   0,
+   "FLOAT"
+  ],
+  [
+   19,
+   3,
+   0,
+   43,
+   1,
+   "FLOAT"
+  ],
+  [
+   20,
+   2,
+   0,
+   43,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   21,
+   11,
+   0,
+   44,
+   0,
+   "MODEL"
+  ],
+  [
+   22,
+   32,
+   0,
+   44,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   23,
+   32,
+   1,
+   44,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   24,
+   41,
+   0,
+   44,
+   3,
+   "LATENT"
+  ],
+  [
+   25,
+   8,
+   0,
+   44,
+   4,
+   "INT"
+  ],
+  [
+   26,
+   6,
+   0,
+   44,
+   5,
+   "INT"
+  ],
+  [
+   27,
+   7,
+   0,
+   44,
+   6,
+   "FLOAT"
+  ],
+  [
+   28,
+   43,
+   0,
+   44,
+   7,
+   "FLOAT"
+  ],
+  [
+   29,
+   44,
+   0,
+   45,
+   0,
+   "LATENT"
+  ],
+  [
+   30,
+   13,
+   0,
+   45,
+   1,
+   "VAE"
+  ],
+  [
+   31,
+   20,
+   1,
+   50,
+   0,
+   "MASK"
+  ],
+  [
+   32,
+   22,
+   0,
+   50,
+   1,
+   "IMAGE"
+  ],
+  [
+   33,
+   50,
+   0,
+   51,
+   0,
+   "MASK"
+  ],
+  [
+   34,
+   14,
+   0,
+   51,
+   1,
+   "INT"
+  ],
+  [
+   35,
+   51,
+   0,
+   52,
+   0,
+   "MASK"
+  ],
+  [
+   36,
+   52,
+   0,
+   53,
+   0,
+   "IMAGE"
+  ],
+  [
+   37,
+   15,
+   0,
+   53,
+   1,
+   "INT"
+  ],
+  [
+   38,
+   53,
+   0,
+   54,
+   0,
+   "IMAGE"
+  ],
+  [
+   39,
+   53,
+   0,
+   57,
+   0,
+   "IMAGE"
+  ],
+  [
+   40,
+   22,
+   0,
+   55,
+   0,
+   "IMAGE"
+  ],
+  [
+   41,
+   45,
+   0,
+   55,
+   1,
+   "IMAGE"
+  ],
+  [
+   42,
+   54,
+   0,
+   55,
+   2,
+   "MASK"
+  ],
+  [
+   43,
+   45,
+   0,
+   56,
+   0,
+   "IMAGE"
+  ],
+  [
+   44,
+   55,
+   0,
+   56,
+   1,
+   "IMAGE"
+  ],
+  [
+   45,
+   9,
+   0,
+   56,
+   2,
+   "BOOLEAN"
+  ],
+  [
+   46,
+   56,
+   0,
+   46,
+   0,
+   "IMAGE"
+  ],
+  [
+   47,
+   22,
+   0,
+   47,
+   0,
+   "IMAGE"
+  ],
+  [
+   48,
+   56,
+   0,
+   47,
+   1,
+   "IMAGE"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "🎛️ CONTRÔLES",
+   "bounding": [
+    530,
+    0,
+    340,
+    1110
+   ],
+   "color": "#335",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "MODÈLES",
+   "bounding": [
+    900,
+    0,
+    380,
+    530
+   ],
+   "color": "#535",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "📥 ENTRÉE + ANTI-DÉCALAGE",
+   "bounding": [
+    1310,
+    0,
+    380,
+    1050
+   ],
+   "color": "#353",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 4,
+   "title": "PROMPT",
+   "bounding": [
+    1720,
+    0,
+    460,
+    690
+   ],
+   "color": "#553",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 5,
+   "title": "GÉNÉRATION",
+   "bounding": [
+    2210,
+    0,
+    340,
+    860
+   ],
+   "color": "#355",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 6,
+   "title": "🧩 COMPOSITE PIXEL-PERFECT",
+   "bounding": [
+    2570,
+    0,
+    370,
+    1220
+   ],
+   "color": "#544",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 7,
+   "title": "💾 SORTIE",
+   "bounding": [
+    2960,
+    0,
+    480,
+    1000
+   ],
+   "color": "#346",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.6,
+   "offset": [
+    0,
+    120
+   ]
+  },
+  "workflow_name": "i2i_QwenImage21_v02"
+ },
+ "version": 0.4
+}

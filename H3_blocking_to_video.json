@@ -1,4 +1,6 @@
 {
+ "id": "87990a20-82f9-4a29-8aa4-eea832b02243",
+ "revision": 0,
  "last_node_id": 38,
  "last_link_id": 50,
  "nodes": [
@@ -16,9 +18,20 @@
    "flags": {},
    "order": 0,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "BOOLEAN",
      "name": "BOOLEAN",
      "type": "BOOLEAN",
      "links": [
@@ -26,13 +39,16 @@
      ]
     }
    ],
+   "title": "🎛️ Prompt Enhancer H3 (Context IR)",
    "properties": {
     "Node name for S&R": "PrimitiveBoolean"
    },
    "widgets_values": [
     false
    ],
-   "title": "🎛️ Prompt Enhancer H3 (Context IR)",
+   "widgets_values_named": {
+    "value": false
+   },
    "color": "#2a2a44",
    "bgcolor": "#3a3a66"
   },
@@ -48,11 +64,22 @@
     58
    ],
    "flags": {},
-   "order": 0,
+   "order": 1,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "BOOLEAN",
      "name": "BOOLEAN",
      "type": "BOOLEAN",
      "links": [
@@ -60,13 +87,16 @@
      ]
     }
    ],
+   "title": "🎛️ Upscale 2K (Regenerate)",
    "properties": {
     "Node name for S&R": "PrimitiveBoolean"
    },
    "widgets_values": [
     false
    ],
-   "title": "🎛️ Upscale 2K (Regenerate)",
+   "widgets_values_named": {
+    "value": false
+   },
    "color": "#2a2a44",
    "bgcolor": "#3a3a66"
   },
@@ -82,19 +112,30 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 2,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "INT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
-      22,
       28
      ]
     }
    ],
+   "title": "🎛️ Durée (s, 4-15) ≤ durée du blocking",
    "properties": {
     "Node name for S&R": "PrimitiveInt"
    },
@@ -102,7 +143,10 @@
     5,
     "fixed"
    ],
-   "title": "🎛️ Durée (s, 4-15) ≤ durée du blocking",
+   "widgets_values_named": {
+    "value": 5,
+    "fixed": "fixed"
+   },
    "color": "#2a2a44",
    "bgcolor": "#3a3a66"
   },
@@ -118,11 +162,31 @@
     340
    ],
    "flags": {},
-   "order": 0,
+   "order": 3,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -130,11 +194,13 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "Image 1 — MODEL SHEET personnage",
    "properties": {
     "Node name for S&R": "LoadImage"
    },
@@ -142,7 +208,10 @@
     "modelsheet_personnage.png",
     "image"
    ],
-   "title": "Image 1 — MODEL SHEET personnage",
+   "widgets_values_named": {
+    "image": "modelsheet_personnage.png",
+    "upload": "image"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -154,21 +223,59 @@
     0
    ],
    "size": [
-    320,
+    364.4666809082031,
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 16,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 1
+    },
+    {
+     "localized_name": "target_width",
+     "name": "target_width",
+     "type": "INT",
+     "widget": {
+      "name": "target_width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "target_height",
+     "name": "target_height",
+     "type": "INT",
+     "widget": {
+      "name": "target_height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "padding_color",
+     "name": "padding_color",
+     "type": "COMBO",
+     "widget": {
+      "name": "padding_color"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "interpolation",
+     "name": "interpolation",
+     "type": "COMBO",
+     "widget": {
+      "name": "interpolation"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -179,6 +286,7 @@
      ]
     }
    ],
+   "title": "Auto-fit 2048×1024 (pad blanc, rien n'est coupé)",
    "properties": {
     "Node name for S&R": "ResizeAndPadImage"
    },
@@ -188,7 +296,12 @@
     "white",
     "lanczos"
    ],
-   "title": "Auto-fit 2048×1024 (pad blanc, rien n'est coupé)",
+   "widgets_values_named": {
+    "target_width": 2048,
+    "target_height": 1024,
+    "padding_color": "white",
+    "interpolation": "lanczos"
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -204,21 +317,28 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 21,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 2
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Contrôle image 1",
    "properties": {
     "Node name for S&R": "PreviewImage"
-   },
-   "widgets_values": [],
-   "title": "Contrôle image 1"
+   }
   },
   {
    "id": 7,
@@ -232,11 +352,31 @@
     340
    ],
    "flags": {},
-   "order": 0,
+   "order": 4,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -244,11 +384,13 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "Image 2 — Moodboard environnement",
    "properties": {
     "Node name for S&R": "LoadImage"
    },
@@ -256,7 +398,10 @@
     "moodboard_environnement.png",
     "image"
    ],
-   "title": "Image 2 — Moodboard environnement",
+   "widgets_values_named": {
+    "image": "moodboard_environnement.png",
+    "upload": "image"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -268,21 +413,59 @@
     400
    ],
    "size": [
-    320,
+    361.2833312988281,
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 17,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 3
+    },
+    {
+     "localized_name": "target_width",
+     "name": "target_width",
+     "type": "INT",
+     "widget": {
+      "name": "target_width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "target_height",
+     "name": "target_height",
+     "type": "INT",
+     "widget": {
+      "name": "target_height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "padding_color",
+     "name": "padding_color",
+     "type": "COMBO",
+     "widget": {
+      "name": "padding_color"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "interpolation",
+     "name": "interpolation",
+     "type": "COMBO",
+     "widget": {
+      "name": "interpolation"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -293,6 +476,7 @@
      ]
     }
    ],
+   "title": "Auto-fit 1024×1024 (pad blanc, rien n'est coupé)",
    "properties": {
     "Node name for S&R": "ResizeAndPadImage"
    },
@@ -302,7 +486,12 @@
     "white",
     "lanczos"
    ],
-   "title": "Auto-fit 1024×1024 (pad blanc, rien n'est coupé)",
+   "widgets_values_named": {
+    "target_width": 1024,
+    "target_height": 1024,
+    "padding_color": "white",
+    "interpolation": "lanczos"
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -318,21 +507,28 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 22,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 4
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Contrôle image 2",
    "properties": {
     "Node name for S&R": "PreviewImage"
-   },
-   "widgets_values": [],
-   "title": "Contrôle image 2"
+   }
   },
   {
    "id": 10,
@@ -342,15 +538,35 @@
     800
    ],
    "size": [
-    340,
+    344.4499877929687,
     340
    ],
    "flags": {},
-   "order": 0,
+   "order": 5,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -358,11 +574,13 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "Image 3 — Moodboard matières / accessoires",
    "properties": {
     "Node name for S&R": "LoadImage"
    },
@@ -370,7 +588,10 @@
     "moodboard_matieres.png",
     "image"
    ],
-   "title": "Image 3 — Moodboard matières / accessoires",
+   "widgets_values_named": {
+    "image": "moodboard_matieres.png",
+    "upload": "image"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -382,31 +603,67 @@
     800
    ],
    "size": [
-    320,
+    361.2833312988281,
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 18,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 5
+    },
+    {
+     "localized_name": "target_width",
+     "name": "target_width",
+     "type": "INT",
+     "widget": {
+      "name": "target_width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "target_height",
+     "name": "target_height",
+     "type": "INT",
+     "widget": {
+      "name": "target_height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "padding_color",
+     "name": "padding_color",
+     "type": "COMBO",
+     "widget": {
+      "name": "padding_color"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "interpolation",
+     "name": "interpolation",
+     "type": "COMBO",
+     "widget": {
+      "name": "interpolation"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      6,
-      33,
-      34,
-      44
+      6
      ]
     }
    ],
+   "title": "Auto-fit 1024×1024 (pad blanc, rien n'est coupé)",
    "properties": {
     "Node name for S&R": "ResizeAndPadImage"
    },
@@ -416,7 +673,12 @@
     "white",
     "lanczos"
    ],
-   "title": "Auto-fit 1024×1024 (pad blanc, rien n'est coupé)",
+   "widgets_values_named": {
+    "target_width": 1024,
+    "target_height": 1024,
+    "padding_color": "white",
+    "interpolation": "lanczos"
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -432,21 +694,28 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 23,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 6
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Contrôle image 3",
    "properties": {
     "Node name for S&R": "PreviewImage"
-   },
-   "widgets_values": [],
-   "title": "Contrôle image 3"
+   }
   },
   {
    "id": 13,
@@ -460,11 +729,31 @@
     340
    ],
    "flags": {},
-   "order": 0,
+   "order": 6,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -472,11 +761,13 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "Image 4 — Moodboard lumière / palette",
    "properties": {
     "Node name for S&R": "LoadImage"
    },
@@ -484,7 +775,10 @@
     "moodboard_lumiere.png",
     "image"
    ],
-   "title": "Image 4 — Moodboard lumière / palette",
+   "widgets_values_named": {
+    "image": "moodboard_lumiere.png",
+    "upload": "image"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -496,31 +790,68 @@
     1200
    ],
    "size": [
-    320,
+    361.2833312988281,
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 19,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 7
+    },
+    {
+     "localized_name": "target_width",
+     "name": "target_width",
+     "type": "INT",
+     "widget": {
+      "name": "target_width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "target_height",
+     "name": "target_height",
+     "type": "INT",
+     "widget": {
+      "name": "target_height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "padding_color",
+     "name": "padding_color",
+     "type": "COMBO",
+     "widget": {
+      "name": "padding_color"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "interpolation",
+     "name": "interpolation",
+     "type": "COMBO",
+     "widget": {
+      "name": "interpolation"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
       8,
-      35,
-      36,
       45
      ]
     }
    ],
+   "title": "Auto-fit 1024×1024 (pad blanc, rien n'est coupé)",
    "properties": {
     "Node name for S&R": "ResizeAndPadImage"
    },
@@ -530,7 +861,12 @@
     "white",
     "lanczos"
    ],
-   "title": "Auto-fit 1024×1024 (pad blanc, rien n'est coupé)",
+   "widgets_values_named": {
+    "target_width": 1024,
+    "target_height": 1024,
+    "padding_color": "white",
+    "interpolation": "lanczos"
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -546,21 +882,28 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 24,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 8
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Contrôle image 4",
    "properties": {
     "Node name for S&R": "PreviewImage"
-   },
-   "widgets_values": [],
-   "title": "Contrôle image 4"
+   }
   },
   {
    "id": 16,
@@ -574,20 +917,39 @@
     420
    ],
    "flags": {},
-   "order": 0,
+   "order": 7,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "file",
+     "name": "file",
+     "type": "COMBO",
+     "widget": {
+      "name": "file"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "VIDEO",
      "name": "VIDEO",
      "type": "VIDEO",
      "links": [
-      37,
-      38,
-      46
+      38
      ]
     }
    ],
+   "title": "🎬 Video 1 — BLOCKING (24-60 fps, 2-15 s)",
    "properties": {
     "Node name for S&R": "LoadVideo"
    },
@@ -595,7 +957,10 @@
     "blocking_blender.mp4",
     "image"
    ],
-   "title": "🎬 Video 1 — BLOCKING (24-60 fps, 2-15 s)",
+   "widgets_values_named": {
+    "file": "blocking_blender.mp4",
+    "upload": "image"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -607,15 +972,26 @@
     0
    ],
    "size": [
-    460,
+    478.4166625976562,
     260
    ],
    "flags": {},
-   "order": 0,
+   "order": 8,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -623,13 +999,16 @@
      ]
     }
    ],
+   "title": "🔗 RÔLES DES RÉFÉRENCES (à adapter si tu changes les entrées)",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "Video 1 is the blocking animation: follow its exact camera movement, framing, timing, character positions and motion. Image 1 is the model sheet of the main character: keep the exact same face, proportions, outfit, colors and accessories from every angle. Image 2, Image 3 and Image 4 are the moodboard: use them for the environment design, materials, color palette and lighting mood. Replace the simple grey blockout shapes of Video 1 with the fully detailed character and environment."
    ],
-   "title": "🔗 RÔLES DES RÉFÉRENCES (à adapter si tu changes les entrées)",
+   "widgets_values_named": {
+    "value": "Video 1 is the blocking animation: follow its exact camera movement, framing, timing, character positions and motion. Image 1 is the model sheet of the main character: keep the exact same face, proportions, outfit, colors and accessories from every angle. Image 2, Image 3 and Image 4 are the moodboard: use them for the environment design, materials, color palette and lighting mood. Replace the simple grey blockout shapes of Video 1 with the fully detailed character and environment."
+   },
    "color": "#232",
    "bgcolor": "#353"
   },
@@ -645,11 +1024,22 @@
     200
    ],
    "flags": {},
-   "order": 0,
+   "order": 9,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -657,13 +1047,16 @@
      ]
     }
    ],
+   "title": "✏️ PROMPT — action / scène",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "A young courier in a short jacket walks through a narrow neon-lit alley at night, stops, and looks up at a delivery drone passing overhead."
    ],
-   "title": "✏️ PROMPT — action / scène",
+   "widgets_values_named": {
+    "value": "A young courier in a short jacket walks through a narrow neon-lit alley at night, stops, and looks up at a delivery drone passing overhead."
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -676,31 +1069,43 @@
    ],
    "size": [
     300,
-    100
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 20,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 9,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 9
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 10,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 10
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -708,6 +1113,7 @@
      ]
     }
    ],
+   "title": "Rôles + prompt",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -716,7 +1122,11 @@
     "",
     "\n\n"
    ],
-   "title": "Rôles + prompt"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 20,
@@ -730,11 +1140,22 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 10,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -742,13 +1163,16 @@
      ]
     }
    ],
+   "title": "Preset 🔒 Cohérence",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "Consistent character identity in every frame, no morphing, no flicker, stable background and architecture, natural motion blur."
    ],
-   "title": "Preset 🔒 Cohérence"
+   "widgets_values_named": {
+    "value": "Consistent character identity in every frame, no morphing, no flicker, stable background and architecture, natural motion blur."
+   }
   },
   {
    "id": 21,
@@ -758,32 +1182,44 @@
     520
    ],
    "size": [
-    300,
-    100
+    372.9666809082031,
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 25,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 11,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 11
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 12,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 12
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -791,6 +1227,7 @@
      ]
     }
    ],
+   "title": "➕ 🔒 Cohérence (ACTIF — Ctrl+B pour basculer)",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -799,7 +1236,11 @@
     "",
     "\n\n"
    ],
-   "title": "➕ 🔒 Cohérence (ACTIF — Ctrl+B pour basculer)"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 22,
@@ -813,11 +1254,22 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 11,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -825,13 +1277,16 @@
      ]
     }
    ],
+   "title": "Preset 🎬 Cinéma",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "Cinematic lighting with motivated light sources, subtle volumetric atmosphere, 35mm lens look, gentle film grain, professional color grading."
    ],
-   "title": "Preset 🎬 Cinéma"
+   "widgets_values_named": {
+    "value": "Cinematic lighting with motivated light sources, subtle volumetric atmosphere, 35mm lens look, gentle film grain, professional color grading."
+   }
   },
   {
    "id": 23,
@@ -841,32 +1296,44 @@
     670
    ],
    "size": [
-    300,
-    100
+    350.4333251953125,
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 26,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 13,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 13
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 14,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 14
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -874,6 +1341,7 @@
      ]
     }
    ],
+   "title": "➕ 🎬 Cinéma (ACTIF — Ctrl+B pour basculer)",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -882,7 +1350,11 @@
     "",
     "\n\n"
    ],
-   "title": "➕ 🎬 Cinéma (ACTIF — Ctrl+B pour basculer)"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 24,
@@ -896,11 +1368,22 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 12,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -908,13 +1391,16 @@
      ]
     }
    ],
+   "title": "Preset 📷 Style photoréaliste",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "Photorealistic live-action footage, true-to-life skin, fabrics and materials, realistic reflections and shadows."
    ],
-   "title": "Preset 📷 Style photoréaliste"
+   "widgets_values_named": {
+    "value": "Photorealistic live-action footage, true-to-life skin, fabrics and materials, realistic reflections and shadows."
+   }
   },
   {
    "id": 25,
@@ -924,32 +1410,44 @@
     820
    ],
    "size": [
-    300,
-    100
+    410.3166564941406,
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 27,
    "mode": 4,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 15,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 15
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 16,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 16
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -957,6 +1455,7 @@
      ]
     }
    ],
+   "title": "➕ 📷 Style photoréaliste (OFF — Ctrl+B pour basculer)",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -965,7 +1464,11 @@
     "",
     "\n\n"
    ],
-   "title": "➕ 📷 Style photoréaliste (OFF — Ctrl+B pour basculer)"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 26,
@@ -979,11 +1482,22 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 13,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -991,13 +1505,16 @@
      ]
     }
    ],
+   "title": "Preset 🧊 Style 3D stylisé",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "High-end stylized 3D animated film look, soft global illumination, clean shapes, appealing proportions, subsurface scattering."
    ],
-   "title": "Preset 🧊 Style 3D stylisé"
+   "widgets_values_named": {
+    "value": "High-end stylized 3D animated film look, soft global illumination, clean shapes, appealing proportions, subsurface scattering."
+   }
   },
   {
    "id": 27,
@@ -1007,32 +1524,44 @@
     970
    ],
    "size": [
-    300,
-    100
+    389.4166625976562,
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 28,
    "mode": 4,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 17,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 17
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 18,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 18
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -1040,6 +1569,7 @@
      ]
     }
    ],
+   "title": "➕ 🧊 Style 3D stylisé (OFF — Ctrl+B pour basculer)",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -1048,7 +1578,11 @@
     "",
     "\n\n"
    ],
-   "title": "➕ 🧊 Style 3D stylisé (OFF — Ctrl+B pour basculer)"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 28,
@@ -1062,11 +1596,22 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 14,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -1074,13 +1619,16 @@
      ]
     }
    ],
+   "title": "Preset 🎨 Style flat 2D",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "Flat 2D vector animation style, clean sharp outlines, flat saturated colors, no gradients, no drop shadows, cel-shaded look."
    ],
-   "title": "Preset 🎨 Style flat 2D"
+   "widgets_values_named": {
+    "value": "Flat 2D vector animation style, clean sharp outlines, flat saturated colors, no gradients, no drop shadows, cel-shaded look."
+   }
   },
   {
    "id": 29,
@@ -1090,32 +1638,44 @@
     1120
    ],
    "size": [
-    300,
-    100
+    367.83331909179685,
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 29,
    "mode": 4,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 19,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 19
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 20,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 20
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -1124,6 +1684,7 @@
      ]
     }
    ],
+   "title": "➕ 🎨 Style flat 2D (OFF — Ctrl+B pour basculer)",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -1132,7 +1693,11 @@
     "",
     "\n\n"
    ],
-   "title": "➕ 🎨 Style flat 2D (OFF — Ctrl+B pour basculer)"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 30,
@@ -1143,92 +1708,115 @@
    ],
    "size": [
     400,
-    360
+    320
    ],
    "flags": {},
-   "order": 0,
+   "order": 30,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "first_frame",
      "name": "first_frame",
+     "shape": 7,
      "type": "IMAGE",
-     "link": null,
-     "shape": 7
+     "link": null
     },
     {
+     "localized_name": "last_frame",
      "name": "last_frame",
+     "shape": 7,
      "type": "IMAGE",
-     "link": null,
-     "shape": 7
+     "link": null
     },
     {
+     "localized_name": "model",
+     "name": "model",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "model"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "prompt",
      "name": "model.prompt",
      "type": "STRING",
-     "link": 21,
      "widget": {
       "name": "model.prompt"
-     }
+     },
+     "link": 21
     },
     {
-     "name": "model.reference_images.image_1",
-     "type": "IMAGE",
-     "link": 29,
-     "label": "image_1",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_images.image_2",
-     "type": "IMAGE",
-     "link": 31,
-     "label": "image_2",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_images.image_3",
-     "type": "IMAGE",
-     "link": 33,
-     "label": "image_3",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_images.image_4",
-     "type": "IMAGE",
-     "link": 35,
-     "label": "image_4",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_images.image_5",
-     "type": "IMAGE",
-     "link": null,
-     "label": "image_5",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_videos.video_1",
-     "type": "VIDEO",
-     "link": 37,
-     "label": "video_1",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_audios.audio_1",
-     "type": "AUDIO",
-     "link": null,
-     "label": "audio_1",
-     "shape": 7
-    },
-    {
+     "localized_name": "duration",
      "name": "model.duration",
      "type": "INT",
-     "link": 22,
      "widget": {
       "name": "model.duration"
-     }
+     },
+     "link": null
+    },
+    {
+     "localized_name": "ratio",
+     "name": "model.ratio",
+     "type": "COMBO",
+     "widget": {
+      "name": "model.ratio"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "image_1",
+     "name": "model.reference_images.image_1",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 29
+    },
+    {
+     "localized_name": "image_2",
+     "name": "model.reference_images.image_2",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 31
+    },
+    {
+     "localized_name": "image_3",
+     "name": "model.reference_images.image_3",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "localized_name": "video_1",
+     "name": "model.reference_videos.video_1",
+     "shape": 7,
+     "type": "VIDEO",
+     "link": null
+    },
+    {
+     "localized_name": "video_2",
+     "name": "model.reference_videos.video_2",
+     "shape": 7,
+     "type": "VIDEO",
+     "link": null
+    },
+    {
+     "localized_name": "audio_1",
+     "name": "model.reference_audios.audio_1",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": null
+    },
+    {
+     "localized_name": "audio_2",
+     "name": "model.reference_audios.audio_2",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -1245,9 +1833,15 @@
     5,
     "adaptive"
    ],
-   "title": "MiniMax H3 Context IR (Prompt Enhancer)",
+   "widgets_values_named": {
+    "model": "MiniMax H3",
+    "model.prompt": "",
+    "model.duration": 5,
+    "model.ratio": "adaptive"
+   },
    "color": "#432",
-   "bgcolor": "#653"
+   "bgcolor": "#653",
+   "title": "MiniMax H3 Context IR (Prompt Enhancer)"
   },
   {
    "id": 31,
@@ -1261,30 +1855,36 @@
     100
    ],
    "flags": {},
-   "order": 0,
+   "order": 31,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "on_false",
      "name": "on_false",
+     "shape": 7,
      "type": "STRING",
      "link": 23
     },
     {
+     "localized_name": "on_true",
      "name": "on_true",
+     "shape": 7,
      "type": "STRING",
      "link": 24
     },
     {
+     "localized_name": "switch",
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 25,
      "widget": {
       "name": "switch"
-     }
+     },
+     "link": 25
     }
    ],
    "outputs": [
     {
+     "localized_name": "output",
      "name": "output",
      "type": "STRING",
      "links": [
@@ -1293,13 +1893,16 @@
      ]
     }
    ],
+   "title": "Prompt : brut / amélioré",
    "properties": {
     "Node name for S&R": "ComfySwitchNode"
    },
    "widgets_values": [
     false
    ],
-   "title": "Prompt : brut / amélioré"
+   "widgets_values_named": {
+    "switch": false
+   }
   },
   {
    "id": 32,
@@ -1310,20 +1913,40 @@
    ],
    "size": [
     300,
-    82
+    170
    ],
    "flags": {},
-   "order": 0,
+   "order": 32,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "text",
      "name": "text",
      "type": "STRING",
      "link": 26
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "format",
+     "name": "format",
+     "type": "COMBO",
+     "widget": {
+      "name": "format"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "text",
      "name": "text",
      "type": "STRING",
      "links": [
@@ -1331,6 +1954,7 @@
      ]
     }
    ],
+   "title": "Save — prompt final (.txt)",
    "properties": {
     "Node name for S&R": "SaveText"
    },
@@ -1338,7 +1962,10 @@
     "H3_prompt",
     "txt"
    ],
-   "title": "Save — prompt final (.txt)"
+   "widgets_values_named": {
+    "filename_prefix": "H3_prompt",
+    "format": "txt"
+   }
   },
   {
    "id": 33,
@@ -1349,87 +1976,128 @@
    ],
    "size": [
     420,
-    380
+    416
    ],
    "flags": {},
-   "order": 0,
+   "order": 33,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
+     "name": "model",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "model"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "prompt",
      "name": "model.prompt",
      "type": "STRING",
-     "link": 27,
      "widget": {
       "name": "model.prompt"
-     }
+     },
+     "link": 27
     },
     {
-     "name": "model.reference_images.image_1",
-     "type": "IMAGE",
-     "link": 30,
-     "label": "image_1",
-     "shape": 7
+     "localized_name": "resolution",
+     "name": "model.resolution",
+     "type": "COMBO",
+     "widget": {
+      "name": "model.resolution"
+     },
+     "link": null
     },
     {
-     "name": "model.reference_images.image_2",
-     "type": "IMAGE",
-     "link": 32,
-     "label": "image_2",
-     "shape": 7
+     "localized_name": "ratio",
+     "name": "model.ratio",
+     "type": "COMBO",
+     "widget": {
+      "name": "model.ratio"
+     },
+     "link": null
     },
     {
-     "name": "model.reference_images.image_3",
-     "type": "IMAGE",
-     "link": 34,
-     "label": "image_3",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_images.image_4",
-     "type": "IMAGE",
-     "link": 36,
-     "label": "image_4",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_images.image_5",
-     "type": "IMAGE",
-     "link": null,
-     "label": "image_5",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_videos.video_1",
-     "type": "VIDEO",
-     "link": 38,
-     "label": "video_1",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_videos.video_2",
-     "type": "VIDEO",
-     "link": null,
-     "label": "video_2",
-     "shape": 7
-    },
-    {
-     "name": "model.reference_audios.audio_1",
-     "type": "AUDIO",
-     "link": null,
-     "label": "audio_1",
-     "shape": 7
-    },
-    {
+     "localized_name": "duration",
      "name": "model.duration",
      "type": "INT",
-     "link": 28,
      "widget": {
       "name": "model.duration"
-     }
+     },
+     "link": 28
+    },
+    {
+     "localized_name": "image_1",
+     "name": "model.reference_images.image_1",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 30
+    },
+    {
+     "localized_name": "image_2",
+     "name": "model.reference_images.image_2",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 32
+    },
+    {
+     "localized_name": "image_3",
+     "name": "model.reference_images.image_3",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "localized_name": "video_1",
+     "name": "model.reference_videos.video_1",
+     "shape": 7,
+     "type": "VIDEO",
+     "link": 38
+    },
+    {
+     "localized_name": "video_2",
+     "name": "model.reference_videos.video_2",
+     "shape": 7,
+     "type": "VIDEO",
+     "link": null
+    },
+    {
+     "localized_name": "audio_1",
+     "name": "model.reference_audios.audio_1",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": null
+    },
+    {
+     "localized_name": "audio_2",
+     "name": "model.reference_audios.audio_2",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": null
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "watermark",
+     "name": "watermark",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "watermark"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "VIDEO",
      "name": "VIDEO",
      "type": "VIDEO",
      "links": [
@@ -1437,6 +2105,7 @@
      ]
     }
    ],
+   "title": "🎥 MiniMax H3 Reference to Video (768P)",
    "properties": {
     "Node name for S&R": "MinimaxHailuo03ReferenceNode"
    },
@@ -1450,7 +2119,16 @@
     "randomize",
     false
    ],
-   "title": "🎥 MiniMax H3 Reference to Video (768P)",
+   "widgets_values_named": {
+    "model": "MiniMax H3",
+    "model.prompt": "",
+    "model.resolution": "768P",
+    "model.ratio": "adaptive",
+    "model.duration": 5,
+    "seed": 42,
+    "control_after_generate": "randomize",
+    "watermark": false
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -1466,17 +2144,56 @@
     420
    ],
    "flags": {},
-   "order": 0,
+   "order": 34,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "video",
      "name": "video",
      "type": "VIDEO",
      "link": 39
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "format",
+     "name": "format",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "format.codec",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format.codec"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "video",
      "name": "video",
      "type": "VIDEO",
      "links": [
@@ -1485,6 +2202,7 @@
      ]
     }
    ],
+   "title": "Save — vidéo 768P",
    "properties": {
     "Node name for S&R": "SaveVideo"
    },
@@ -1494,7 +2212,12 @@
     "auto",
     "auto"
    ],
-   "title": "Save — vidéo 768P"
+   "widgets_values_named": {
+    "filename_prefix": "video/H3_v2v_768P",
+    "format": "auto",
+    "format.codec": "auto",
+    "codec": "auto"
+   }
   },
   {
    "id": 35,
@@ -1505,89 +2228,128 @@
    ],
    "size": [
     420,
-    360
+    380
    ],
    "flags": {},
-   "order": 0,
+   "order": 35,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "video",
      "name": "video",
      "type": "VIDEO",
      "link": 40
     },
     {
+     "localized_name": "first_frame",
      "name": "first_frame",
+     "shape": 7,
      "type": "IMAGE",
-     "link": null,
-     "shape": 7
+     "link": null
     },
     {
+     "localized_name": "last_frame",
      "name": "last_frame",
+     "shape": 7,
      "type": "IMAGE",
-     "link": null,
-     "shape": 7
+     "link": null
     },
     {
+     "localized_name": "model",
+     "name": "model",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "model"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "prompt",
      "name": "model.prompt",
      "type": "STRING",
-     "link": 41,
      "widget": {
       "name": "model.prompt"
-     }
+     },
+     "link": 41
     },
     {
+     "localized_name": "resolution",
+     "name": "model.resolution",
+     "type": "COMBO",
+     "widget": {
+      "name": "model.resolution"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "image_1",
      "name": "model.reference_images.image_1",
+     "shape": 7,
      "type": "IMAGE",
-     "link": 42,
-     "label": "image_1",
-     "shape": 7
+     "link": 42
     },
     {
+     "localized_name": "image_2",
      "name": "model.reference_images.image_2",
+     "shape": 7,
      "type": "IMAGE",
-     "link": 43,
-     "label": "image_2",
-     "shape": 7
+     "link": 43
     },
     {
+     "localized_name": "image_3",
      "name": "model.reference_images.image_3",
+     "shape": 7,
      "type": "IMAGE",
-     "link": 44,
-     "label": "image_3",
-     "shape": 7
+     "link": 45
     },
     {
+     "localized_name": "image_4",
      "name": "model.reference_images.image_4",
+     "shape": 7,
      "type": "IMAGE",
-     "link": 45,
-     "label": "image_4",
-     "shape": 7
+     "link": null
     },
     {
-     "name": "model.reference_images.image_5",
-     "type": "IMAGE",
-     "link": null,
-     "label": "image_5",
-     "shape": 7
-    },
-    {
+     "localized_name": "video_1",
      "name": "model.reference_videos.video_1",
+     "shape": 7,
      "type": "VIDEO",
-     "link": 46,
-     "label": "video_1",
-     "shape": 7
+     "link": null
     },
     {
+     "localized_name": "video_2",
+     "name": "model.reference_videos.video_2",
+     "shape": 7,
+     "type": "VIDEO",
+     "link": null
+    },
+    {
+     "localized_name": "audio_1",
      "name": "model.reference_audios.audio_1",
+     "shape": 7,
      "type": "AUDIO",
-     "link": null,
-     "label": "audio_1",
-     "shape": 7
+     "link": null
+    },
+    {
+     "localized_name": "audio_2",
+     "name": "model.reference_audios.audio_2",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": null
+    },
+    {
+     "localized_name": "watermark",
+     "name": "watermark",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "watermark"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "VIDEO",
      "name": "VIDEO",
      "type": "VIDEO",
      "links": [
@@ -1604,9 +2366,15 @@
     "2K",
     false
    ],
-   "title": "MiniMax H3 Regenerate to 2K",
+   "widgets_values_named": {
+    "model": "MiniMax H3",
+    "model.prompt": "",
+    "model.resolution": "2K",
+    "watermark": false
+   },
    "color": "#432",
-   "bgcolor": "#653"
+   "bgcolor": "#653",
+   "title": "MiniMax H3 Regenerate to 2K"
   },
   {
    "id": 36,
@@ -1620,30 +2388,36 @@
     100
    ],
    "flags": {},
-   "order": 0,
+   "order": 36,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "on_false",
      "name": "on_false",
+     "shape": 7,
      "type": "VIDEO",
      "link": 47
     },
     {
+     "localized_name": "on_true",
      "name": "on_true",
+     "shape": 7,
      "type": "VIDEO",
      "link": 48
     },
     {
+     "localized_name": "switch",
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 49,
      "widget": {
       "name": "switch"
-     }
+     },
+     "link": 49
     }
    ],
    "outputs": [
     {
+     "localized_name": "output",
      "name": "output",
      "type": "VIDEO",
      "links": [
@@ -1651,13 +2425,16 @@
      ]
     }
    ],
+   "title": "Sortie : 768P / 2K",
    "properties": {
     "Node name for S&R": "ComfySwitchNode"
    },
    "widgets_values": [
     false
    ],
-   "title": "Sortie : 768P / 2K"
+   "widgets_values_named": {
+    "switch": false
+   }
   },
   {
    "id": 37,
@@ -1671,22 +2448,62 @@
     420
    ],
    "flags": {},
-   "order": 0,
+   "order": 37,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "video",
      "name": "video",
      "type": "VIDEO",
      "link": 50
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "format",
+     "name": "format",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "format.codec",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format.codec"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "video",
      "name": "video",
      "type": "VIDEO",
      "links": []
     }
    ],
+   "title": "Save — VIDÉO FINALE",
    "properties": {
     "Node name for S&R": "SaveVideo"
    },
@@ -1696,7 +2513,12 @@
     "auto",
     "auto"
    ],
-   "title": "Save — VIDÉO FINALE"
+   "widgets_values_named": {
+    "filename_prefix": "video/H3_v2v_final",
+    "format": "auto",
+    "format.codec": "auto",
+    "codec": "auto"
+   }
   },
   {
    "id": 38,
@@ -1710,17 +2532,22 @@
     700
    ],
    "flags": {},
-   "order": 0,
+   "order": 15,
    "mode": 0,
    "inputs": [],
    "outputs": [],
+   "title": "Mode d'emploi",
    "properties": {
     "Node name for S&R": "MarkdownNote"
    },
    "widgets_values": [
     "## Blocking → vidéo finale (MiniMax H3)\n\n**Entrées**\n- **Image 1** : model sheet (auto-fit 2048×1024 avec marges blanches : H3 refuse les ratios > 2.5:1, une planche 4 vues passe donc sans être coupée).\n- **Images 2-4** : moodboards (auto-fit 1024×1024).\n- **Video 1** : blocking Blender, 24-60 fps, 2 à 15 s.\n- Moins d'images : sélectionne le LoadImage + son Auto-fit et **Ctrl+M** (muet).\n  Adapte alors le nœud 🔗 RÔLES (le prompt cite les références par leur numéro).\n\n**Prompt**\n- 🔗 RÔLES dit au modèle quoi prendre dans chaque référence : c'est le nœud le plus important.\n- ➕ presets additifs : Ctrl+B pour activer/désactiver. Un seul preset de style à la fois.\n\n**Panneau de contrôle**\n- Prompt Enhancer : H3 Context IR réécrit le prompt en voyant les mêmes médias (payant, ~0,06-0,11 $).\n- Upscale 2K : re-rendu de la sortie 768P avec le même prompt et les mêmes références.\n- Durée : identique pour l'enhancer et la génération ; ≤ durée du blocking.\n\n**Coût** : affiché sur chaque nœud H3 (badge prix). Teste en 5 s avant de lancer 15 s."
    ],
-   "title": "Mode d'emploi"
+   "widgets_values_named": {
+    "text": "## Blocking → vidéo finale (MiniMax H3)\n\n**Entrées**\n- **Image 1** : model sheet (auto-fit 2048×1024 avec marges blanches : H3 refuse les ratios > 2.5:1, une planche 4 vues passe donc sans être coupée).\n- **Images 2-4** : moodboards (auto-fit 1024×1024).\n- **Video 1** : blocking Blender, 24-60 fps, 2 à 15 s.\n- Moins d'images : sélectionne le LoadImage + son Auto-fit et **Ctrl+M** (muet).\n  Adapte alors le nœud 🔗 RÔLES (le prompt cite les références par leur numéro).\n\n**Prompt**\n- 🔗 RÔLES dit au modèle quoi prendre dans chaque référence : c'est le nœud le plus important.\n- ➕ presets additifs : Ctrl+B pour activer/désactiver. Un seul preset de style à la fois.\n\n**Panneau de contrôle**\n- Prompt Enhancer : H3 Context IR réécrit le prompt en voyant les mêmes médias (payant, ~0,06-0,11 $).\n- Upscale 2K : re-rendu de la sortie 768P avec le même prompt et les mêmes références.\n- Durée : identique pour l'enhancer et la génération ; ≤ durée du blocking.\n\n**Coût** : affiché sur chaque nœud H3 (badge prix). Teste en 5 s avant de lancer 15 s."
+   },
+   "color": "#432",
+   "bgcolor": "#653"
   }
  ],
  "links": [
@@ -1885,22 +2712,6 @@
    "STRING"
   ],
   [
-   21,
-   29,
-   0,
-   30,
-   2,
-   "STRING"
-  ],
-  [
-   22,
-   3,
-   0,
-   30,
-   10,
-   "INT"
-  ],
-  [
    23,
    29,
    0,
@@ -1933,166 +2744,6 @@
    "STRING"
   ],
   [
-   27,
-   31,
-   0,
-   33,
-   0,
-   "STRING"
-  ],
-  [
-   28,
-   3,
-   0,
-   33,
-   9,
-   "INT"
-  ],
-  [
-   29,
-   5,
-   0,
-   30,
-   3,
-   "IMAGE"
-  ],
-  [
-   30,
-   5,
-   0,
-   33,
-   1,
-   "IMAGE"
-  ],
-  [
-   31,
-   8,
-   0,
-   30,
-   4,
-   "IMAGE"
-  ],
-  [
-   32,
-   8,
-   0,
-   33,
-   2,
-   "IMAGE"
-  ],
-  [
-   33,
-   11,
-   0,
-   30,
-   5,
-   "IMAGE"
-  ],
-  [
-   34,
-   11,
-   0,
-   33,
-   3,
-   "IMAGE"
-  ],
-  [
-   35,
-   14,
-   0,
-   30,
-   6,
-   "IMAGE"
-  ],
-  [
-   36,
-   14,
-   0,
-   33,
-   4,
-   "IMAGE"
-  ],
-  [
-   37,
-   16,
-   0,
-   30,
-   8,
-   "VIDEO"
-  ],
-  [
-   38,
-   16,
-   0,
-   33,
-   6,
-   "VIDEO"
-  ],
-  [
-   39,
-   33,
-   0,
-   34,
-   0,
-   "VIDEO"
-  ],
-  [
-   40,
-   34,
-   0,
-   35,
-   0,
-   "VIDEO"
-  ],
-  [
-   41,
-   32,
-   0,
-   35,
-   3,
-   "STRING"
-  ],
-  [
-   42,
-   5,
-   0,
-   35,
-   4,
-   "IMAGE"
-  ],
-  [
-   43,
-   8,
-   0,
-   35,
-   5,
-   "IMAGE"
-  ],
-  [
-   44,
-   11,
-   0,
-   35,
-   6,
-   "IMAGE"
-  ],
-  [
-   45,
-   14,
-   0,
-   35,
-   7,
-   "IMAGE"
-  ],
-  [
-   46,
-   16,
-   0,
-   35,
-   9,
-   "VIDEO"
-  ],
-  [
    47,
    34,
    0,
@@ -2117,16 +2768,129 @@
    "BOOLEAN"
   ],
   [
+   39,
+   33,
+   0,
+   34,
+   0,
+   "VIDEO"
+  ],
+  [
    50,
    36,
    0,
    37,
    0,
    "VIDEO"
+  ],
+  [
+   21,
+   29,
+   0,
+   30,
+   3,
+   "STRING"
+  ],
+  [
+   29,
+   5,
+   0,
+   30,
+   6,
+   "IMAGE"
+  ],
+  [
+   31,
+   8,
+   0,
+   30,
+   7,
+   "IMAGE"
+  ],
+  [
+   27,
+   31,
+   0,
+   33,
+   1,
+   "STRING"
+  ],
+  [
+   28,
+   3,
+   0,
+   33,
+   4,
+   "INT"
+  ],
+  [
+   30,
+   5,
+   0,
+   33,
+   5,
+   "IMAGE"
+  ],
+  [
+   32,
+   8,
+   0,
+   33,
+   6,
+   "IMAGE"
+  ],
+  [
+   38,
+   16,
+   0,
+   33,
+   8,
+   "VIDEO"
+  ],
+  [
+   40,
+   34,
+   0,
+   35,
+   0,
+   "VIDEO"
+  ],
+  [
+   41,
+   32,
+   0,
+   35,
+   4,
+   "STRING"
+  ],
+  [
+   42,
+   5,
+   0,
+   35,
+   6,
+   "IMAGE"
+  ],
+  [
+   43,
+   8,
+   0,
+   35,
+   7,
+   "IMAGE"
+  ],
+  [
+   45,
+   14,
+   0,
+   35,
+   8,
+   "IMAGE"
   ]
  ],
  "groups": [
   {
+   "id": 1,
    "title": "🎛️ CONTRÔLES",
    "bounding": [
     -2620,
@@ -2134,9 +2898,11 @@
     360,
     340
    ],
-   "color": "#555"
+   "color": "#555",
+   "flags": {}
   },
   {
+   "id": 2,
    "title": "RÉFÉRENCES (auto-fit) + BLOCKING",
    "bounding": [
     -2170,
@@ -2144,9 +2910,11 @@
     740,
     2140
    ],
-   "color": "#3f789e"
+   "color": "#3f789e",
+   "flags": {}
   },
   {
+   "id": 3,
    "title": "PROMPT (rôles + presets additifs) + ENHANCER",
    "bounding": [
     -1420,
@@ -2154,9 +2922,11 @@
     1360,
     1400
    ],
-   "color": "#3f6"
+   "color": "#3f6",
+   "flags": {}
   },
   {
+   "id": 4,
    "title": "GÉNÉRATION H3 + UPSCALE 2K",
    "bounding": [
     280,
@@ -2164,16 +2934,17 @@
     1040,
     1120
    ],
-   "color": "#a1883f"
+   "color": "#a1883f",
+   "flags": {}
   }
  ],
  "config": {},
  "extra": {
   "ds": {
-   "scale": 0.5,
+   "scale": 0.27491528142064386,
    "offset": [
-    2700,
-    200
+    3137.79726839657,
+    975.9627957653371
    ]
   }
  },

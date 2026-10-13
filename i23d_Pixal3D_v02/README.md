@@ -9,7 +9,7 @@
 3. **🔀 Routage des vues** (2 `ComfySwitchNode` pilotés par le même booléen, entrées inversées) — la vue de côté part dans le slot `left` (ON) ou `right` (OFF) selon le flanc montré ; le dos peut être désactivé.
 4. **🧭 Conditionnement** (`Pixal3DMultiViewConditioning`, DINOv3) — face = premier slot, donc la face définit l'avant du mesh.
 5. **🧊 Génération Pixal3D** (Trellis.2) — ① structure (32³) → ② forme 512 → ③ détail (upsample 1536) → `VaeDecodeShapeTrellis`. Réglages CFG / shift repris du template officiel.
-6. **♻️ Mesh** — `WeldVertices` → `FillHoles` (petits trous) → `RemeshMesh` **UDF** par défaut (coque interne inversée / englobée retirée) — ou **SDF** expérimental via switch — → `DecimateMesh` (QEM midpoint) → `MeshSmoothNormals` → stats. Résolution remesh auto depuis le poly count (min 128).
+6. **♻️ Mesh** — `WeldVertices` → `FillHoles` (petits trous) → `RemeshMesh` **SDF paroi simple** par défaut (une seule surface fermée) — ou **UDF** de secours via switch si le SDF sort troué ou bruité — → `DecimateMesh` (QEM midpoint) → `MeshSmoothNormals` → stats. Résolution remesh auto depuis le poly count (min 128).
 7. **💾 Sortie** (`StringFormat` + `SaveGLB`) — `output/i23d_Pixal3D/model_H<hauteur>cm_<tris>tris_00001_.glb`.
 8. **Hors ComfyUI** — `blender_scale_to_height.py` lit la hauteur dans le nom et met le modèle à l'échelle réelle, pieds au sol.
 
@@ -41,7 +41,7 @@ Aucun — 100 % natifs (`comfy-core`). Pas de nœud Partner / API. Nœuds 3D ré
 | 🎛️ Résolution détail | 1536 | 1024 rapide, 2048 plus fin (plus de VRAM). |
 | 🎛️ Lissage | 2 | Taubin sur le remesh. 0 = arêtes vives. |
 | KSampler ① / ② / ③ | 12 / 20 / 12 steps, CFG 7,5, euler | Valeurs du template officiel Pixal3D multivue. |
-| 🎛️ Remesh SDF paroi simple | **OFF (UDF)** | UDF = meilleurs résultats en test ; double paroi possible là où le mesh brut est ouvert (manches, bas de veste), coque interne retirée seulement si elle est détachée. ON = SDF paroi simple, **expérimental** : résultats médiocres sur Pixal3D en test. |
+| 🎛️ Remesh SDF paroi simple | **ON (SDF)** | SDF = une seule surface fermée (paroi simple). OFF = UDF de secours si le SDF sort troué ou bruité : l'UDF crée par nature une double paroi là où le mesh brut est ouvert (manches, bas de veste), coque interne retirée seulement si elle est détachée. |
 | 🩹 Boucher les trous `max_perimeter` | 0,03 | Ferme les petits trous avant le remesh (le signe SDF a besoin d'une surface fermée). |
 
 ## Entrées attendues
@@ -61,7 +61,7 @@ Pas de prompt texte dans ce WF. [CONTEXT_prompt-set_i23d_Pixal3D_v02.md](CONTEXT
 
 ## Changements v02
 
-- **Correction double paroi** : en v01, le remesh UDF (champ de distance non signé) crée par nature deux surfaces décalées autour de la paroi ; la coque intérieure n'était supprimée que si elle formait un morceau séparé, ce qui n'est pas le cas dès que le mesh Pixal3D a des trous → « épaisseur » visible en coupe. v02 ajoute un remesh **SDF** (une seule surface) en option et le bouchage des trous, plus `drop_enclosed_components` en UDF. **En test, le SDF donne de mauvais résultats sur Pixal3D : UDF reste le défaut.**
+- **Correction double paroi** : en v01, le remesh UDF (champ de distance non signé) crée par nature deux surfaces décalées autour de la paroi ; la coque intérieure n'était supprimée que si elle formait un morceau séparé, ce qui n'est pas le cas dès que le mesh Pixal3D a des trous → « épaisseur » visible en coupe. v02 ajoute un remesh **SDF** (une seule surface) et le bouchage des trous, plus `drop_enclosed_components` en UDF. **Le SDF paroi simple est désormais le défaut** (mise à jour Comfy Cloud du 05/10/2026) ; l'UDF reste disponible en secours via le switch.
 - Switch côté gauche / droite sans `InvertBooleanNode` (absent de Comfy Cloud).
 
 ## Limites connues
@@ -70,7 +70,7 @@ Pas de prompt texte dans ce WF. [CONTEXT_prompt-set_i23d_Pixal3D_v02.md](CONTEXT
 - **Triangles uniquement** (glTF), pas de quad ni de symétrie → Blender après coup.
 - La vue **3/4 n'influence pas** la forme.
 - Le poly count est un **maximum** ; si le remesh produit moins de faces, la décimation ne fait rien.
-- **Double paroi (UDF)** aux ouvertures du mesh brut : non résolue de façon native. Nettoyage dans Blender si besoin (sélection de la coque interne en *Select Linked*, ou Remesh Voxel).
+- **Double paroi (mode UDF de secours)** aux ouvertures du mesh brut : non résolue de façon native. Nettoyage dans Blender si besoin (sélection de la coque interne en *Select Linked*, ou Remesh Voxel).
 - Manifold : le remesh + décimation QEM donnent un mesh fermé et soudé, mais à vérifier (Blender : *Select > All by Trait > Non Manifold*), surtout sur les parties très fines.
 - Le `StringFormat` (entrées dynamiques) est récent : si le nom de fichier sort mal, saisir le préfixe à la main dans `SaveGLB`.
 - Aperçu 3D vide (« Failed to initialize 3D Viewer ») = WebGL du navigateur ; fichier dans **Assets → Generated**.

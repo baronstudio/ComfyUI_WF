@@ -1,4 +1,6 @@
 {
+ "id": "b1f693d1-8ded-4fd0-b5e1-256af291734e",
+ "revision": 0,
  "last_node_id": 44,
  "last_link_id": 55,
  "nodes": [
@@ -16,9 +18,48 @@
    "flags": {},
    "order": 0,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "aspect_ratio",
+     "name": "aspect_ratio",
+     "type": "COMBO",
+     "widget": {
+      "name": "aspect_ratio"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "megapixels",
+     "name": "megapixels",
+     "type": "FLOAT",
+     "widget": {
+      "name": "megapixels"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "multiple",
+     "name": "multiple",
+     "type": "INT",
+     "widget": {
+      "name": "multiple"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "preview",
+     "name": "preview",
+     "shape": 7,
+     "type": "RESOLUTION_PREVIEW",
+     "widget": {
+      "name": "preview"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "width",
      "name": "width",
      "type": "INT",
      "links": [
@@ -27,6 +68,7 @@
      ]
     },
     {
+     "localized_name": "height",
      "name": "height",
      "type": "INT",
      "links": [
@@ -35,6 +77,7 @@
      ]
     }
    ],
+   "title": "🎛️ FORMAT VIDÉO (0.98 MP = 768p officiel)",
    "properties": {
     "Node name for S&R": "ResolutionSelector"
    },
@@ -43,7 +86,11 @@
     0.98,
     32
    ],
-   "title": "🎛️ FORMAT VIDÉO (0.98 MP = 768p officiel)",
+   "widgets_values_named": {
+    "aspect_ratio": "16:9 (Widescreen)",
+    "megapixels": 1,
+    "multiple": 32
+   },
    "color": "#2a2a44",
    "bgcolor": "#3a3a66"
   },
@@ -59,11 +106,22 @@
     58
    ],
    "flags": {},
-   "order": 0,
+   "order": 1,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "FLOAT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "FLOAT",
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
@@ -73,13 +131,16 @@
      ]
     }
    ],
+   "title": "🎛️ FRAMERATE cible (24 / 48 / 72 · 25 / 50)",
    "properties": {
     "Node name for S&R": "PrimitiveFloat"
    },
    "widgets_values": [
-    24.0
+    24
    ],
-   "title": "🎛️ FRAMERATE cible (24 / 48 / 72 · 25 / 50)",
+   "widgets_values_named": {
+    "value": 24
+   },
    "color": "#2a2a44",
    "bgcolor": "#3a3a66"
   },
@@ -95,11 +156,22 @@
     58
    ],
    "flags": {},
-   "order": 0,
+   "order": 2,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "FLOAT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "FLOAT",
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
@@ -107,13 +179,16 @@
      ]
     }
    ],
+   "title": "🎛️ Durée (s, ~5-15)",
    "properties": {
     "Node name for S&R": "PrimitiveFloat"
    },
    "widgets_values": [
-    5.0
+    5
    ],
-   "title": "🎛️ Durée (s, ~5-15)",
+   "widgets_values_named": {
+    "value": 5
+   },
    "color": "#2a2a44",
    "bgcolor": "#3a3a66"
   },
@@ -129,11 +204,22 @@
     58
    ],
    "flags": {},
-   "order": 0,
+   "order": 3,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "BOOLEAN",
      "name": "BOOLEAN",
      "type": "BOOLEAN",
      "links": [
@@ -142,13 +228,16 @@
      ]
     }
    ],
+   "title": "🎛️ Mode TURBO (LoRA 8 steps)",
    "properties": {
     "Node name for S&R": "PrimitiveBoolean"
    },
    "widgets_values": [
     true
    ],
-   "title": "🎛️ Mode TURBO (LoRA 8 steps)",
+   "widgets_values_named": {
+    "value": true
+   },
    "color": "#2a2a44",
    "bgcolor": "#3a3a66"
   },
@@ -164,11 +253,22 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 4,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "INT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
@@ -176,6 +276,7 @@
      ]
     }
    ],
+   "title": "🎛️ Steps qualité",
    "properties": {
     "Node name for S&R": "PrimitiveInt"
    },
@@ -183,7 +284,10 @@
     20,
     "fixed"
    ],
-   "title": "🎛️ Steps qualité",
+   "widgets_values_named": {
+    "value": 20,
+    "fixed": "fixed"
+   },
    "color": "#2a2a44",
    "bgcolor": "#3a3a66"
   },
@@ -199,11 +303,22 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 5,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "INT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
@@ -211,6 +326,7 @@
      ]
     }
    ],
+   "title": "🎛️ Steps Turbo",
    "properties": {
     "Node name for S&R": "PrimitiveInt"
    },
@@ -218,7 +334,10 @@
     8,
     "fixed"
    ],
-   "title": "🎛️ Steps Turbo",
+   "widgets_values_named": {
+    "value": 8,
+    "fixed": "fixed"
+   },
    "color": "#2a2a44",
    "bgcolor": "#3a3a66"
   },
@@ -234,11 +353,22 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 6,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "noise_seed",
+     "name": "noise_seed",
+     "type": "INT",
+     "widget": {
+      "name": "noise_seed"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "NOISE",
      "name": "NOISE",
      "type": "NOISE",
      "links": [
@@ -246,6 +376,7 @@
      ]
     }
    ],
+   "title": "🎛️ Seed",
    "properties": {
     "Node name for S&R": "RandomNoise"
    },
@@ -253,7 +384,10 @@
     42,
     "randomize"
    ],
-   "title": "🎛️ Seed",
+   "widgets_values_named": {
+    "noise_seed": 933078660141824,
+    "control_after_generate": "randomize"
+   },
    "color": "#2a2a44",
    "bgcolor": "#3a3a66"
   },
@@ -269,11 +403,31 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 7,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "unet_name",
+     "name": "unet_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "unet_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "weight_dtype",
+     "name": "weight_dtype",
+     "type": "COMBO",
+     "widget": {
+      "name": "weight_dtype"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -282,6 +436,7 @@
      ]
     }
    ],
+   "title": "MiniMax H3 fl2va (local, int8)",
    "properties": {
     "Node name for S&R": "UNETLoader"
    },
@@ -289,7 +444,10 @@
     "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
     "default"
    ],
-   "title": "MiniMax H3 fl2va (local, int8)"
+   "widgets_values_named": {
+    "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+    "weight_dtype": "default"
+   }
   },
   {
    "id": 9,
@@ -303,11 +461,41 @@
     106
    ],
    "flags": {},
-   "order": 0,
+   "order": 8,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "clip_name",
+     "name": "clip_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "clip_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "type",
+     "name": "type",
+     "type": "COMBO",
+     "widget": {
+      "name": "type"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "device",
+     "name": "device",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "device"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "CLIP",
      "name": "CLIP",
      "type": "CLIP",
      "links": [
@@ -315,6 +503,7 @@
      ]
     }
    ],
+   "title": "Text encoder Qwen3-VL 32B",
    "properties": {
     "Node name for S&R": "CLIPLoader"
    },
@@ -323,7 +512,11 @@
     "minimax",
     "default"
    ],
-   "title": "Text encoder Qwen3-VL 32B"
+   "widgets_values_named": {
+    "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "type": "minimax",
+    "device": "default"
+   }
   },
   {
    "id": 10,
@@ -337,11 +530,22 @@
     58
    ],
    "flags": {},
-   "order": 0,
+   "order": 9,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "vae_name",
+     "name": "vae_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "vae_name"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "VAE",
      "name": "VAE",
      "type": "VAE",
      "links": [
@@ -350,13 +554,16 @@
      ]
     }
    ],
+   "title": "VAE vidéo H3",
    "properties": {
     "Node name for S&R": "VAELoader"
    },
    "widgets_values": [
     "minimax_h3_video_vae_int8_convrot.safetensors"
    ],
-   "title": "VAE vidéo H3"
+   "widgets_values_named": {
+    "vae_name": "minimax_h3_video_vae_int8_convrot.safetensors"
+   }
   },
   {
    "id": 11,
@@ -370,11 +577,22 @@
     58
    ],
    "flags": {},
-   "order": 0,
+   "order": 10,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "vae_name",
+     "name": "vae_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "vae_name"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "VAE",
      "name": "VAE",
      "type": "VAE",
      "links": [
@@ -382,13 +600,16 @@
      ]
     }
    ],
+   "title": "VAE audio H3",
    "properties": {
     "Node name for S&R": "VAELoader"
    },
    "widgets_values": [
     "minimax_h3_audio_vae_fp32.safetensors"
    ],
-   "title": "VAE audio H3"
+   "widgets_values_named": {
+    "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+   }
   },
   {
    "id": 12,
@@ -402,17 +623,37 @@
     82
    ],
    "flags": {},
-   "order": 0,
+   "order": 24,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 1
+    },
+    {
+     "localized_name": "lora_name",
+     "name": "lora_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "lora_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "strength_model",
+     "name": "strength_model",
+     "type": "FLOAT",
+     "widget": {
+      "name": "strength_model"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "MODEL",
      "name": "MODEL",
      "type": "MODEL",
      "links": [
@@ -420,14 +661,18 @@
      ]
     }
    ],
+   "title": "LoRA Turbo 8 steps",
    "properties": {
     "Node name for S&R": "LoraLoaderModelOnly"
    },
    "widgets_values": [
     "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
-    1.0
+    1
    ],
-   "title": "LoRA Turbo 8 steps"
+   "widgets_values_named": {
+    "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+    "strength_model": 1
+   }
   },
   {
    "id": 13,
@@ -441,30 +686,36 @@
     100
    ],
    "flags": {},
-   "order": 0,
+   "order": 27,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "on_false",
      "name": "on_false",
+     "shape": 7,
      "type": "MODEL",
      "link": 2
     },
     {
+     "localized_name": "on_true",
      "name": "on_true",
+     "shape": 7,
      "type": "MODEL",
      "link": 3
     },
     {
+     "localized_name": "switch",
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 4,
      "widget": {
       "name": "switch"
-     }
+     },
+     "link": 4
     }
    ],
    "outputs": [
     {
+     "localized_name": "output",
      "name": "output",
      "type": "MODEL",
      "links": [
@@ -473,13 +724,16 @@
      ]
     }
    ],
+   "title": "Modèle : qualité / Turbo",
    "properties": {
     "Node name for S&R": "ComfySwitchNode"
    },
    "widgets_values": [
     false
    ],
-   "title": "Modèle : qualité / Turbo"
+   "widgets_values_named": {
+    "switch": false
+   }
   },
   {
    "id": 14,
@@ -493,30 +747,36 @@
     100
    ],
    "flags": {},
-   "order": 0,
+   "order": 23,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "on_false",
      "name": "on_false",
+     "shape": 7,
      "type": "INT",
      "link": 5
     },
     {
+     "localized_name": "on_true",
      "name": "on_true",
+     "shape": 7,
      "type": "INT",
      "link": 6
     },
     {
+     "localized_name": "switch",
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 7,
      "widget": {
       "name": "switch"
-     }
+     },
+     "link": 7
     }
    ],
    "outputs": [
     {
+     "localized_name": "output",
      "name": "output",
      "type": "INT",
      "links": [
@@ -524,13 +784,16 @@
      ]
     }
    ],
+   "title": "Steps : qualité / Turbo",
    "properties": {
     "Node name for S&R": "ComfySwitchNode"
    },
    "widgets_values": [
     false
    ],
-   "title": "Steps : qualité / Turbo"
+   "widgets_values_named": {
+    "switch": false
+   }
   },
   {
    "id": 15,
@@ -544,11 +807,31 @@
     360
    ],
    "flags": {},
-   "order": 0,
+   "order": 11,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -556,19 +839,24 @@
      ]
     },
     {
+     "localized_name": "MASK",
      "name": "MASK",
      "type": "MASK",
      "links": []
     }
    ],
+   "title": "🖼️ IMAGE DE DÉPART (1re frame)",
    "properties": {
     "Node name for S&R": "LoadImage"
    },
    "widgets_values": [
-    "image_depart.png",
+    "fdf7369e71ef2cda1a757f8b51cb43388fdabddea304c85562a23ea3cb4189f4.png",
     "image"
    ],
-   "title": "🖼️ IMAGE DE DÉPART (1re frame)",
+   "widgets_values_named": {
+    "image": "fdf7369e71ef2cda1a757f8b51cb43388fdabddea304c85562a23ea3cb4189f4.png",
+    "upload": "image"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -584,33 +872,55 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 25,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "image",
      "name": "image",
      "type": "IMAGE",
      "link": 8
     },
     {
-     "name": "width",
-     "type": "INT",
-     "link": 9,
+     "localized_name": "upscale_method",
+     "name": "upscale_method",
+     "type": "COMBO",
      "widget": {
-      "name": "width"
-     }
+      "name": "upscale_method"
+     },
+     "link": null
     },
     {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": 9
+    },
+    {
+     "localized_name": "height",
      "name": "height",
      "type": "INT",
-     "link": 10,
      "widget": {
       "name": "height"
-     }
+     },
+     "link": 10
+    },
+    {
+     "localized_name": "crop",
+     "name": "crop",
+     "type": "COMBO",
+     "widget": {
+      "name": "crop"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -619,6 +929,7 @@
      ]
     }
    ],
+   "title": "Auto-fit au format (resize + crop centre)",
    "properties": {
     "Node name for S&R": "ImageScale"
    },
@@ -628,7 +939,12 @@
     768,
     "center"
    ],
-   "title": "Auto-fit au format (resize + crop centre)",
+   "widgets_values_named": {
+    "upscale_method": "lanczos",
+    "width": 1344,
+    "height": 768,
+    "crop": "disabled"
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -644,21 +960,28 @@
     220
    ],
    "flags": {},
-   "order": 0,
+   "order": 28,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 11
     }
    ],
-   "outputs": [],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "title": "Contrôle cadrage",
    "properties": {
     "Node name for S&R": "PreviewImage"
-   },
-   "widgets_values": [],
-   "title": "Contrôle cadrage"
+   }
   },
   {
    "id": 18,
@@ -672,11 +995,22 @@
     220
    ],
    "flags": {},
-   "order": 0,
+   "order": 12,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -684,13 +1018,16 @@
      ]
     }
    ],
+   "title": "✏️ PROMPT DESCRIPTIF (action, caméra, ambiance, son)",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "The camera slowly pushes in while the character turns her head toward the window; soft morning light, dust particles floating in the air, gentle breeze moving the curtains."
    ],
-   "title": "✏️ PROMPT DESCRIPTIF (action, caméra, ambiance, son)",
+   "widgets_values_named": {
+    "value": "{\n  \"shot\": \"static low-angle wide shot of the kitchen at dawn from <Picture 1>, camera about 45 cm above the oak floor, level, 24 mm perspective\",\n  \"subject\": {\n    \"who\": \"the woman from <Picture 1>, visible from the shoulders down, her face always out of frame\",\n    \"outfit\": \"white semi-sheer blouse with black piping, slim black trousers, pointed black patent stiletto pumps\",\n    \"prop\": \"clear plastic lunch box with a red apple and a green apple inside, held in her right hand\"\n  },\n  \"action\": [\n    { \"time\": \"0-4 s\", \"beat\": \"she is already walking toward the right and continues with brisk, regular steps at the same pace, moving slightly toward the camera to pass in front of the cat feeder and its white bowl without touching them; the lunch box stays in her right hand and swings gently with each step\" },\n    { \"time\": \"around 4 s\", \"beat\": \"her back heel leaves the frame through the right edge\" },\n    { \"time\": \"4-10 s\", \"beat\": \"the kitchen is empty; fine dust drifts slowly in the golden sunbeams\" }\n  ],\n  \"camera\": \"static locked-off; the framing stays identical for the whole shot\",\n  \"static_elements\": \"the oak drawers, the fridge, the cat feeder with its screen showing \\\"07:00\\\", the kibble, the white bowl, the rosemary pot and the balcony railing stay perfectly still, sharp and identical to <Picture 1>\",\n  \"lighting\": \"low warm golden sunrise light from the balcony door on the right, backlighting her; her shadow moves across the oak drawers and the floorboards with her, then the drawers are fully lit; the light stays constant\",\n  \"audio\": {\n    \"ambience\": \"quiet morning room tone with a soft distant city hum\",\n    \"sfx\": [\n      \"close, crisp high-heel clicks on the wooden floor, one per step, fading as she exits right\",\n      \"faint plastic rattle of the lunch box\"\n    ],\n    \"music\": \"none\",\n    \"dialogue\": \"none\"\n  }\n}"
+   },
    "color": "#233",
    "bgcolor": "#355"
   },
@@ -706,11 +1043,22 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 13,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -718,13 +1066,16 @@
      ]
     }
    ],
+   "title": "Preset 🎥 Caméra douce",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "Smooth, stable camera motion, no sudden cuts, natural motion blur."
    ],
-   "title": "Preset 🎥 Caméra douce"
+   "widgets_values_named": {
+    "value": "Smooth, stable camera motion, no sudden cuts, natural motion blur."
+   }
   },
   {
    "id": 20,
@@ -734,32 +1085,44 @@
     670
    ],
    "size": [
-    300,
-    100
+    301.8166564941406,
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 26,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 12,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 12
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 13,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 13
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -767,6 +1130,7 @@
      ]
     }
    ],
+   "title": "➕ 🎥 Caméra douce (ACTIF — Ctrl+B)",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -775,7 +1139,11 @@
     "",
     "\n\n"
    ],
-   "title": "➕ 🎥 Caméra douce (ACTIF — Ctrl+B)"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 21,
@@ -789,11 +1157,22 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 14,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -801,13 +1180,16 @@
      ]
     }
    ],
+   "title": "Preset 🔒 Fidélité à l'image",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "Keep the exact look, identity, colors and composition of the first frame; consistent details in every frame, no morphing, no flicker."
    ],
-   "title": "Preset 🔒 Fidélité à l'image"
+   "widgets_values_named": {
+    "value": "Keep the exact look, identity, colors and composition of the first frame; consistent details in every frame, no morphing, no flicker."
+   }
   },
   {
    "id": 22,
@@ -817,32 +1199,44 @@
     820
    ],
    "size": [
-    300,
-    100
+    316.15,
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 29,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 14,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 14
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 15,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 15
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -850,6 +1244,7 @@
      ]
     }
    ],
+   "title": "➕ 🔒 Fidélité à l'image (ACTIF — Ctrl+B)",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -858,7 +1253,11 @@
     "",
     "\n\n"
    ],
-   "title": "➕ 🔒 Fidélité à l'image (ACTIF — Ctrl+B)"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 23,
@@ -872,11 +1271,22 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 15,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -884,13 +1294,16 @@
      ]
     }
    ],
+   "title": "Preset 🔊 Audio d'ambiance",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "Audio: subtle natural ambient sound matching the scene, no music, no dialogue."
    ],
-   "title": "Preset 🔊 Audio d'ambiance"
+   "widgets_values_named": {
+    "value": "Audio: subtle natural ambient sound matching the scene, no music, no dialogue."
+   }
   },
   {
    "id": 24,
@@ -900,32 +1313,44 @@
     970
    ],
    "size": [
-    300,
-    100
+    324.1833251953125,
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 31,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 16,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 16
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 17,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 17
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -933,6 +1358,7 @@
      ]
     }
    ],
+   "title": "➕ 🔊 Audio d'ambiance (ACTIF — Ctrl+B)",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -941,7 +1367,11 @@
     "",
     "\n\n"
    ],
-   "title": "➕ 🔊 Audio d'ambiance (ACTIF — Ctrl+B)"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 25,
@@ -955,11 +1385,22 @@
     130
    ],
    "flags": {},
-   "order": 0,
+   "order": 16,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -967,13 +1408,16 @@
      ]
     }
    ],
+   "title": "Preset 🎬 Cinéma",
    "properties": {
     "Node name for S&R": "PrimitiveStringMultiline"
    },
    "widgets_values": [
     "Cinematic lighting, subtle film grain, professional color grading, shallow depth of field."
    ],
-   "title": "Preset 🎬 Cinéma"
+   "widgets_values_named": {
+    "value": "Cinematic lighting, subtle film grain, professional color grading, shallow depth of field."
+   }
   },
   {
    "id": 26,
@@ -984,31 +1428,43 @@
    ],
    "size": [
     300,
-    100
+    166
    ],
    "flags": {},
-   "order": 0,
+   "order": 32,
    "mode": 4,
    "inputs": [
     {
+     "localized_name": "string_a",
      "name": "string_a",
      "type": "STRING",
-     "link": 18,
      "widget": {
       "name": "string_a"
-     }
+     },
+     "link": 18
     },
     {
+     "localized_name": "string_b",
      "name": "string_b",
      "type": "STRING",
-     "link": 19,
      "widget": {
       "name": "string_b"
-     }
+     },
+     "link": 19
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "STRING",
      "name": "STRING",
      "type": "STRING",
      "links": [
@@ -1016,6 +1472,7 @@
      ]
     }
    ],
+   "title": "➕ 🎬 Cinéma (OFF — Ctrl+B)",
    "properties": {
     "Node name for S&R": "StringConcatenate"
    },
@@ -1024,7 +1481,11 @@
     "",
     "\n\n"
    ],
-   "title": "➕ 🎬 Cinéma (OFF — Ctrl+B)"
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": "\n\n"
+   }
   },
   {
    "id": 27,
@@ -1035,33 +1496,45 @@
    ],
    "size": [
     340,
-    120
+    128
    ],
    "flags": {},
-   "order": 0,
+   "order": 22,
    "mode": 0,
    "inputs": [
     {
+     "label": "a",
+     "localized_name": "a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 20,
-     "label": "a"
+     "link": 20
     },
     {
+     "localized_name": "b",
      "name": "values.b",
+     "shape": 7,
      "type": "FLOAT,INT,BOOLEAN",
-     "link": null,
-     "label": "b",
-     "shape": 7
+     "link": null
+    },
+    {
+     "localized_name": "expression",
+     "name": "expression",
+     "type": "STRING",
+     "widget": {
+      "name": "expression"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "FLOAT",
      "name": "FLOAT",
      "type": "FLOAT",
      "links": []
     },
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
@@ -1069,18 +1542,22 @@
      ]
     },
     {
+     "localized_name": "BOOL",
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": []
     }
    ],
+   "title": "Durée → frames (grille 17k+5 à 24 fps)",
    "properties": {
     "Node name for S&R": "ComfyMathExpression"
    },
    "widgets_values": [
     "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
    ],
-   "title": "Durée → frames (grille 17k+5 à 24 fps)"
+   "widgets_values_named": {
+    "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
+   }
   },
   {
    "id": 28,
@@ -1094,66 +1571,75 @@
     340
    ],
    "flags": {},
-   "order": 0,
+   "order": 33,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "clip",
      "name": "clip",
      "type": "CLIP",
      "link": 21
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 22
     },
     {
+     "localized_name": "first_frame",
      "name": "first_frame",
+     "shape": 7,
      "type": "IMAGE",
-     "link": 23,
-     "shape": 7
+     "link": 23
     },
     {
+     "localized_name": "last_frame",
      "name": "last_frame",
+     "shape": 7,
      "type": "IMAGE",
-     "link": null,
-     "shape": 7
+     "link": null
     },
     {
+     "localized_name": "prompt",
      "name": "prompt",
      "type": "STRING",
-     "link": 24,
      "widget": {
       "name": "prompt"
-     }
+     },
+     "link": 24
     },
     {
+     "localized_name": "width",
      "name": "width",
      "type": "INT",
-     "link": 25,
      "widget": {
       "name": "width"
-     }
+     },
+     "link": 25
     },
     {
+     "localized_name": "height",
      "name": "height",
      "type": "INT",
-     "link": 26,
      "widget": {
       "name": "height"
-     }
+     },
+     "link": 26
     },
     {
+     "localized_name": "length",
      "name": "length",
      "type": "INT",
-     "link": 27,
      "widget": {
       "name": "length"
-     }
+     },
+     "link": 27
     }
    ],
    "outputs": [
     {
+     "localized_name": "positive",
      "name": "positive",
      "type": "CONDITIONING",
      "links": [
@@ -1161,6 +1647,7 @@
      ]
     },
     {
+     "localized_name": "LATENT",
      "name": "LATENT",
      "type": "LATENT",
      "links": [
@@ -1168,6 +1655,7 @@
      ]
     }
    ],
+   "title": "🎥 MiniMax H3 Image to Video (local)",
    "properties": {
     "Node name for S&R": "MiniMaxH3ImageToVideo"
    },
@@ -1177,7 +1665,12 @@
     768,
     124
    ],
-   "title": "🎥 MiniMax H3 Image to Video (local)",
+   "widgets_values_named": {
+    "prompt": "",
+    "width": 1344,
+    "height": 768,
+    "length": 124
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -1193,15 +1686,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 34,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 28
     },
     {
+     "localized_name": "conditioning",
      "name": "conditioning",
      "type": "CONDITIONING",
      "link": 29
@@ -1209,6 +1704,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "GUIDER",
      "name": "GUIDER",
      "type": "GUIDER",
      "links": [
@@ -1218,8 +1714,7 @@
    ],
    "properties": {
     "Node name for S&R": "BasicGuider"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 30,
@@ -1233,11 +1728,22 @@
     58
    ],
    "flags": {},
-   "order": 0,
+   "order": 17,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "SAMPLER",
      "name": "SAMPLER",
      "type": "SAMPLER",
      "links": [
@@ -1250,7 +1756,10 @@
    },
    "widgets_values": [
     "res_multistep"
-   ]
+   ],
+   "widgets_values_named": {
+    "sampler_name": "res_multistep"
+   }
   },
   {
    "id": 31,
@@ -1264,25 +1773,46 @@
     106
    ],
    "flags": {},
-   "order": 0,
+   "order": 30,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "model",
      "name": "model",
      "type": "MODEL",
      "link": 30
     },
     {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
      "name": "steps",
      "type": "INT",
-     "link": 31,
      "widget": {
       "name": "steps"
-     }
+     },
+     "link": 31
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "SIGMAS",
      "name": "SIGMAS",
      "type": "SIGMAS",
      "links": [
@@ -1296,8 +1826,13 @@
    "widgets_values": [
     "simple",
     8,
-    1.0
-   ]
+    1
+   ],
+   "widgets_values_named": {
+    "scheduler": "simple",
+    "steps": 8,
+    "denoise": 1
+   }
   },
   {
    "id": 32,
@@ -1311,30 +1846,35 @@
     110
    ],
    "flags": {},
-   "order": 0,
+   "order": 35,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "noise",
      "name": "noise",
      "type": "NOISE",
      "link": 32
     },
     {
+     "localized_name": "guider",
      "name": "guider",
      "type": "GUIDER",
      "link": 33
     },
     {
+     "localized_name": "sampler",
      "name": "sampler",
      "type": "SAMPLER",
      "link": 34
     },
     {
+     "localized_name": "sigmas",
      "name": "sigmas",
      "type": "SIGMAS",
      "link": 35
     },
     {
+     "localized_name": "latent_image",
      "name": "latent_image",
      "type": "LATENT",
      "link": 36
@@ -1342,6 +1882,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "output",
      "name": "output",
      "type": "LATENT",
      "links": [
@@ -1350,6 +1891,7 @@
      ]
     },
     {
+     "localized_name": "denoised_output",
      "name": "denoised_output",
      "type": "LATENT",
      "links": []
@@ -1357,8 +1899,7 @@
    ],
    "properties": {
     "Node name for S&R": "SamplerCustomAdvanced"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 33,
@@ -1372,15 +1913,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 36,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "samples",
      "name": "samples",
      "type": "LATENT",
      "link": 37
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 38
@@ -1388,6 +1931,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -1399,8 +1943,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEDecode"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 34,
@@ -1414,15 +1957,17 @@
     46
    ],
    "flags": {},
-   "order": 0,
+   "order": 37,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "samples",
      "name": "samples",
      "type": "LATENT",
      "link": 39
     },
     {
+     "localized_name": "vae",
      "name": "vae",
      "type": "VAE",
      "link": 40
@@ -1430,6 +1975,7 @@
    ],
    "outputs": [
     {
+     "localized_name": "AUDIO",
      "name": "AUDIO",
      "type": "AUDIO",
      "links": [
@@ -1440,8 +1986,7 @@
    ],
    "properties": {
     "Node name for S&R": "VAEDecodeAudio"
-   },
-   "widgets_values": []
+   }
   },
   {
    "id": 35,
@@ -1452,26 +1997,68 @@
    ],
    "size": [
     280,
-    100
+    150
    ],
    "flags": {},
-   "order": 0,
+   "order": 39,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 41
     },
     {
+     "localized_name": "audio",
      "name": "audio",
+     "shape": 7,
      "type": "AUDIO",
-     "link": 42,
-     "shape": 7
+     "link": 42
+    },
+    {
+     "localized_name": "fps",
+     "name": "fps",
+     "type": "FLOAT",
+     "widget": {
+      "name": "fps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "bit_depth",
+     "name": "bit_depth",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "bit_depth"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "color_space",
+     "name": "color_space",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "color_space"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "VIDEO",
      "name": "VIDEO",
      "type": "VIDEO",
      "links": [
@@ -1479,13 +2066,22 @@
      ]
     }
    ],
+   "title": "Vidéo native 24 fps",
    "properties": {
     "Node name for S&R": "CreateVideo"
    },
    "widgets_values": [
-    24.0
+    24,
+    "auto",
+    "sRGB",
+    "none"
    ],
-   "title": "Vidéo native 24 fps"
+   "widgets_values_named": {
+    "fps": 24,
+    "bit_depth": "auto",
+    "color_space": "sRGB",
+    "codec": "none"
+   }
   },
   {
    "id": 36,
@@ -1499,22 +2095,62 @@
     320
    ],
    "flags": {},
-   "order": 0,
+   "order": 41,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "video",
      "name": "video",
      "type": "VIDEO",
      "link": 43
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "format",
+     "name": "format",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "format.codec",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format.codec"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "video",
      "name": "video",
      "type": "VIDEO",
      "links": []
     }
    ],
+   "title": "Save — master 24 fps (avec son)",
    "properties": {
     "Node name for S&R": "SaveVideo"
    },
@@ -1524,7 +2160,12 @@
     "auto",
     "auto"
    ],
-   "title": "Save — master 24 fps (avec son)"
+   "widgets_values_named": {
+    "filename_prefix": "video/H3_local_i2v_24fps",
+    "format": "auto",
+    "format.codec": "auto",
+    "codec": "auto"
+   }
   },
   {
    "id": 37,
@@ -1535,33 +2176,45 @@
    ],
    "size": [
     340,
-    120
+    128
    ],
    "flags": {},
-   "order": 0,
+   "order": 20,
    "mode": 0,
    "inputs": [
     {
+     "label": "a",
+     "localized_name": "a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 44,
-     "label": "a"
+     "link": 44
     },
     {
+     "localized_name": "b",
      "name": "values.b",
+     "shape": 7,
      "type": "FLOAT,INT,BOOLEAN",
-     "link": null,
-     "label": "b",
-     "shape": 7
+     "link": null
+    },
+    {
+     "localized_name": "expression",
+     "name": "expression",
+     "type": "STRING",
+     "widget": {
+      "name": "expression"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "FLOAT",
      "name": "FLOAT",
      "type": "FLOAT",
      "links": []
     },
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": [
@@ -1569,18 +2222,22 @@
      ]
     },
     {
+     "localized_name": "BOOL",
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": []
     }
    ],
+   "title": "Multiplicateur = arrondi(fps / 24)",
    "properties": {
     "Node name for S&R": "ComfyMathExpression"
    },
    "widgets_values": [
     "max(2, round(a / 24))"
    ],
-   "title": "Multiplicateur = arrondi(fps / 24)"
+   "widgets_values_named": {
+    "expression": "max(2, round(a / 24))"
+   }
   },
   {
    "id": 38,
@@ -1591,28 +2248,39 @@
    ],
    "size": [
     340,
-    120
+    128
    ],
    "flags": {},
-   "order": 0,
+   "order": 21,
    "mode": 0,
    "inputs": [
     {
+     "label": "a",
+     "localized_name": "a",
      "name": "values.a",
      "type": "FLOAT,INT,BOOLEAN",
-     "link": 45,
-     "label": "a"
+     "link": 45
     },
     {
+     "localized_name": "b",
      "name": "values.b",
+     "shape": 7,
      "type": "FLOAT,INT,BOOLEAN",
-     "link": null,
-     "label": "b",
-     "shape": 7
+     "link": null
+    },
+    {
+     "localized_name": "expression",
+     "name": "expression",
+     "type": "STRING",
+     "widget": {
+      "name": "expression"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "FLOAT",
      "name": "FLOAT",
      "type": "FLOAT",
      "links": [
@@ -1620,23 +2288,28 @@
      ]
     },
     {
+     "localized_name": "INT",
      "name": "INT",
      "type": "INT",
      "links": []
     },
     {
+     "localized_name": "BOOL",
      "name": "BOOL",
      "type": "BOOLEAN",
      "links": []
     }
    ],
+   "title": "Interpolation nécessaire ? (fps > 36)",
    "properties": {
     "Node name for S&R": "ComfyMathExpression"
    },
    "widgets_values": [
     "a > 36"
    ],
-   "title": "Interpolation nécessaire ? (fps > 36)"
+   "widgets_values_named": {
+    "expression": "a > 36"
+   }
   },
   {
    "id": 39,
@@ -1650,11 +2323,22 @@
     58
    ],
    "flags": {},
-   "order": 0,
+   "order": 18,
    "mode": 0,
-   "inputs": [],
+   "inputs": [
+    {
+     "localized_name": "model_name",
+     "name": "model_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "model_name"
+     },
+     "link": null
+    }
+   ],
    "outputs": [
     {
+     "localized_name": "INTERP_MODEL",
      "name": "INTERP_MODEL",
      "type": "INTERP_MODEL",
      "links": [
@@ -1662,13 +2346,16 @@
      ]
     }
    ],
+   "title": "Modèle d'interpolation (FILM / RIFE)",
    "properties": {
     "Node name for S&R": "FrameInterpolationModelLoader"
    },
    "widgets_values": [
     "film_net_fp16.safetensors"
    ],
-   "title": "Modèle d'interpolation (FILM / RIFE)",
+   "widgets_values_named": {
+    "model_name": "film_net_fp16.safetensors"
+   },
    "color": "#432",
    "bgcolor": "#653"
   },
@@ -1684,30 +2371,34 @@
     100
    ],
    "flags": {},
-   "order": 0,
+   "order": 38,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "interp_model",
      "name": "interp_model",
      "type": "INTERP_MODEL",
      "link": 46
     },
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 47
     },
     {
+     "localized_name": "multiplier",
      "name": "multiplier",
      "type": "INT",
-     "link": 48,
      "widget": {
       "name": "multiplier"
-     }
+     },
+     "link": 48
     }
    ],
    "outputs": [
     {
+     "localized_name": "IMAGE",
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
@@ -1715,13 +2406,16 @@
      ]
     }
    ],
+   "title": "Interpolation d'images",
    "properties": {
     "Node name for S&R": "FrameInterpolate"
    },
    "widgets_values": [
     2
    ],
-   "title": "Interpolation d'images"
+   "widgets_values_named": {
+    "multiplier": 2
+   }
   },
   {
    "id": 41,
@@ -1735,30 +2429,36 @@
     100
    ],
    "flags": {},
-   "order": 0,
+   "order": 40,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "on_false",
      "name": "on_false",
+     "shape": 7,
      "type": "IMAGE",
      "link": 49
     },
     {
+     "localized_name": "on_true",
      "name": "on_true",
+     "shape": 7,
      "type": "IMAGE",
      "link": 50
     },
     {
+     "localized_name": "switch",
      "name": "switch",
      "type": "BOOLEAN",
-     "link": 51,
      "widget": {
       "name": "switch"
-     }
+     },
+     "link": 51
     }
    ],
    "outputs": [
     {
+     "localized_name": "output",
      "name": "output",
      "type": "IMAGE",
      "links": [
@@ -1766,13 +2466,16 @@
      ]
     }
    ],
+   "title": "Frames : natives / interpolées",
    "properties": {
     "Node name for S&R": "ComfySwitchNode"
    },
    "widgets_values": [
     false
    ],
-   "title": "Frames : natives / interpolées"
+   "widgets_values_named": {
+    "switch": false
+   }
   },
   {
    "id": 42,
@@ -1783,34 +2486,68 @@
    ],
    "size": [
     300,
-    120
+    150
    ],
    "flags": {},
-   "order": 0,
+   "order": 42,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "images",
      "name": "images",
      "type": "IMAGE",
      "link": 52
     },
     {
+     "localized_name": "audio",
      "name": "audio",
+     "shape": 7,
      "type": "AUDIO",
-     "link": 53,
-     "shape": 7
+     "link": 53
     },
     {
+     "localized_name": "fps",
      "name": "fps",
      "type": "FLOAT",
-     "link": 54,
      "widget": {
       "name": "fps"
-     }
+     },
+     "link": 54
+    },
+    {
+     "localized_name": "bit_depth",
+     "name": "bit_depth",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "bit_depth"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "color_space",
+     "name": "color_space",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "color_space"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "VIDEO",
      "name": "VIDEO",
      "type": "VIDEO",
      "links": [
@@ -1818,13 +2555,22 @@
      ]
     }
    ],
+   "title": "Assemble au framerate cible",
    "properties": {
     "Node name for S&R": "CreateVideo"
    },
    "widgets_values": [
-    24.0
+    24,
+    "auto",
+    "sRGB",
+    "none"
    ],
-   "title": "Assemble au framerate cible"
+   "widgets_values_named": {
+    "fps": 24,
+    "bit_depth": "auto",
+    "color_space": "sRGB",
+    "codec": "none"
+   }
   },
   {
    "id": 43,
@@ -1838,22 +2584,62 @@
     400
    ],
    "flags": {},
-   "order": 0,
+   "order": 43,
    "mode": 0,
    "inputs": [
     {
+     "localized_name": "video",
      "name": "video",
      "type": "VIDEO",
      "link": 55
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "format",
+     "name": "format",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "format.codec",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format.codec"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
     }
    ],
    "outputs": [
     {
+     "localized_name": "video",
      "name": "video",
      "type": "VIDEO",
      "links": []
     }
    ],
+   "title": "Save — VIDÉO FINALE",
    "properties": {
     "Node name for S&R": "SaveVideo"
    },
@@ -1863,31 +2649,41 @@
     "auto",
     "auto"
    ],
-   "title": "Save — VIDÉO FINALE"
+   "widgets_values_named": {
+    "filename_prefix": "video/H3_local_i2v_final",
+    "format": "auto",
+    "format.codec": "auto",
+    "codec": "auto"
+   }
   },
   {
    "id": 44,
    "type": "MarkdownNote",
    "pos": [
-    -2400,
-    830
+    -2920.594900064337,
+    -30.886200594196453
    ],
    "size": [
     480,
     640
    ],
    "flags": {},
-   "order": 0,
+   "order": 19,
    "mode": 0,
    "inputs": [],
    "outputs": [],
+   "title": "Mode d'emploi",
    "properties": {
     "Node name for S&R": "MarkdownNote"
    },
    "widgets_values": [
-    "## Image → vidéo — MiniMax H3 LOCAL (sans crédits partenaires)\n\nModèles open-weights **Comfy-Org/MiniMax-H3**, exécutés sur le GPU du cloud : pas de nœud API, pas de crédits en plus.\n\n**Panneau 🎛️**\n- **FORMAT** : ratio + 0.98 MP (= 1344×768, le 768p natif). Image recadrée au centre à ce format.\n- **FRAMERATE** : H3 génère en 24 fps.\n  - 24 → natif ; 48 / 72 → interpolation FILM ×2 / ×3 (exact, son synchro)\n  - 25 / 50 → conformation (+4 % de vitesse ; le son se décale légèrement)\n  - 30 / 60 → non exact : génère en 24/48 puis convertis dans Resolve/Premiere.\n- **Durée** : convertie en frames sur la grille du modèle (17k+5).\n- **TURBO** : LoRA 8 steps (actif par défaut). Désactive-le pour la qualité max (20 steps, ≈2,5× plus lent).\n\n**Prompt** : décris action, caméra ET son : H3 génère l'audio en même temps que l'image (voix, SFX, musique).\n\n**Charge** : modèle 19,5 Go + text encoder 14,6 Go. Le premier run est long (chargement)."
+    "## Image → vidéo — MiniMax H3 LOCAL (sans crédits partenaires)\n\nModèles open-weights **Comfy-Org/MiniMax-H3**, exécutés sur le GPU du cloud : pas de nœud API, pas de crédits en plus.\n\n**Panneau 🎛️**\n- **FORMAT** : ratio + 0.98 MP (= 1344×768, le 768p natif). Image recadrée au centre à ce format.\n- **FRAMERATE** : H3 génère en 24 fps.\n  - 24 → natif ; 48 / 72 → interpolation FILM ×2 / ×3 (exact, son synchro)\n  - 25 / 50 → conformation (+4 % de vitesse ; le son se décale légèrement)\n  - 30 / 60 → non exact : génère en 24/48 puis convertis dans Resolve/Premiere.\n- **Durée** : convertie en frames sur la grille du modèle (17k+5).\n- **TURBO** : LoRA 8 steps (actif par défaut). Désactive-le pour la qualité max (20 steps, ≈2,5× plus lent).\n\n**Prompt** : décris action, caméra ET son : H3 génère l'audio en même temps que l'image (voix, SFX, musique).\n\n**Charge** : modèle 19,5 Go + text encoder 14,6 Go. Le premier run est long (chargement).\n\n\n## PROMPT SET FOR CLAUDE\n# CONTEXT — Prompt-set generator for my ComfyUI workflow \"MiniMax H3 local — Image to Video\" (first frame → video 5–15 s + native audio)\n\nYou are a senior cinematographer, VFX supervisor and sound designer who writes production prompts for generative video.\nYour job: from my brief (and the first-frame image if I attach one), write the **prompt and settings** for my ComfyUI workflow, ready to paste.\n\n## 1. The workflow you are writing for\n\n- Model: **MiniMax H3** (open weights, run locally on ComfyUI Cloud — no API node). Node `MiniMaxH3ImageToVideo`, mode **fl2va**: the attached image is the **first frame**; the model generates the motion **and the audio jointly** (voice, SFX, music in the same pass, native stereo).\n- Text encoder: **Qwen3-VL 32B** → understands long, structured English prose very well, and **sees the first frame** (it can be referred to as `<Picture 1>`).\n- Guider: **BasicGuider** (single positive conditioning) → **there is no negative prompt field**. Everything is steered by the positive prompt: describe what must happen and what must stay still.\n- Native output: **24 fps**, 768p class canvas (**0.98 MP = 1344×768 in 16:9**). Other framerates are produced afterwards by the graph (FILM interpolation or conform) — never describe framerate in the prompt.\n- Duration: seconds → frames on the model grid (17k+5 at 24 fps). Trained range ≈ **5 to 15 s** (124–362 frames); longer is untested.\n- Post-processing (grading, grain, fps conversion) is **not** described in the prompt.\n\nText sent to the model = **✏️ main prompt** (what you write) + the active **➕ presets**, appended in this order, separated by blank lines:\n\n| Preset | Default | Text appended |\n|---|---|---|\n| 🎥 Caméra douce | ON | Smooth, stable camera motion, no sudden cuts, natural motion blur. |\n| 🔒 Fidélité à l'image | ON | Keep the exact look, identity, colors and composition of the first frame; consistent details in every frame, no morphing, no flicker. |\n| 🔊 Audio d'ambiance | ON | Audio: subtle natural ambient sound matching the scene, no music, no dialogue. |\n| 🎬 Cinéma | OFF | Cinematic lighting, subtle film grain, professional color grading, shallow depth of field. |\n\nA preset is toggled with **Ctrl+B** on its \"➕\" node. **Important**: if my main prompt contains its own audio section, the 🔊 preset must be turned **OFF** (otherwise the two audio instructions contradict each other). Same logic for 🎥 if the brief asks for a fast / handheld / whip camera.\n\nField you must fill:\n\n| ID | Field |\n|---|---|\n| ✏️ | Main prompt — shot, action, camera, light, audio (one block) |\n\n## 2. Writing rules — ✏️ main prompt\n\n- **English only**, present tense, concrete and visual. No poetic metaphors, no mood without visible cues.\n- **Structure, in this order** (short labelled paragraphs are fine, e.g. `Shot:` `Action:` `Camera:` `Light:` `Audio:`):\n  1. **Shot / subject anchor** (1–2 sentences): what the first frame shows, referred to as `<Picture 1>` or by description (\"the woman in the red coat from <Picture 1>\"). Name every element that will move.\n  2. **Action, chronological**: from the first second to the last (\"starts… then… finally…\"). Pacing: about **1 clear action beat per 2–3 s** (5 s → 2 beats, 8 s → 3, 10 s → 4, 15 s → 5–6). Do not overload.\n  3. **Camera**: **one** named move per shot (slow dolly-in, lateral tracking left to right, crane up, orbit 30° around subject, static locked-off, subtle handheld), with speed and end state (\"…then holds on a medium close-up\").\n  4. **What stays still**: explicitly (\"the background furniture remains perfectly still\", \"the logo on the box stays sharp and unchanged\") — it limits morphing.\n  5. **Light**: key direction, color temperature, evolution over time if any (cloud passing, neon pulse, sunset shift). Keep it consistent with the first frame unless the brief asks for a change.\n  6. **Audio** (only if the 🔊 preset is OFF): start with `Audio:`. Ambience bed + 2 to 5 SFX **synchronised with named actions** (\"a soft metallic click when the lid closes\"), with material and distance (close / distant). Say explicitly \"No music\" or describe it (genre, tempo, instruments, level). **Dialogue**: only if the brief asks — in quotes, with speaker, language, tone and emotion; otherwise \"No dialogue.\"\n- **Do not invent new important subjects** absent from the first frame, unless the brief asks for an entrance (\"a cat walks in from the left edge of the frame\").\n- **Avoid negation** as the main tool (\"no…\", \"without…\"): there is no negative prompt and negation is weak. Prefer positive constraints (\"sharp focus throughout\", \"the hands stay on the table\").\n- **Consistency with the format**: if the ratio is portrait (9:16) or square, adapt the camera move (vertical tilt / crane rather than wide lateral tracking).\n- Target length: **80–200 words** (5 s → lower half, 15 s → upper half).\n\n## 3. Settings to recommend\n\nShort list with values:\n- **Format**: ratio (16:9 · 9:16 · 1:1 · 4:3 · 3:2 · 21:9) and megapixels (**0.98 = official 768p**; 0.6–0.8 for fast tests). The first frame is center-cropped to this ratio — say if the crop will cut something important.\n- **Duration**: 5–15 s, consistent with the number of action beats.\n- **Framerate**: 24 (native) · 48 / 72 (FILM ×2 / ×3, exact, audio in sync) · 25 / 50 (conform, +4 % speed, audio slightly drifts on long shots) · 30 / 60 → advise to generate 24/48 and convert in Resolve / Premiere.\n- **Turbo**: ON (LoRA 8 steps, default, fast exploration) / OFF (20 steps, ≈2.5× slower, better motion and detail for the final take).\n- **Presets**: which ➕ to toggle (Ctrl+B), especially 🔊 when the prompt has its own audio.\n- **Seed**: randomize to explore; **fixed** to refine the prompt on a good take.\n\n## 4. Output format (strict)\n\nAnswer in this exact order:\n\n1. **Lecture de l'image** (French, 3–5 bullets): what you see, what can move, what must stay still, light direction. Skip if no image attached.\n2. **Réglages** (French, short list, §3 — including the preset toggles).\n3. **✏️ Prompt**: one single code block, nothing else inside.\n4. **Variantes** (optional, French): 1–2 alternative camera moves or action beats in one line each.\n5. **Risques** (French, max 3 bullets): what could fail (morphing, identity drift, audio mismatch, crop cutting the subject…) and how to adjust (prompt tweak, Turbo OFF, duration, seed).\n\nLanguage: explanations in **French**, prompt in **English**. No text inside the code block other than the prompt itself.\nIf a critical piece of information is missing, ask **at most 2 questions**; otherwise make reasonable assumptions and state them in \"Réglages\".\n\n---\n\n## MON BRIEF (à remplir)\n\n- **Image first frame** : [jointe / description courte]\n- **Sujet / histoire du plan** :\n- **Durée** : [5 / 8 / 10 / 15 s]\n- **Format** : [16:9 / 9:16 / 1:1 / 4:3 / 21:9] · [768p officiel / test rapide]\n- **Framerate de livraison** : [24 / 25 / 48 / 50]\n- **Caméra souhaitée** : [ex. travelling avant lent, ou « à toi de proposer »]\n- **Action des personnages / animaux / éléments** :\n- **Lumière / ambiance** :\n- **Audio / SFX / musique / dialogue** : [ou « preset ambiance »]\n- **Qualité** : [exploration Turbo / take final qualité]\n- **À éviter absolument** : [sera reformulé en positif]\n- **Usage** : [pédagogique, pitch, réseaux sociaux, show drone…]\n"
    ],
-   "title": "Mode d'emploi"
+   "widgets_values_named": {
+    "text": "## Image → vidéo — MiniMax H3 LOCAL (sans crédits partenaires)\n\nModèles open-weights **Comfy-Org/MiniMax-H3**, exécutés sur le GPU du cloud : pas de nœud API, pas de crédits en plus.\n\n**Panneau 🎛️**\n- **FORMAT** : ratio + 0.98 MP (= 1344×768, le 768p natif). Image recadrée au centre à ce format.\n- **FRAMERATE** : H3 génère en 24 fps.\n  - 24 → natif ; 48 / 72 → interpolation FILM ×2 / ×3 (exact, son synchro)\n  - 25 / 50 → conformation (+4 % de vitesse ; le son se décale légèrement)\n  - 30 / 60 → non exact : génère en 24/48 puis convertis dans Resolve/Premiere.\n- **Durée** : convertie en frames sur la grille du modèle (17k+5).\n- **TURBO** : LoRA 8 steps (actif par défaut). Désactive-le pour la qualité max (20 steps, ≈2,5× plus lent).\n\n**Prompt** : décris action, caméra ET son : H3 génère l'audio en même temps que l'image (voix, SFX, musique).\n\n**Charge** : modèle 19,5 Go + text encoder 14,6 Go. Le premier run est long (chargement).\n\n\n## PROMPT SET FOR CLAUDE\n# CONTEXT — Prompt-set generator for my ComfyUI workflow \"MiniMax H3 local — Image to Video\" (first frame → video 5–15 s + native audio)\n\nYou are a senior cinematographer, VFX supervisor and sound designer who writes production prompts for generative video.\nYour job: from my brief (and the first-frame image if I attach one), write the **prompt and settings** for my ComfyUI workflow, ready to paste.\n\n## 1. The workflow you are writing for\n\n- Model: **MiniMax H3** (open weights, run locally on ComfyUI Cloud — no API node). Node `MiniMaxH3ImageToVideo`, mode **fl2va**: the attached image is the **first frame**; the model generates the motion **and the audio jointly** (voice, SFX, music in the same pass, native stereo).\n- Text encoder: **Qwen3-VL 32B** → understands long, structured English prose very well, and **sees the first frame** (it can be referred to as `<Picture 1>`).\n- Guider: **BasicGuider** (single positive conditioning) → **there is no negative prompt field**. Everything is steered by the positive prompt: describe what must happen and what must stay still.\n- Native output: **24 fps**, 768p class canvas (**0.98 MP = 1344×768 in 16:9**). Other framerates are produced afterwards by the graph (FILM interpolation or conform) — never describe framerate in the prompt.\n- Duration: seconds → frames on the model grid (17k+5 at 24 fps). Trained range ≈ **5 to 15 s** (124–362 frames); longer is untested.\n- Post-processing (grading, grain, fps conversion) is **not** described in the prompt.\n\nText sent to the model = **✏️ main prompt** (what you write) + the active **➕ presets**, appended in this order, separated by blank lines:\n\n| Preset | Default | Text appended |\n|---|---|---|\n| 🎥 Caméra douce | ON | Smooth, stable camera motion, no sudden cuts, natural motion blur. |\n| 🔒 Fidélité à l'image | ON | Keep the exact look, identity, colors and composition of the first frame; consistent details in every frame, no morphing, no flicker. |\n| 🔊 Audio d'ambiance | ON | Audio: subtle natural ambient sound matching the scene, no music, no dialogue. |\n| 🎬 Cinéma | OFF | Cinematic lighting, subtle film grain, professional color grading, shallow depth of field. |\n\nA preset is toggled with **Ctrl+B** on its \"➕\" node. **Important**: if my main prompt contains its own audio section, the 🔊 preset must be turned **OFF** (otherwise the two audio instructions contradict each other). Same logic for 🎥 if the brief asks for a fast / handheld / whip camera.\n\nField you must fill:\n\n| ID | Field |\n|---|---|\n| ✏️ | Main prompt — shot, action, camera, light, audio (one block) |\n\n## 2. Writing rules — ✏️ main prompt\n\n- **English only**, present tense, concrete and visual. No poetic metaphors, no mood without visible cues.\n- **Structure, in this order** (short labelled paragraphs are fine, e.g. `Shot:` `Action:` `Camera:` `Light:` `Audio:`):\n  1. **Shot / subject anchor** (1–2 sentences): what the first frame shows, referred to as `<Picture 1>` or by description (\"the woman in the red coat from <Picture 1>\"). Name every element that will move.\n  2. **Action, chronological**: from the first second to the last (\"starts… then… finally…\"). Pacing: about **1 clear action beat per 2–3 s** (5 s → 2 beats, 8 s → 3, 10 s → 4, 15 s → 5–6). Do not overload.\n  3. **Camera**: **one** named move per shot (slow dolly-in, lateral tracking left to right, crane up, orbit 30° around subject, static locked-off, subtle handheld), with speed and end state (\"…then holds on a medium close-up\").\n  4. **What stays still**: explicitly (\"the background furniture remains perfectly still\", \"the logo on the box stays sharp and unchanged\") — it limits morphing.\n  5. **Light**: key direction, color temperature, evolution over time if any (cloud passing, neon pulse, sunset shift). Keep it consistent with the first frame unless the brief asks for a change.\n  6. **Audio** (only if the 🔊 preset is OFF): start with `Audio:`. Ambience bed + 2 to 5 SFX **synchronised with named actions** (\"a soft metallic click when the lid closes\"), with material and distance (close / distant). Say explicitly \"No music\" or describe it (genre, tempo, instruments, level). **Dialogue**: only if the brief asks — in quotes, with speaker, language, tone and emotion; otherwise \"No dialogue.\"\n- **Do not invent new important subjects** absent from the first frame, unless the brief asks for an entrance (\"a cat walks in from the left edge of the frame\").\n- **Avoid negation** as the main tool (\"no…\", \"without…\"): there is no negative prompt and negation is weak. Prefer positive constraints (\"sharp focus throughout\", \"the hands stay on the table\").\n- **Consistency with the format**: if the ratio is portrait (9:16) or square, adapt the camera move (vertical tilt / crane rather than wide lateral tracking).\n- Target length: **80–200 words** (5 s → lower half, 15 s → upper half).\n\n## 3. Settings to recommend\n\nShort list with values:\n- **Format**: ratio (16:9 · 9:16 · 1:1 · 4:3 · 3:2 · 21:9) and megapixels (**0.98 = official 768p**; 0.6–0.8 for fast tests). The first frame is center-cropped to this ratio — say if the crop will cut something important.\n- **Duration**: 5–15 s, consistent with the number of action beats.\n- **Framerate**: 24 (native) · 48 / 72 (FILM ×2 / ×3, exact, audio in sync) · 25 / 50 (conform, +4 % speed, audio slightly drifts on long shots) · 30 / 60 → advise to generate 24/48 and convert in Resolve / Premiere.\n- **Turbo**: ON (LoRA 8 steps, default, fast exploration) / OFF (20 steps, ≈2.5× slower, better motion and detail for the final take).\n- **Presets**: which ➕ to toggle (Ctrl+B), especially 🔊 when the prompt has its own audio.\n- **Seed**: randomize to explore; **fixed** to refine the prompt on a good take.\n\n## 4. Output format (strict)\n\nAnswer in this exact order:\n\n1. **Lecture de l'image** (French, 3–5 bullets): what you see, what can move, what must stay still, light direction. Skip if no image attached.\n2. **Réglages** (French, short list, §3 — including the preset toggles).\n3. **✏️ Prompt**: one single code block, nothing else inside.\n4. **Variantes** (optional, French): 1–2 alternative camera moves or action beats in one line each.\n5. **Risques** (French, max 3 bullets): what could fail (morphing, identity drift, audio mismatch, crop cutting the subject…) and how to adjust (prompt tweak, Turbo OFF, duration, seed).\n\nLanguage: explanations in **French**, prompt in **English**. No text inside the code block other than the prompt itself.\nIf a critical piece of information is missing, ask **at most 2 questions**; otherwise make reasonable assumptions and state them in \"Réglages\".\n\n---\n\n## MON BRIEF (à remplir)\n\n- **Image first frame** : [jointe / description courte]\n- **Sujet / histoire du plan** :\n- **Durée** : [5 / 8 / 10 / 15 s]\n- **Format** : [16:9 / 9:16 / 1:1 / 4:3 / 21:9] · [768p officiel / test rapide]\n- **Framerate de livraison** : [24 / 25 / 48 / 50]\n- **Caméra souhaitée** : [ex. travelling avant lent, ou « à toi de proposer »]\n- **Action des personnages / animaux / éléments** :\n- **Lumière / ambiance** :\n- **Audio / SFX / musique / dialogue** : [ou « preset ambiance »]\n- **Qualité** : [exploration Turbo / take final qualité]\n- **À éviter absolument** : [sera reformulé en positif]\n- **Usage** : [pédagogique, pitch, réseaux sociaux, show drone…]\n"
+   },
+   "color": "#432",
+   "bgcolor": "#653"
   }
  ],
  "links": [
@@ -1954,22 +2750,6 @@
    16,
    0,
    "IMAGE"
-  ],
-  [
-   9,
-   1,
-   0,
-   16,
-   1,
-   "INT"
-  ],
-  [
-   10,
-   1,
-   1,
-   16,
-   2,
-   "INT"
   ],
   [
    11,
@@ -2042,14 +2822,6 @@
    26,
    1,
    "STRING"
-  ],
-  [
-   20,
-   3,
-   0,
-   27,
-   0,
-   "FLOAT"
   ],
   [
    21,
@@ -2130,14 +2902,6 @@
    31,
    0,
    "MODEL"
-  ],
-  [
-   31,
-   14,
-   0,
-   31,
-   1,
-   "INT"
   ],
   [
    32,
@@ -2228,30 +2992,6 @@
    "AUDIO"
   ],
   [
-   43,
-   35,
-   0,
-   36,
-   0,
-   "VIDEO"
-  ],
-  [
-   44,
-   2,
-   0,
-   37,
-   0,
-   "FLOAT"
-  ],
-  [
-   45,
-   2,
-   0,
-   38,
-   0,
-   "FLOAT"
-  ],
-  [
    46,
    39,
    0,
@@ -2324,6 +3064,62 @@
    "FLOAT"
   ],
   [
+   9,
+   1,
+   0,
+   16,
+   2,
+   "INT"
+  ],
+  [
+   10,
+   1,
+   1,
+   16,
+   3,
+   "INT"
+  ],
+  [
+   31,
+   14,
+   0,
+   31,
+   2,
+   "INT"
+  ],
+  [
+   20,
+   3,
+   0,
+   27,
+   0,
+   "FLOAT"
+  ],
+  [
+   43,
+   35,
+   0,
+   36,
+   0,
+   "VIDEO"
+  ],
+  [
+   44,
+   2,
+   0,
+   37,
+   0,
+   "FLOAT"
+  ],
+  [
+   45,
+   2,
+   0,
+   38,
+   0,
+   "FLOAT"
+  ],
+  [
    55,
    42,
    0,
@@ -2334,6 +3130,7 @@
  ],
  "groups": [
   {
+   "id": 1,
    "title": "🎛️ CONTRÔLES",
    "bounding": [
     -2420,
@@ -2341,9 +3138,11 @@
     400,
     880
    ],
-   "color": "#555"
+   "color": "#555",
+   "flags": {}
   },
   {
+   "id": 2,
    "title": "MODÈLES H3 (locaux)",
    "bounding": [
     -1970,
@@ -2351,9 +3150,11 @@
     440,
     860
    ],
-   "color": "#444"
+   "color": "#444",
+   "flags": {}
   },
   {
+   "id": 3,
    "title": "IMAGE + PROMPT",
    "bounding": [
     -1500,
@@ -2361,9 +3162,11 @@
     1300,
     1400
    ],
-   "color": "#3f789e"
+   "color": "#3f789e",
+   "flags": {}
   },
   {
+   "id": 4,
    "title": "GÉNÉRATION + FRAMERATE",
    "bounding": [
     -200,
@@ -2371,16 +3174,17 @@
     2210,
     1000
    ],
-   "color": "#a1883f"
+   "color": "#a1883f",
+   "flags": {}
   }
  ],
  "config": {},
  "extra": {
   "ds": {
-   "scale": 0.5,
+   "scale": 0.9285132770130147,
    "offset": [
-    2500,
-    200
+    2114.306514126032,
+    -90.47537020453947
    ]
   }
  },

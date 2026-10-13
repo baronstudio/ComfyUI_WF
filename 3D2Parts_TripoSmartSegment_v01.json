@@ -2,7 +2,7 @@
  "id": "3d2parts-tripo-v01",
  "revision": 0,
  "last_node_id": 14,
- "last_link_id": 12,
+ "last_link_id": 11,
  "nodes": [
   {
    "id": 1,
@@ -27,7 +27,7 @@
     "ver": "0.33.0"
    },
    "widgets_values": [
-    "# 3D2Parts — Découper un GLB en pièces (Tripo, Comfy Cloud)\n\n**Ce que fait le workflow**\n1. Charge un fichier 3D (**GLB** conseillé ; FBX, OBJ, STL acceptés, 150 Mo max).\n2. L'importe chez Tripo (*Tripo: Import Model*, gratuit).\n3. **Découpe sémantique** (*Tripo: Smart Segment*) : pièces séparées **et nommées**, guidée par ton prompt (nombre + liste des pièces).\n4. **🧩 Cap ON** : chaque pièce est **complétée / fermée** (*Tripo: Complete Mesh Parts*), les zones cachées sont reconstruites.\n   **Cap OFF** : découpe brute, ouvertures aux jonctions.\n5. Sortie : **un GLB, une pièce = un objet**, dossier `output/3D2Parts/` + aperçu 3D.\n\n**💳 Crédits (nœuds Partner)**\nImport gratuit · Smart Segment ≈ 0,55 $ · Cap ≈ 0,50 $ → **≈ 1,05 $ / run en Cap ON**, ≈ 0,55 $ en Cap OFF.\n\n**À régler**\n- 🎛️ *Nombre d'éléments visé* : **indicatif**, injecté dans le prompt. Tripo peut en rendre un peu plus ou moins.\n- ✏️ *Description des pièces* (anglais) : nature de l'objet + liste des pièces attendues. C'est le levier le plus fort.\n- *granularity* (sur le nœud ✂️) : `coarse` (gros blocs) · `medium` · `fine` (détail). Accorde-la au nombre d'éléments : ≤ 4 → coarse, 5–10 → medium, 10+ → fine.\n- **🧩 Cap ON / OFF** : sélectionne le nœud **🧩 CAP** et fais **Ctrl+B**. Violet (bypass) = OFF, aucun crédit consommé. Le switch de sortie bascule tout seul sur la découpe brute.\n\n**Lire le résultat**\n- 📋 *Noms des pièces* : liste renvoyée par Tripo (= noms des objets dans le GLB).\n- 📝 *Analyse Tripo* : ce que Tripo a compris de l'objet.\n- 🖼️ *Masque* : carte couleur des pièces.\n\n**Limites connues**\n- Nombre de pièces **non garanti** (pas de paramètre « N pièces exact » dans l'API).\n- Le Cap **reconstruit** la géométrie : les pièces complétées peuvent s'écarter légèrement de l'original et perdre leurs UV / textures d'origine.\n- GLTF (multi-fichiers) refusé : exporter en **.glb** unique.\n- Aperçu 3D vide = souci WebGL du navigateur, pas du WF : récupère le fichier dans **Assets → Generated**.\n"
+    "# 3D2Parts — Découper un GLB en pièces (Tripo, Comfy Cloud)\n\n**Ce que fait le workflow**\n1. Charge un fichier 3D (**GLB** conseillé ; FBX, OBJ, STL acceptés, 150 Mo max).\n2. L'importe chez Tripo (*Tripo: Import Model*, gratuit).\n3. **Découpe sémantique** (*Tripo: Smart Segment*) : pièces séparées **et nommées**, guidée par ton prompt (nombre + liste des pièces).\n4. **🧩 Cap ON** : chaque pièce est **complétée / fermée** (*Tripo: Complete Mesh Parts*), les zones cachées sont reconstruites.\n   **Cap OFF** : découpe brute, ouvertures aux jonctions.\n5. Sortie : **GLB, une pièce = un objet**, dossier `output/3D2Parts/` + aperçu 3D (brut toujours, complété si Cap ON).\n\n**💳 Crédits (nœuds Partner)**\nImport gratuit · Smart Segment ≈ 0,55 $ · Cap ≈ 0,50 $ → **≈ 1,05 $ / run en Cap ON**, ≈ 0,55 $ en Cap OFF.\n\n**À régler**\n- 🎛️ *Nombre d'éléments visé* : **indicatif**, injecté dans le prompt. Tripo peut en rendre un peu plus ou moins.\n- ✏️ *Description des pièces* (anglais) : nature de l'objet + liste des pièces attendues. C'est le levier le plus fort.\n- *granularity* (sur le nœud ✂️) : `coarse` (gros blocs) · `medium` · `fine` (détail). Accorde-la au nombre d'éléments : ≤ 4 → coarse, 5–10 → medium, 10+ → fine.\n- **🧩 Cap ON / OFF** : clic sur le **titre du groupe 🧩 CAP** puis **Ctrl+B**. Violet (bypass) = OFF : le nœud de complétion et sa sauvegarde ne tournent pas, aucun crédit consommé.\n\n**Sorties** (`output/3D2Parts/`)\n- `parts_brut_*.glb` : découpe brute, **toujours** sauvegardée.\n- `parts_cap_*.glb` : pièces complétées, seulement si le Cap est ON.\n\n**Lire le résultat**\n- 📋 *Noms des pièces* : liste renvoyée par Tripo (= noms des objets dans le GLB).\n- 📝 *Analyse Tripo* : ce que Tripo a compris de l'objet.\n- 🖼️ *Masque* : carte couleur des pièces.\n\n**Limites connues**\n- Nombre de pièces **non garanti** (pas de paramètre « N pièces exact » dans l'API).\n- Le Cap **reconstruit** la géométrie : les pièces complétées peuvent s'écarter légèrement de l'original et perdre leurs UV / textures d'origine.\n- GLTF (multi-fichiers) refusé : exporter en **.glb** unique.\n- Aperçu 3D vide = souci WebGL du navigateur, pas du WF : récupère le fichier dans **Assets → Generated**.\n"
    ]
   },
   {
@@ -89,7 +89,7 @@
     "ver": "0.33.0"
    },
    "widgets_values": [
-    "**Cap ON / OFF** = nœud **🧩 CAP** (groupe 🧩).\n\nSélectionne-le → **Ctrl+B**.\n- Normal = **ON** : pièces fermées (≈ +0,50 $)\n- Violet = **OFF** : découpe brute, gratuit"
+    "**Cap ON / OFF** = groupe **🧩 CAP** (à droite).\n\nClic sur son titre → **Ctrl+B**.\n- Normal = **ON** : pièces fermées (≈ +0,50 $)\n- Violet = **OFF** : brut seul, gratuit"
    ],
    "color": "#223"
   },
@@ -506,18 +506,52 @@
    "color": "#322"
   },
   {
-   "id": 12,
-   "type": "TripoMeshCompleteNode",
+   "id": 14,
+   "type": "SaveGLB",
    "pos": [
     1760,
     60
    ],
    "size": [
-    340,
-    110
+    500,
+    700
    ],
    "flags": {},
    "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "mesh",
+     "type": "MESH,FILE_3D_GLB,FILE_3D_GLTF,FILE_3D_OBJ,FILE_3D_FBX,FILE_3D_STL,FILE_3D_USDZ,FILE_3D_PLY,FILE_3D_SPLAT,FILE_3D_SPZ,FILE_3D_KSPLAT,FILE_3D_SPLAT_ANY,FILE_3D_POINT_CLOUD_ANY,FILE_3D",
+     "link": 10
+    }
+   ],
+   "outputs": [],
+   "title": "💾 GLB brut (toujours) + aperçu 3D",
+   "properties": {
+    "Node name for S&R": "SaveGLB",
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0"
+   },
+   "widgets_values": [
+    "3D2Parts/parts_brut",
+    ""
+   ],
+   "color": "#233"
+  },
+  {
+   "id": 12,
+   "type": "TripoMeshCompleteNode",
+   "pos": [
+    2340,
+    60
+   ],
+   "size": [
+    500,
+    110
+   ],
+   "flags": {},
+   "order": 12,
    "mode": 0,
    "inputs": [
     {
@@ -554,7 +588,7 @@
      ]
     }
    ],
-   "title": "🧩 CAP — compléter les pièces (Ctrl+B = OFF)",
+   "title": "🧩 Compléter les pièces (Tripo Complete)",
    "properties": {
     "Node name for S&R": "TripoMeshCompleteNode",
     "cnr_id": "comfy-core",
@@ -567,65 +601,9 @@
   },
   {
    "id": 13,
-   "type": "ComfySoftSwitchNode",
-   "pos": [
-    2180,
-    60
-   ],
-   "size": [
-    320,
-    110
-   ],
-   "flags": {},
-   "order": 12,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "on_false",
-     "type": "FILE_3D_GLB",
-     "link": 10,
-     "shape": 7
-    },
-    {
-     "name": "on_true",
-     "type": "FILE_3D_GLB",
-     "link": 11,
-     "shape": 7
-    },
-    {
-     "name": "switch",
-     "type": "BOOLEAN",
-     "link": null,
-     "widget": {
-      "name": "switch"
-     }
-    }
-   ],
-   "outputs": [
-    {
-     "name": "output",
-     "type": "FILE_3D_GLB",
-     "links": [
-      12
-     ]
-    }
-   ],
-   "title": "🔀 Cap ON → complété · OFF → brut",
-   "properties": {
-    "Node name for S&R": "ComfySoftSwitchNode",
-    "cnr_id": "comfy-core",
-    "ver": "0.33.0"
-   },
-   "widgets_values": [
-    true
-   ],
-   "color": "#233"
-  },
-  {
-   "id": 14,
    "type": "SaveGLB",
    "pos": [
-    2180,
+    2340,
     200
    ],
    "size": [
@@ -639,21 +617,21 @@
     {
      "name": "mesh",
      "type": "MESH,FILE_3D_GLB,FILE_3D_GLTF,FILE_3D_OBJ,FILE_3D_FBX,FILE_3D_STL,FILE_3D_USDZ,FILE_3D_PLY,FILE_3D_SPLAT,FILE_3D_SPZ,FILE_3D_KSPLAT,FILE_3D_SPLAT_ANY,FILE_3D_POINT_CLOUD_ANY,FILE_3D",
-     "link": 12
+     "link": 11
     }
    ],
    "outputs": [],
-   "title": "💾 GLB en pièces + aperçu 3D",
+   "title": "💾 GLB complété (Cap ON) + aperçu 3D",
    "properties": {
     "Node name for S&R": "SaveGLB",
     "cnr_id": "comfy-core",
     "ver": "0.33.0"
    },
    "widgets_values": [
-    "3D2Parts/parts",
+    "3D2Parts/parts_cap",
     ""
    ],
-   "color": "#233"
+   "color": "#332"
   }
  ],
  "links": [
@@ -733,7 +711,7 @@
    10,
    8,
    2,
-   13,
+   14,
    0,
    "FILE_3D_GLB"
   ],
@@ -742,14 +720,6 @@
    12,
    2,
    13,
-   1,
-   "FILE_3D_GLB"
-  ],
-  [
-   12,
-   13,
-   0,
-   14,
    0,
    "FILE_3D_GLB"
   ]
@@ -809,27 +779,27 @@
   },
   {
    "id": 5,
-   "title": "🧩 CAP (complétion)",
+   "title": "💾 SORTIE BRUTE",
    "bounding": [
     1740,
     0,
-    380,
-    190
+    540,
+    800
    ],
-   "color": "#553",
+   "color": "#355",
    "font_size": 24,
    "flags": {}
   },
   {
    "id": 6,
-   "title": "💾 SORTIE",
+   "title": "🧩 CAP — complétion (Ctrl+B sur le groupe = OFF)",
    "bounding": [
-    2160,
+    2320,
     0,
     540,
-    920
+    940
    ],
-   "color": "#355",
+   "color": "#553",
    "font_size": 24,
    "flags": {}
   }

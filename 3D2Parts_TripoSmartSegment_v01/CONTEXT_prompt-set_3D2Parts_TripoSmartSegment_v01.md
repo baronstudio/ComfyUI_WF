@@ -13,8 +13,8 @@ Pipeline, in order:
 3. **🧮 Prompt Tripo** (`StringFormat`) builds the `hint` sent to Tripo:
    `Split this 3D model into about {C1} separate parts. Object and expected parts: {P1}`
 4. **✂️ Découpe sémantique** (`TripoSmartSegmentNode`, source `model`) : semantic split, each part named. Settings: `granularity` (coarse / medium / fine) + `hint`. Outputs: segmented GLB, part names, Tripo's own analysis, colour mask. ≈ 0.55 $.
-5. **🧩 CAP** (`TripoMeshCompleteNode`) : completes and closes every part (hidden areas rebuilt). ON by default; bypassed (Ctrl+B) = OFF, no credit spent. Optional `part_names` = complete only those parts. ≈ 0.50 $.
-6. **🔀 Switch** → **💾 SaveGLB** : one GLB, one part = one object, in `output/3D2Parts/`.
+5. **💾 GLB brut** (`SaveGLB`) : raw split, always saved → `output/3D2Parts/parts_brut_*.glb` (one part = one object).
+6. **🧩 CAP group** (`TripoMeshCompleteNode` + its own `SaveGLB`) : completes and closes every part (hidden areas rebuilt) → `parts_cap_*.glb`. ON by default; whole group bypassed (Ctrl+B) = OFF, no credit spent. Optional `part_names` = complete only those parts. ≈ 0.50 $.
 
 Post-production outside ComfyUI (never ask the workflow for it): renaming / re-parenting objects, pivots, UV unwrap and re-texture of rebuilt areas, rigging, exploded-view animation, boolean fixes, slicing for print — Blender.
 
@@ -25,7 +25,7 @@ Fields you must fill:
 | C1 | 🎛️ Nombre d'éléments visé (indicatif) | INT | 1–50 | 6 |
 | P1 | ✏️ Description des pièces (EN) | TEXT | object + list of parts | game character example |
 | S1 | ✂️ Découpe sémantique → granularity | COMBO | coarse / medium / fine | medium |
-| K1 | 🧩 CAP ON / OFF | node state | active (ON) / bypassed Ctrl+B (OFF) | ON |
+| K1 | 🧩 CAP ON / OFF | group state | active (ON) / group bypassed Ctrl+B (OFF) | ON |
 | K2 | 🧩 CAP → part_names | TEXT | empty = all, or comma-separated names from 📋 | empty |
 | P0 | Préparation hors ComfyUI | TEXT | Blender steps | — |
 
