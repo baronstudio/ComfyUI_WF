@@ -27,7 +27,7 @@ Le dossier [_TEMPLATE_WF/](_TEMPLATE_WF/) fournit les gabarits de `README.md` et
 
 ## Conventions
 
-- **Nommage** : `[type]_[ModèlePrincipal]_[ModèleSecondaire]_[vNN]` — segment secondaire omis s'il n'y en a pas (ex. `t2i_Flux2Dev_v01`, `i2i_QwenEdit2511_MultiAngleLoRA_v01`). Types : `t2i, i2i, i2v, t2v, v2v, inpaint, upscale, relight, i2Vecto, i23d, t23D, 3D2UV, 3D2Remesh, 3D2Parts, i2pbr, t2audio, i2audio`. La version `vNN` est portée par le nom de fichier (nouveau fichier + nouveau dossier à chaque version, on ne réécrit pas l'ancienne). Les workflows antérieurs gardent leur nom historique `Domaine_Sujet_vN`.
+- **Nommage** : `[type]_[Variante]_[ModèlePrincipal]_[ModèleSecondaire]_[vNN]` — segments variante et secondaire omis s'il n'y en a pas (ex. `t2i_Flux2Dev_v01`, `i2i_QwenEdit2511_MultiAngleLoRA_v01`, `i2hdri_4Input_QwenImage2512_Qwen25VL_v07`). La variante précise l'usage (nombre ou nature des entrées). Types : `t2i, i2i, i2v, t2v, v2v, inpaint, upscale, relight, i2Vecto, i23d, t23D, 3D2UV, 3D2Remesh, 3D2Parts, i2pbr, i2hdri, t2hdri, t2audio, i2audio`. La version `vNN` est portée par le nom de fichier (nouveau fichier + nouveau dossier à chaque version, on ne réécrit pas l'ancienne). Les workflows antérieurs gardent leur nom historique `Domaine_Sujet_vN`.
 - **Prompt Set** : toujours préfixé `CONTEXT_prompt-set_`, rédigé en anglais pour la partie prompts, en français pour les consignes de travail.
 - **Images d'exemple** : PNG/JPG uniquement, préfixe `in_` (entrées) / `out_` (résultats). Les vidéos et fichiers lourds sont exclus par le [.gitignore](.gitignore) — les héberger ailleurs et pointer le lien dans le README du WF.
 - **Modèles / checkpoints** : jamais versionnés. Les lister dans le README du workflow (nom exact + source).
@@ -76,6 +76,9 @@ Les fichiers arrivent dans `comfy_cloud_assets/<tag>/` (ignoré par git) avec un
 ### Environnements 360 / blockout
 | Workflow | Prompt Set |
 |---|---|
+| [t2hdri_Sliders_QwenImage2512_Qwen360LoRA_v01.json](t2hdri_Sliders_QwenImage2512_Qwen360LoRA_v01.json) — **environment map extérieure 360° depuis un prompt texte** + 3 barrettes verrouillées (**heure** → position du soleil, **saison** → végétation / sol, **nuages** pondérés par la saison, 4 × 5 presets), prompt de base = style, lieu, boîtier ; sans passe 2, raccord gauche/droite, **mode QUALITÉ**, sortie **4096×2048 PNG 16 bits + EXR 32 bits**, 100 % natif, Cloud | [CONTEXT](t2hdri_Sliders_QwenImage2512_Qwen360LoRA_v01/CONTEXT_prompt-set_t2hdri_Sliders_QwenImage2512_Qwen360LoRA_v01.md) |
+| [i2hdri_4Input_QwenImage2512_Qwen25VL_v07.json](i2hdri_4Input_QwenImage2512_Qwen25VL_v07.json) — **environment map extérieure 360° depuis 4 photos d'un lieu** (N / E / S / O, chaque slot image ou texte) : Qwen2.5-VL décrit les photos, esquisse = fond flou + bande nette de chaque photo sur l'horizon + grain, Qwen-Image-2512 + LoRA 360 repeint toute la sphère ; **passe 2 désactivable** (OFF par défaut) et **mode QUALITÉ** sans Lightning (30 steps, CFG 3, négatif anti-illustration) ; raccord gauche/droite, sortie **4096×2048 PNG 16 bits + EXR 32 bits**, Cloud | [CONTEXT](i2hdri_4Input_QwenImage2512_Qwen25VL_v07/CONTEXT_prompt-set_i2hdri_4Input_QwenImage2512_Qwen25VL_v07.md) |
+| Versions antérieures v01–v06 (supprimées) : v01–v02 vues collées (blocs visibles), v03 esquisse floue, v04 bandes nettes (rendu en aplats), v05–v06 grain + passe 2 Lightning (rendu « dessin ») | — |
 | [env360_pipeline_4etapes.json](env360_pipeline_4etapes.json) — pipeline 360 en 4 étapes | — |
 | [qwen_INT_environnement_v2_360_first.json](qwen_INT_environnement_v2_360_first.json) — intérieur, 360 d'abord | — |
 | [qwen_environnement_blockout_360.json](qwen_environnement_blockout_360.json) — depuis un blockout 3D | — |

@@ -18,6 +18,8 @@ custom_nodes/
 *.webm
 *.exr
 *.psd
+*.dng
+*.DNG
 
 # --- Python ---
 __pycache__/
