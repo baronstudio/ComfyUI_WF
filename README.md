@@ -77,6 +77,7 @@ Les fichiers arrivent dans `comfy_cloud_assets/<tag>/` (ignoré par git) avec un
 | Workflow | Prompt Set |
 |---|---|
 | [t2hdri_Sliders_QwenImage2512_Qwen360LoRA_v01.json](t2hdri_Sliders_QwenImage2512_Qwen360LoRA_v01.json) — **environment map extérieure 360° depuis un prompt texte** + 3 barrettes verrouillées (**heure** → position du soleil, **saison** → végétation / sol, **nuages** pondérés par la saison, 4 × 5 presets), prompt de base = style, lieu, boîtier ; sans passe 2, raccord gauche/droite, **mode QUALITÉ**, sortie **4096×2048 PNG 16 bits + EXR 32 bits**, 100 % natif, Cloud | [CONTEXT](t2hdri_Sliders_QwenImage2512_Qwen360LoRA_v01/CONTEXT_prompt-set_t2hdri_Sliders_QwenImage2512_Qwen360LoRA_v01.md) |
+| [t2hdri_INT_Compare3_SDXL360_Qwen360_Klein360_v01.json](t2hdri_INT_Compare3_SDXL360_Qwen360_Klein360_v01.json) — **banc d'essai environment map INTÉRIEURE 360°** : 3 blocs en parallèle (SDXL 360 Diffusion · Qwen-Image-2512 + qwen-360-diffusion · Flux.2 Klein 9B base + LoRA 360) alimentés par le **même prompt, les mêmes barrettes et la même seed** (**ambiance × ensoleillement** 16 lignes, **mobilier** 4 états, **style déco** 15 styles, **hauteur** 1 m / 1,6 m / 2,8 m), sortie 2048×1024 PNG, 100 % natif — étape 1 de comparaison avant le WF final | [CONTEXT](t2hdri_INT_Compare3_SDXL360_Qwen360_Klein360_v01/CONTEXT_prompt-set_t2hdri_INT_Compare3_SDXL360_Qwen360_Klein360_v01.md) |
 | [i2hdri_4Input_QwenImage2512_Qwen25VL_v07.json](i2hdri_4Input_QwenImage2512_Qwen25VL_v07.json) — **environment map extérieure 360° depuis 4 photos d'un lieu** (N / E / S / O, chaque slot image ou texte) : Qwen2.5-VL décrit les photos, esquisse = fond flou + bande nette de chaque photo sur l'horizon + grain, Qwen-Image-2512 + LoRA 360 repeint toute la sphère ; **passe 2 désactivable** (OFF par défaut) et **mode QUALITÉ** sans Lightning (30 steps, CFG 3, négatif anti-illustration) ; raccord gauche/droite, sortie **4096×2048 PNG 16 bits + EXR 32 bits**, Cloud | [CONTEXT](i2hdri_4Input_QwenImage2512_Qwen25VL_v07/CONTEXT_prompt-set_i2hdri_4Input_QwenImage2512_Qwen25VL_v07.md) |
 | Versions antérieures v01–v06 (supprimées) : v01–v02 vues collées (blocs visibles), v03 esquisse floue, v04 bandes nettes (rendu en aplats), v05–v06 grain + passe 2 Lightning (rendu « dessin ») | — |
 | [env360_pipeline_4etapes.json](env360_pipeline_4etapes.json) — pipeline 360 en 4 étapes | — |
@@ -85,9 +86,10 @@ Les fichiers arrivent dans `comfy_cloud_assets/<tag>/` (ignoré par git) avec un
 | [qwen_environnement_4vues_360_cloud_v3.json](qwen_environnement_4vues_360_cloud_v3.json) — 4 vues + 360, exécution cloud (v3) | — |
 | [qwen_environnement_4vues_360_cloud_v2.json](qwen_environnement_4vues_360_cloud_v2.json) · [cloud v1](qwen_environnement_4vues_360_cloud.json) · [local](qwen_environnement_4vues_360.json) | — |
 
-### Vidéo (image-to-video, FX, SFX)
+### Vidéo (image-to-video, video-to-video, FX, SFX)
 | Workflow | Prompt Set |
 |---|---|
+| [v2v_LTX25_UnionCtrlLoRA_v01.json](v2v_LTX25_UnionCtrlLoRA_v01.json) — **blocking 3D 1K + prompt → rendu stylisé 2K** avec LTX-2.5 22B distilled : blocking injecté en **latent initial** (repères couleur « the RED character… ») et en **guide de structure** IC-LoRA Union Control (Canny natif ou vidéo depth rendue, switch), image de référence 1re image optionnelle, sigmas = denoise du blocking, upscale latent ×2 débrayable, MP4 au fps du blocking, 100 % natif, Cloud | [CONTEXT](v2v_LTX25_UnionCtrlLoRA_v01/CONTEXT_prompt-set_v2v_LTX25_UnionCtrlLoRA_v01.md) |
 | [JB_LTX23_FLF_EDIT_FX_SFX_v3.json](JB_LTX23_FLF_EDIT_FX_SFX_v3.json) — LTX 2.3, first/last frame + edit + FX + SFX | [CONTEXT](JB_LTX23_FLF_EDIT_FX_SFX_v3/CONTEXT_prompt-set_LTX23_WF-v3.md) |
 | [JB_LTX23_FLF_EDIT_FX_SFX_v2.json](JB_LTX23_FLF_EDIT_FX_SFX_v2.json) — v2 | — |
 | [JB_LTX23_I2V_FX_SFX.json](JB_LTX23_I2V_FX_SFX.json) — LTX 2.3 image-to-video | — |

@@ -1,0 +1,111 @@
+{
+ "EXPRS": {
+  "light": [
+   "min(max(a,0),3)*4+min(max(b,0),3)",
+   240,
+   2
+  ],
+  "state": [
+   "min(max(a,0),3)",
+   204,
+   1
+  ],
+  "style": [
+   "(a>=3)*min(max(b,0),14)+(a<3)*15",
+   201,
+   2
+  ],
+  "height": [
+   "min(max(a,0),2)",
+   203,
+   1
+  ]
+ },
+ "LIGHT": [
+  "early morning, overcast pale grey daylight entering softly through the windows, flat cool diffuse light without direct sun, interior lamps providing most of the illumination with a warm glow against the cool window light",
+  "early morning, low soft sun entering through the windows, pale warm light and gentle long soft-edged shadows on the floor, cool blue-white shadows, a few lamps lit",
+  "early morning, low sun rays entering through the windows as sharp warm beams across the floor and lower walls, long defined shadows of the window frames, dust floating in the light, lamps unnecessary",
+  "early morning, bright low sun directly facing the camera through the windows, blinding glare and glowing haze around the window openings, the room interior underexposed and silhouetted, soft rim light on edges, interior lamps barely visible",
+  "midday, white overcast sky, flat soft diffuse daylight through the windows, no cast shadows, even neutral light, interior lamps lit and dominating the dim corners",
+  "midday, soft sun through a light haze, gentle daylight entering the windows, soft shadows with blurred edges, neutral white light, interior lamps secondary",
+  "midday, strong direct sun rays entering through the windows, bright sharp-edged light patches on the floor and walls, crisp shadows, high contrast, neutral white light, lamps unnecessary",
+  "midday, dazzling high sun directly facing the camera through the windows, overexposed glowing window openings, strong glare and bloom, the room underexposed and dark, interior lamps lost in the glare",
+  "evening, dusk under a grey overcast sky, dim blue-grey light from the windows, warm interior lamps lit and dominating, pools of warm lamplight in the room",
+  "evening, low soft sun glow through the windows, warm amber light, soft long shadows, some warm lamps lit",
+  "evening, low golden sun rays entering through the windows as sharp orange beams crossing the room, long shadows, deep golden light on the walls, lamps unnecessary",
+  "evening, blinding low sun facing the camera through the windows at sunset, orange glare and bloom around the window openings, silhouetted room interior underexposed, faint warm rim light, lamps barely visible",
+  "night, windows dark blue-black, interior lamps lit as the only light, warm pools of artificial light with deep shadows in the corners",
+  "night, soft cold moonlight through the windows, pale blue patches on the floor, a few warm lamps lit",
+  "night, strong moonlight and bright street light rays entering through the windows, sharp pale-blue beams and long shadows on the floor, lamps very dim",
+  "night, a bright street lamp or full moon directly facing the camera through the windows, glowing glare and bloom at the openings, the room underexposed and very dark, lamps off"
+ ],
+ "STATE": [
+  "an unfinished bare shell with raw concrete walls and floor, exposed cinder blocks, hanging electrical cables and an exposed concrete ceiling slab, completely empty",
+  "a building site at second-fix stage, rough plastered walls partly painted, protective plastic sheets and tarpaulins, tools, paint buckets and ladders, an unfinished dusty floor, bare temporary work lights",
+  "a finished empty room, completed finishes, clean painted walls, finished floor, skirting boards and ceiling mouldings, completely empty of furniture and decoration",
+  "a fully furnished and decorated room, with sofas, tables, rugs, lamps, shelves, curtains and decorative objects"
+ ],
+ "STYLE": [
+  ". Decor style: modern, concrete, glass and steel materials, geometric shapes, straight lines, open space, limited decoration",
+  ". Decor style: contemporary, natural materials and textures, light and deep tones in balance, curved forms, curated decoration, clean lines, a minimalist dining table in a noble material as centrepiece",
+  ". Decor style: Scandinavian, light wood, textiles and rugs, light airy palette, simple forms, light proportions, well-placed lighting, only useful objects",
+  ". Decor style: mid-century modern, dark wood, tapered legs, organic lines, comfortable seating, a few bold colours and graphic patterns",
+  ". Decor style: industrial, steel, wood, brick, concrete and glass, raw materials, deep mineral tones, sturdy functional furniture",
+  ". Decor style: bohemian, mixed materials and textiles, varied colours and patterns, accumulated objects, souvenirs and mismatched pieces",
+  ". Decor style: vintage, wood, Formica, metal and textured fabrics, deep colours, furniture and objects from the 1950s to the 1970s with patina and wear",
+  ". Decor style: Art Deco, wood, glass, brass and velvet, geometric compositions, symmetry, worked lines",
+  ". Decor style: English country, painted panelling, wallpaper, floral or checked fabrics, muted coherent palette, aged antique furniture and patinated objects",
+  ". Decor style: holiday house, wood, stone, linen and natural fibres, soft tones, light and calm atmosphere, subtle sea references",
+  ". Decor style: wabi-sabi, raw wood, stone, ceramics and linen, irregular surfaces, handmade objects, visible signs of age",
+  ". Decor style: Kinfolk, wood, linen and ceramics, muted low-contrast tones, fresh or dried plants, books, old jars and terracotta vases, a solid wood table",
+  ". Decor style: Haussmann, herringbone parquet, marble fireplaces, mouldings, high ceilings, large windows, contemporary furniture scaled to the space",
+  ". Decor style: contemporary classic, precious period elements mixed with contemporary pieces, clean-lined modern furniture against traditional architecture",
+  ". Decor style: warm minimalism, textured relief-rich materials such as travertine, light wood and bouclé, soft neutral beige tones, simple lines, arches and rounded forms",
+  ""
+ ],
+ "HEIGHT": [
+  "captured from a seated viewpoint about 1 metre above the floor, table height, the floor close and prominent in the lower half, objects seen from low, the ceiling high above, horizon exactly at mid-height",
+  "captured from a standing viewpoint about 1.6 metres above the floor, natural human eye level, horizon exactly at mid-height",
+  "captured from about 2.8 metres above the floor, just below the ceiling, looking slightly down on the room, floor and objects seen from above, the ceiling close above, horizon exactly at mid-height"
+ ],
+ "LIGHT_LABELS_A": [
+  "0 matin",
+  "1 jour",
+  "2 soir",
+  "3 nuit"
+ ],
+ "LIGHT_LABELS_S": [
+  "0 aucun soleil direct",
+  "1 soleil doux",
+  "2 rayons marqués",
+  "3 contre-jour éblouissant"
+ ],
+ "STATE_LABELS": [
+  "0 gros œuvre",
+  "1 second œuvre",
+  "2 vide, finitions terminées",
+  "3 meublé et décoré"
+ ],
+ "STYLE_LABELS": [
+  "0 moderne",
+  "1 contemporain",
+  "2 scandinave",
+  "3 mid-century",
+  "4 industriel",
+  "5 bohème",
+  "6 vintage",
+  "7 art déco",
+  "8 campagne anglaise",
+  "9 maison de vacances",
+  "10 wabi-sabi",
+  "11 kinfolk",
+  "12 haussmannien",
+  "13 classique contemporain",
+  "14 minimalisme chaleureux"
+ ],
+ "HEIGHT_LABELS": [
+  "0 ≈ 1 m (assis)",
+  "1 ≈ 1,6 m (debout)",
+  "2 ≈ 2,8 m (sous plafond)"
+ ]
+}

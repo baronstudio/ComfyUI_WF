@@ -1,0 +1,4973 @@
+{
+ "id": "t2hdri-int-compare3-sdxl360-qwen360-klein360-v01",
+ "revision": 0,
+ "last_node_id": 84,
+ "last_link_id": 104,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "MarkdownNote",
+   "pos": [
+    40,
+    40
+   ],
+   "size": [
+    520,
+    1900
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote"
+   },
+   "widgets_values": [
+    "# t2hdri_INT_Compare3_SDXL360_Qwen360_Klein360_v01 — Mode d'emploi\n\n**Banc d'essai (étape 1)** : trois solutions de génération d'**environment map INTÉRIEURE 360°** (équirectangulaire 2:1, **2048 × 1024**) alimentées par **le même prompt, les mêmes barrettes, la même seed et la même résolution**, pour comparer la qualité de rendu. Rien d'autre : pas de raccord, pas d'upscale, pas d'EXR (étape 3, sur la solution retenue).\n\n| Bloc | Modèle | LoRA / checkpoint 360 | Licence (à vérifier) |\n|---|---|---|---|\n| **A** | SDXL | checkpoint `sdxl_360_diffusion` (+ LoRA `View360` / 360Redmond, OFF par défaut) | MIT / OpenRAIL |\n| **B** | Qwen-Image-2512 | LoRA `qwen-360-diffusion` v2 + Lightning (mode rapide validé) | à vérifier |\n| **C** | Flux.2 Klein 9B **base** | LoRA `flux-2-klein-9b-360-panorama-lora` (crafiq) | Klein 9B = FLUX Non-Commercial |\n\n## Entrées (groupe 🎛️ CONTRÔLES)\n1. **✏️ Prompt de base (EN)** : type de pièce, architecture, volumes, ouvertures, boîtier photo. Rien sur la lumière, le mobilier, le style ni la hauteur. Éviter les finitions précises (parquet, marbre…) qui contrediraient *Mobilier* 0–1.\n2. **🎛️ Ambiance (0–3)** : 0 matin · 1 jour · 2 soir · 3 nuit.\n3. **🎛️ Ensoleillement (0–3)** : 0 aucun soleil direct · 1 soleil doux · 2 rayons marqués · 3 contre-jour éblouissant (intérieur sous-exposé). Table 4 × 4 = 16 lignes, pondérée par l'ambiance.\n4. **🎛️ Mobilier (0–3)** : 0 gros œuvre · 1 second œuvre · 2 vide, finitions terminées · 3 meublé et décoré. Aucun personnage.\n5. **🎛️ Style déco (0–14)** : actif seulement si Mobilier = 3 (sinon fragment vide). 0 moderne · 1 contemporain · 2 scandinave · 3 mid-century · 4 industriel · 5 bohème · 6 vintage · 7 art déco · 8 campagne anglaise · 9 maison de vacances · 10 wabi-sabi · 11 kinfolk · 12 haussmannien · 13 classique contemporain · 14 minimalisme chaleureux.\n6. **🎛️ Hauteur (0–2)** : 0 ≈ 1 m · 1 ≈ 1,6 m · 2 ≈ 2,8 m.\n7. **Seed / Largeur / Hauteur** partagés. Réglages par modèle (steps, CFG, force LoRA) dans le même groupe.\n\nLes textes des barrettes sont **verrouillés** (tables à largeur fixe lues par position) : ne pas les éditer à la main, régénérer le WF.\n\n## Protocole de test\n1. Garder les valeurs par défaut, lancer, noter le temps de chaque bloc.\n2. Comparer les 3 sorties (géométrie des lignes, raccord gauche/droite, plafond / sol, fenêtres, cohérence de la pièce, respect des barrettes).\n3. Refaire avec 3 à 4 combinaisons : (Ambiance 1, Soleil 2, Mobilier 3, Style 12) · (Ambiance 3, Soleil 0, Mobilier 2) · (Ambiance 2, Soleil 3, Mobilier 0) · même chose en changeant la seed.\n4. **Ctrl+M** sur un groupe = couper ce bloc (économise du temps et de la VRAM). Un bloc coupé ne sera pas exécuté.\n5. Test optionnel : bloc A avec la LoRA View360 activée (Ctrl+B sur le nœud ➕).\n\n## Modèles (à déposer dans Comfy Cloud / ComfyUI)\n- A : `checkpoints/sdxl_360_diffusion.safetensors` (ProGamerGov/sdxl-360-diffusion, 7,11 Go) · `loras/View360.safetensors` (artificialguybr/360Redmond)\n- B : `diffusion_models/qwen_image_2512_fp8_e4m3fn.safetensors` · `loras/Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors` · `loras/qwen-360-diffusion-2512-int8-bf16-v2.safetensors` · `text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors` · `vae/qwen_image_vae.safetensors`\n- C : `diffusion_models/flux-2-klein-base-9b-fp8.safetensors` · `loras/flux-2-klein-9b-360-panorama-lora.safetensors` (crafiq) · `text_encoders/qwen_3_8b_fp8mixed.safetensors` · `vae/full_encoder_small_decoder.safetensors`\n\n## Limites\n- Le LoRA 360 place la source lumineuse principale au centre : l'orientation se fait dans Blender.\n- Même prompt en texte naturel sur les 3 blocs (pas de JSON FLUX.2 à ce stade) : chaque bloc ajoute seulement son *trigger*.\n- Prompt négatif : actif seulement sur A (SDXL) ; B est à CFG 1 (sans effet) ; C n'en utilise pas.\n- Les fichiers A et C ne sont pas des modèles Comfy Cloud standard : à importer avant le premier run.\n"
+   ],
+   "title": "📖 Mode d'emploi"
+  },
+  {
+   "id": 2,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    620,
+    60
+   ],
+   "size": [
+    320,
+    260
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      29
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "a large rectangular living room with a high ceiling, three tall arched windows on one long wall and a wide glazed opening on the opposite wall, a door in one short wall and a chimney breast in the other, shot on a full-frame mirrorless camera with a 14 mm lens, sharp realistic photograph"
+   ],
+   "title": "✏️ Prompt de base (EN) : pièce, architecture, volumes, ouvertures, boîtier",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 3,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    344
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      1,
+      3
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    1,
+    "fixed"
+   ],
+   "title": "🎛️ Ambiance lumineuse (0–3) : matin · jour · soir · nuit",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 4,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    450
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      2,
+      4
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    2,
+    "fixed"
+   ],
+   "title": "🎛️ Ensoleillement (0–3) : aucun · doux · rayons · contre-jour",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 5,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    556
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      9,
+      10,
+      15,
+      17
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    3,
+    "fixed"
+   ],
+   "title": "🎛️ Mobilier (0–3) : gros œuvre · second œuvre · vide · meublé",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 6,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    662
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      16,
+      18
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    12,
+    "fixed"
+   ],
+   "title": "🎛️ Style déco (0–14), actif si Mobilier = 3",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 7,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    768
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      23,
+      24
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    1,
+    "fixed"
+   ],
+   "title": "🎛️ Hauteur de prise de vue (0–2) : 1 m · 1,6 m · 2,8 m",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 8,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    874
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      58,
+      76,
+      92
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    360001,
+    "fixed"
+   ],
+   "title": "🎛️ Seed (commune aux 3 blocs)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 9,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    980
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      52,
+      70,
+      87,
+      90
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    2048,
+    "fixed"
+   ],
+   "title": "🎛️ Largeur (2048)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 10,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    1086
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      53,
+      71,
+      88,
+      91
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    1024,
+    "fixed"
+   ],
+   "title": "🎛️ Hauteur image (1024)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 11,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    1192
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      59
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    30,
+    "fixed"
+   ],
+   "title": "A SDXL — Steps (25–40)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 12,
+   "type": "PrimitiveFloat",
+   "pos": [
+    620,
+    1298
+   ],
+   "size": [
+    320,
+    58
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      60
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat"
+   },
+   "widgets_values": [
+    6.0
+   ],
+   "title": "A SDXL — CFG (5–8)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 13,
+   "type": "PrimitiveFloat",
+   "pos": [
+    620,
+    1380
+   ],
+   "size": [
+    320,
+    58
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      49,
+      50
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat"
+   },
+   "widgets_values": [
+    0.8
+   ],
+   "title": "A SDXL — Force LoRA View360 (si activée)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 14,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    1462
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      77
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    8,
+    "fixed"
+   ],
+   "title": "B Qwen — Steps (8, Lightning)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 15,
+   "type": "PrimitiveFloat",
+   "pos": [
+    620,
+    1568
+   ],
+   "size": [
+    320,
+    58
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      78
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat"
+   },
+   "widgets_values": [
+    1.0
+   ],
+   "title": "B Qwen — CFG (1.0 avec Lightning)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 16,
+   "type": "PrimitiveInt",
+   "pos": [
+    620,
+    1650
+   ],
+   "size": [
+    320,
+    82
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      89
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    20,
+    "fixed"
+   ],
+   "title": "C Klein 9B base — Steps (20–30)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 17,
+   "type": "PrimitiveFloat",
+   "pos": [
+    620,
+    1756
+   ],
+   "size": [
+    320,
+    58
+   ],
+   "flags": {},
+   "order": 16,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      96
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat"
+   },
+   "widgets_values": [
+    5.0
+   ],
+   "title": "C Klein 9B base — CFG (3–5)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 18,
+   "type": "PrimitiveFloat",
+   "pos": [
+    620,
+    1838
+   ],
+   "size": [
+    320,
+    58
+   ],
+   "flags": {},
+   "order": 17,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      83
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveFloat"
+   },
+   "widgets_values": [
+    1.0
+   ],
+   "title": "C Klein — Force LoRA 360",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 19,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    1040,
+    60
+   ],
+   "size": [
+    400,
+    420
+   ],
+   "flags": {},
+   "order": 18,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      5
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "early morning, overcast pale grey daylight entering softly through the windows, flat cool diffuse light without direct sun, interior lamps providing most of the illumination with a warm glow against the cool window light                    \nearly morning, low soft sun entering through the windows, pale warm light and gentle long soft-edged shadows on the floor, cool blue-white shadows, a few lamps lit                                                                             \nearly morning, low sun rays entering through the windows as sharp warm beams across the floor and lower walls, long defined shadows of the window frames, dust floating in the light, lamps unnecessary                                         \nearly morning, bright low sun directly facing the camera through the windows, blinding glare and glowing haze around the window openings, the room interior underexposed and silhouetted, soft rim light on edges, interior lamps barely visible\nmidday, white overcast sky, flat soft diffuse daylight through the windows, no cast shadows, even neutral light, interior lamps lit and dominating the dim corners                                                                              \nmidday, soft sun through a light haze, gentle daylight entering the windows, soft shadows with blurred edges, neutral white light, interior lamps secondary                                                                                     \nmidday, strong direct sun rays entering through the windows, bright sharp-edged light patches on the floor and walls, crisp shadows, high contrast, neutral white light, lamps unnecessary                                                      \nmidday, dazzling high sun directly facing the camera through the windows, overexposed glowing window openings, strong glare and bloom, the room underexposed and dark, interior lamps lost in the glare                                         \nevening, dusk under a grey overcast sky, dim blue-grey light from the windows, warm interior lamps lit and dominating, pools of warm lamplight in the room                                                                                      \nevening, low soft sun glow through the windows, warm amber light, soft long shadows, some warm lamps lit                                                                                                                                        \nevening, low golden sun rays entering through the windows as sharp orange beams crossing the room, long shadows, deep golden light on the walls, lamps unnecessary                                                                              \nevening, blinding low sun facing the camera through the windows at sunset, orange glare and bloom around the window openings, silhouetted room interior underexposed, faint warm rim light, lamps barely visible                                \nnight, windows dark blue-black, interior lamps lit as the only light, warm pools of artificial light with deep shadows in the corners                                                                                                           \nnight, soft cold moonlight through the windows, pale blue patches on the floor, a few warm lamps lit                                                                                                                                            \nnight, strong moonlight and bright street light rays entering through the windows, sharp pale-blue beams and long shadows on the floor, lamps very dim                                                                                          \nnight, a bright street lamp or full moon directly facing the camera through the windows, glowing glare and bloom at the openings, the room underexposed and very dark, lamps off                                                                "
+   ],
+   "title": "🔒 Table LUMIÈRE = Ambiance × Ensoleillement (16 lignes, largeur fixe — ne pas éditer)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 20,
+   "type": "ComfyMathExpression",
+   "pos": [
+    1480,
+    60
+   ],
+   "size": [
+    320,
+    120
+   ],
+   "flags": {},
+   "order": 19,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 1,
+     "label": "a"
+    },
+    {
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 2,
+     "label": "b"
+    },
+    {
+     "localized_name": "values.c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null,
+     "label": "c",
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      6
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "widgets_values": [
+    "(min(max(a,0),3)*4+min(max(b,0),3))*241"
+   ],
+   "title": "Début = index borné × 241",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 21,
+   "type": "ComfyMathExpression",
+   "pos": [
+    1480,
+    230
+   ],
+   "size": [
+    320,
+    120
+   ],
+   "flags": {},
+   "order": 20,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 3,
+     "label": "a"
+    },
+    {
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 4,
+     "label": "b"
+    },
+    {
+     "localized_name": "values.c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null,
+     "label": "c",
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      7
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "widgets_values": [
+    "(min(max(a,0),3)*4+min(max(b,0),3))*241+240"
+   ],
+   "title": "Fin = début + 240",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 22,
+   "type": "StringSubstring",
+   "pos": [
+    1820,
+    60
+   ],
+   "size": [
+    300,
+    150
+   ],
+   "flags": {},
+   "order": 21,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string",
+     "name": "string",
+     "type": "STRING",
+     "link": 5,
+     "widget": {
+      "name": "string"
+     }
+    },
+    {
+     "localized_name": "start",
+     "name": "start",
+     "type": "INT",
+     "link": 6,
+     "widget": {
+      "name": "start"
+     }
+    },
+    {
+     "localized_name": "end",
+     "name": "end",
+     "type": "INT",
+     "link": 7,
+     "widget": {
+      "name": "end"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      8
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringSubstring"
+   },
+   "widgets_values": [
+    "",
+    0,
+    0
+   ],
+   "title": "Ligne de la table (position)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 23,
+   "type": "StringTrim",
+   "pos": [
+    1820,
+    250
+   ],
+   "size": [
+    300,
+    80
+   ],
+   "flags": {},
+   "order": 22,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string",
+     "name": "string",
+     "type": "STRING",
+     "link": 8,
+     "widget": {
+      "name": "string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      30
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringTrim"
+   },
+   "widgets_values": [
+    "",
+    "Both"
+   ],
+   "title": "Texte du preset (sans remplissage)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 24,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    1040,
+    540
+   ],
+   "size": [
+    400,
+    270
+   ],
+   "flags": {},
+   "order": 23,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      11
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "an unfinished bare shell with raw concrete walls and floor, exposed cinder blocks, hanging electrical cables and an exposed concrete ceiling slab, completely empty                                         \na building site at second-fix stage, rough plastered walls partly painted, protective plastic sheets and tarpaulins, tools, paint buckets and ladders, an unfinished dusty floor, bare temporary work lights\na finished empty room, completed finishes, clean painted walls, finished floor, skirting boards and ceiling mouldings, completely empty of furniture and decoration                                         \na fully furnished and decorated room, with sofas, tables, rugs, lamps, shelves, curtains and decorative objects                                                                                             "
+   ],
+   "title": "🔒 Table MOBILIER (4 lignes, largeur fixe — ne pas éditer)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 25,
+   "type": "ComfyMathExpression",
+   "pos": [
+    1480,
+    540
+   ],
+   "size": [
+    320,
+    120
+   ],
+   "flags": {},
+   "order": 24,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 9,
+     "label": "a"
+    },
+    {
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null,
+     "label": "b",
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      12
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "widgets_values": [
+    "(min(max(a,0),3))*205"
+   ],
+   "title": "Début = index borné × 205",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 26,
+   "type": "ComfyMathExpression",
+   "pos": [
+    1480,
+    710
+   ],
+   "size": [
+    320,
+    120
+   ],
+   "flags": {},
+   "order": 25,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 10,
+     "label": "a"
+    },
+    {
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null,
+     "label": "b",
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      13
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "widgets_values": [
+    "(min(max(a,0),3))*205+204"
+   ],
+   "title": "Fin = début + 204",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 27,
+   "type": "StringSubstring",
+   "pos": [
+    1820,
+    540
+   ],
+   "size": [
+    300,
+    150
+   ],
+   "flags": {},
+   "order": 26,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string",
+     "name": "string",
+     "type": "STRING",
+     "link": 11,
+     "widget": {
+      "name": "string"
+     }
+    },
+    {
+     "localized_name": "start",
+     "name": "start",
+     "type": "INT",
+     "link": 12,
+     "widget": {
+      "name": "start"
+     }
+    },
+    {
+     "localized_name": "end",
+     "name": "end",
+     "type": "INT",
+     "link": 13,
+     "widget": {
+      "name": "end"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      14
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringSubstring"
+   },
+   "widgets_values": [
+    "",
+    0,
+    0
+   ],
+   "title": "Ligne de la table (position)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 28,
+   "type": "StringTrim",
+   "pos": [
+    1820,
+    730
+   ],
+   "size": [
+    300,
+    80
+   ],
+   "flags": {},
+   "order": 27,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string",
+     "name": "string",
+     "type": "STRING",
+     "link": 14,
+     "widget": {
+      "name": "string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      32
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringTrim"
+   },
+   "widgets_values": [
+    "",
+    "Both"
+   ],
+   "title": "Texte du preset (sans remplissage)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 29,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    1040,
+    870
+   ],
+   "size": [
+    400,
+    420
+   ],
+   "flags": {},
+   "order": 28,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      19
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    ". Decor style: modern, concrete, glass and steel materials, geometric shapes, straight lines, open space, limited decoration                                                                             \n. Decor style: contemporary, natural materials and textures, light and deep tones in balance, curved forms, curated decoration, clean lines, a minimalist dining table in a noble material as centrepiece\n. Decor style: Scandinavian, light wood, textiles and rugs, light airy palette, simple forms, light proportions, well-placed lighting, only useful objects                                               \n. Decor style: mid-century modern, dark wood, tapered legs, organic lines, comfortable seating, a few bold colours and graphic patterns                                                                  \n. Decor style: industrial, steel, wood, brick, concrete and glass, raw materials, deep mineral tones, sturdy functional furniture                                                                        \n. Decor style: bohemian, mixed materials and textiles, varied colours and patterns, accumulated objects, souvenirs and mismatched pieces                                                                 \n. Decor style: vintage, wood, Formica, metal and textured fabrics, deep colours, furniture and objects from the 1950s to the 1970s with patina and wear                                                  \n. Decor style: Art Deco, wood, glass, brass and velvet, geometric compositions, symmetry, worked lines                                                                                                   \n. Decor style: English country, painted panelling, wallpaper, floral or checked fabrics, muted coherent palette, aged antique furniture and patinated objects                                            \n. Decor style: holiday house, wood, stone, linen and natural fibres, soft tones, light and calm atmosphere, subtle sea references                                                                        \n. Decor style: wabi-sabi, raw wood, stone, ceramics and linen, irregular surfaces, handmade objects, visible signs of age                                                                                \n. Decor style: Kinfolk, wood, linen and ceramics, muted low-contrast tones, fresh or dried plants, books, old jars and terracotta vases, a solid wood table                                              \n. Decor style: Haussmann, herringbone parquet, marble fireplaces, mouldings, high ceilings, large windows, contemporary furniture scaled to the space                                                    \n. Decor style: contemporary classic, precious period elements mixed with contemporary pieces, clean-lined modern furniture against traditional architecture                                              \n. Decor style: warm minimalism, textured relief-rich materials such as travertine, light wood and bouclé, soft neutral beige tones, simple lines, arches and rounded forms                               \n                                                                                                                                                                                                         "
+   ],
+   "title": "🔒 Table STYLE DÉCO (15 + 1 ligne vide, actif si Mobilier = 3 — ne pas éditer)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 30,
+   "type": "ComfyMathExpression",
+   "pos": [
+    1480,
+    870
+   ],
+   "size": [
+    320,
+    120
+   ],
+   "flags": {},
+   "order": 29,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 15,
+     "label": "a"
+    },
+    {
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 16,
+     "label": "b"
+    },
+    {
+     "localized_name": "values.c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null,
+     "label": "c",
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      20
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "widgets_values": [
+    "((a>=3)*min(max(b,0),14)+(a<3)*15)*202"
+   ],
+   "title": "Début = index borné × 202",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 31,
+   "type": "ComfyMathExpression",
+   "pos": [
+    1480,
+    1040
+   ],
+   "size": [
+    320,
+    120
+   ],
+   "flags": {},
+   "order": 30,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 17,
+     "label": "a"
+    },
+    {
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 18,
+     "label": "b"
+    },
+    {
+     "localized_name": "values.c",
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null,
+     "label": "c",
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      21
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "widgets_values": [
+    "((a>=3)*min(max(b,0),14)+(a<3)*15)*202+201"
+   ],
+   "title": "Fin = début + 201",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 32,
+   "type": "StringSubstring",
+   "pos": [
+    1820,
+    870
+   ],
+   "size": [
+    300,
+    150
+   ],
+   "flags": {},
+   "order": 31,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string",
+     "name": "string",
+     "type": "STRING",
+     "link": 19,
+     "widget": {
+      "name": "string"
+     }
+    },
+    {
+     "localized_name": "start",
+     "name": "start",
+     "type": "INT",
+     "link": 20,
+     "widget": {
+      "name": "start"
+     }
+    },
+    {
+     "localized_name": "end",
+     "name": "end",
+     "type": "INT",
+     "link": 21,
+     "widget": {
+      "name": "end"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      22
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringSubstring"
+   },
+   "widgets_values": [
+    "",
+    0,
+    0
+   ],
+   "title": "Ligne de la table (position)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 33,
+   "type": "StringTrim",
+   "pos": [
+    1820,
+    1060
+   ],
+   "size": [
+    300,
+    80
+   ],
+   "flags": {},
+   "order": 32,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string",
+     "name": "string",
+     "type": "STRING",
+     "link": 22,
+     "widget": {
+      "name": "string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      34
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringTrim"
+   },
+   "widgets_values": [
+    "",
+    "Both"
+   ],
+   "title": "Texte du preset (sans remplissage)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 34,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    1040,
+    1350
+   ],
+   "size": [
+    400,
+    270
+   ],
+   "flags": {},
+   "order": 33,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      25
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "captured from a seated viewpoint about 1 metre above the floor, table height, the floor close and prominent in the lower half, objects seen from low, the ceiling high above, horizon exactly at mid-height\ncaptured from a standing viewpoint about 1.6 metres above the floor, natural human eye level, horizon exactly at mid-height                                                                                \ncaptured from about 2.8 metres above the floor, just below the ceiling, looking slightly down on the room, floor and objects seen from above, the ceiling close above, horizon exactly at mid-height       "
+   ],
+   "title": "🔒 Table HAUTEUR DE PRISE DE VUE (3 lignes, largeur fixe — ne pas éditer)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 35,
+   "type": "ComfyMathExpression",
+   "pos": [
+    1480,
+    1350
+   ],
+   "size": [
+    320,
+    120
+   ],
+   "flags": {},
+   "order": 34,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 23,
+     "label": "a"
+    },
+    {
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null,
+     "label": "b",
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      26
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "widgets_values": [
+    "(min(max(a,0),2))*204"
+   ],
+   "title": "Début = index borné × 204",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 36,
+   "type": "ComfyMathExpression",
+   "pos": [
+    1480,
+    1520
+   ],
+   "size": [
+    320,
+    120
+   ],
+   "flags": {},
+   "order": 35,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "values.a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 24,
+     "label": "a"
+    },
+    {
+     "localized_name": "values.b",
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null,
+     "label": "b",
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      27
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "widgets_values": [
+    "(min(max(a,0),2))*204+203"
+   ],
+   "title": "Fin = début + 203",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 37,
+   "type": "StringSubstring",
+   "pos": [
+    1820,
+    1350
+   ],
+   "size": [
+    300,
+    150
+   ],
+   "flags": {},
+   "order": 36,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string",
+     "name": "string",
+     "type": "STRING",
+     "link": 25,
+     "widget": {
+      "name": "string"
+     }
+    },
+    {
+     "localized_name": "start",
+     "name": "start",
+     "type": "INT",
+     "link": 26,
+     "widget": {
+      "name": "start"
+     }
+    },
+    {
+     "localized_name": "end",
+     "name": "end",
+     "type": "INT",
+     "link": 27,
+     "widget": {
+      "name": "end"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      28
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringSubstring"
+   },
+   "widgets_values": [
+    "",
+    0,
+    0
+   ],
+   "title": "Ligne de la table (position)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 38,
+   "type": "StringTrim",
+   "pos": [
+    1820,
+    1540
+   ],
+   "size": [
+    300,
+    80
+   ],
+   "flags": {},
+   "order": 37,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string",
+     "name": "string",
+     "type": "STRING",
+     "link": 28,
+     "widget": {
+      "name": "string"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      36
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringTrim"
+   },
+   "widgets_values": [
+    "",
+    "Both"
+   ],
+   "title": "Texte du preset (sans remplissage)",
+   "color": "#233",
+   "bgcolor": "#355"
+  },
+  {
+   "id": 39,
+   "type": "StringConcatenate",
+   "pos": [
+    2240,
+    60
+   ],
+   "size": [
+    340,
+    150
+   ],
+   "flags": {},
+   "order": 38,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "link": 29,
+     "widget": {
+      "name": "string_a"
+     }
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "link": 30,
+     "widget": {
+      "name": "string_b"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      31
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    ". Lighting: "
+   ],
+   "title": "Base + lumière (barrette)",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 40,
+   "type": "StringConcatenate",
+   "pos": [
+    2240,
+    240
+   ],
+   "size": [
+    340,
+    150
+   ],
+   "flags": {},
+   "order": 39,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "link": 31,
+     "widget": {
+      "name": "string_a"
+     }
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "link": 32,
+     "widget": {
+      "name": "string_b"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      33
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    ". Room state: "
+   ],
+   "title": "+ État du lieu / mobilier (barrette)",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 41,
+   "type": "StringConcatenate",
+   "pos": [
+    2240,
+    420
+   ],
+   "size": [
+    340,
+    150
+   ],
+   "flags": {},
+   "order": 40,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "link": 33,
+     "widget": {
+      "name": "string_a"
+     }
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "link": 34,
+     "widget": {
+      "name": "string_b"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      35
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    ""
+   ],
+   "title": "+ Style déco (barrette, vide si Mobilier < 3)",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 42,
+   "type": "StringConcatenate",
+   "pos": [
+    2240,
+    600
+   ],
+   "size": [
+    340,
+    150
+   ],
+   "flags": {},
+   "order": 41,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "link": 35,
+     "widget": {
+      "name": "string_a"
+     }
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "link": 36,
+     "widget": {
+      "name": "string_b"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      37
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    ". Camera height: "
+   ],
+   "title": "+ Hauteur de prise de vue (barrette)",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 43,
+   "type": "StringConcatenate",
+   "pos": [
+    2240,
+    780
+   ],
+   "size": [
+    340,
+    150
+   ],
+   "flags": {},
+   "order": 42,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "link": 37,
+     "widget": {
+      "name": "string_a"
+     }
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "link": null,
+     "widget": {
+      "name": "string_b"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      38,
+      39,
+      40,
+      41
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "Full spherical interior view from inside the room, a single coherent room, continuous floor at the bottom, continuous ceiling at the top, walls that connect all around, seamless left and right edges, straight horizon in the exact middle, the same lighting, colours and time of day everywhere. Sharp photographic detail, natural textures, real camera photograph, not an illustration, not a 3D render. An unoccupied room, no text, no frame.",
+    "\n\n"
+   ],
+   "title": "+ Consignes 360 intérieures (fixes)",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 44,
+   "type": "PreviewAny",
+   "pos": [
+    2240,
+    970
+   ],
+   "size": [
+    340,
+    320
+   ],
+   "flags": {},
+   "order": 43,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "source",
+     "name": "source",
+     "type": "*",
+     "link": 38
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewAny"
+   },
+   "widgets_values": [],
+   "title": "👁️ Corps de prompt commun (3 blocs)",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 45,
+   "type": "StringConcatenate",
+   "pos": [
+    2640,
+    60
+   ],
+   "size": [
+    340,
+    150
+   ],
+   "flags": {},
+   "order": 44,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "link": null,
+     "widget": {
+      "name": "string_a"
+     }
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "link": 39,
+     "widget": {
+      "name": "string_b"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      42,
+      51
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "equirectangular 360 view, 360 panorama, photograph of",
+    "",
+    " "
+   ],
+   "title": "A · trigger SDXL 360 + corps",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 46,
+   "type": "StringConcatenate",
+   "pos": [
+    2640,
+    240
+   ],
+   "size": [
+    340,
+    150
+   ],
+   "flags": {},
+   "order": 45,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "link": null,
+     "widget": {
+      "name": "string_a"
+     }
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "link": 40,
+     "widget": {
+      "name": "string_b"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      43,
+      69
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "equirectangular 360 degree panorama with equirectangular projection, photograph of",
+    "",
+    " "
+   ],
+   "title": "B · trigger Qwen 360 + corps",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 47,
+   "type": "StringConcatenate",
+   "pos": [
+    2640,
+    420
+   ],
+   "size": [
+    340,
+    150
+   ],
+   "flags": {},
+   "order": 46,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "link": null,
+     "widget": {
+      "name": "string_a"
+     }
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "link": 41,
+     "widget": {
+      "name": "string_b"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      44,
+      86
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "Equirectangular 360 panorama, photograph of",
+    "",
+    " "
+   ],
+   "title": "C · trigger Klein 360 + corps",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 48,
+   "type": "PreviewAny",
+   "pos": [
+    3040,
+    60
+   ],
+   "size": [
+    340,
+    220
+   ],
+   "flags": {},
+   "order": 47,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "source",
+     "name": "source",
+     "type": "*",
+     "link": 42
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewAny"
+   },
+   "widgets_values": [],
+   "title": "👁️ Prompt A (SDXL)",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 49,
+   "type": "PreviewAny",
+   "pos": [
+    3040,
+    310
+   ],
+   "size": [
+    340,
+    220
+   ],
+   "flags": {},
+   "order": 48,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "source",
+     "name": "source",
+     "type": "*",
+     "link": 43
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewAny"
+   },
+   "widgets_values": [],
+   "title": "👁️ Prompt B (Qwen)",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 50,
+   "type": "PreviewAny",
+   "pos": [
+    3040,
+    560
+   ],
+   "size": [
+    340,
+    220
+   ],
+   "flags": {},
+   "order": 49,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "source",
+     "name": "source",
+     "type": "*",
+     "link": 44
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewAny"
+   },
+   "widgets_values": [],
+   "title": "👁️ Prompt C (Klein)",
+   "color": "#332",
+   "bgcolor": "#553"
+  },
+  {
+   "id": 51,
+   "type": "CheckpointLoaderSimple",
+   "pos": [
+    3500,
+    60
+   ],
+   "size": [
+    400,
+    110
+   ],
+   "flags": {},
+   "order": 50,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      45
+     ]
+    },
+    {
+     "localized_name": "CLIP",
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      46
+     ]
+    },
+    {
+     "localized_name": "VAE",
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      62
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CheckpointLoaderSimple"
+   },
+   "widgets_values": [
+    "sdxl_360_diffusion.safetensors"
+   ],
+   "title": "A · SDXL 360 Diffusion (checkpoint)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 52,
+   "type": "LoraLoader",
+   "pos": [
+    3500,
+    194
+   ],
+   "size": [
+    400,
+    160
+   ],
+   "flags": {},
+   "order": 51,
+   "mode": 4,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 45
+    },
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 46
+    },
+    {
+     "localized_name": "strength_model",
+     "name": "strength_model",
+     "type": "FLOAT",
+     "link": 49,
+     "widget": {
+      "name": "strength_model"
+     }
+    },
+    {
+     "localized_name": "strength_clip",
+     "name": "strength_clip",
+     "type": "FLOAT",
+     "link": 50,
+     "widget": {
+      "name": "strength_clip"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      54
+     ]
+    },
+    {
+     "localized_name": "CLIP",
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      47,
+      48
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoader"
+   },
+   "widgets_values": [
+    "View360.safetensors",
+    0.8,
+    0.8
+   ],
+   "title": "➕ LoRA View360 / 360Redmond (OFF — Ctrl+B pour activer)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 53,
+   "type": "CLIPTextEncode",
+   "pos": [
+    3500,
+    378
+   ],
+   "size": [
+    400,
+    130
+   ],
+   "flags": {},
+   "order": 52,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 47
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "link": 51,
+     "widget": {
+      "name": "text"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      55
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "title": "A · PROMPT (positif)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 54,
+   "type": "CLIPTextEncode",
+   "pos": [
+    3500,
+    532
+   ],
+   "size": [
+    400,
+    180
+   ],
+   "flags": {},
+   "order": 53,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 48
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "link": null,
+     "widget": {
+      "name": "text"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      56
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    "illustration, cartoon, drawing, painting, anime, 3d render, cgi, video game, people, person, human, text, watermark, logo, frame, blurry, lowres, deformed, bad perspective, duplicated furniture, mirrored duplicate, visible seam"
+   ],
+   "title": "A · Négatif SDXL (CFG > 1)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 55,
+   "type": "EmptyLatentImage",
+   "pos": [
+    3500,
+    736
+   ],
+   "size": [
+    400,
+    130
+   ],
+   "flags": {},
+   "order": 54,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "link": 52,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "link": 53,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      57
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "EmptyLatentImage"
+   },
+   "widgets_values": [
+    2048,
+    1024,
+    1
+   ],
+   "title": "A · Latent vide 2048 × 1024",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 56,
+   "type": "KSampler",
+   "pos": [
+    3500,
+    890
+   ],
+   "size": [
+    400,
+    262
+   ],
+   "flags": {},
+   "order": 55,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 54
+    },
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 55
+    },
+    {
+     "localized_name": "negative",
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 56
+    },
+    {
+     "localized_name": "latent_image",
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 57
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "link": 58,
+     "widget": {
+      "name": "seed"
+     }
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "link": 59,
+     "widget": {
+      "name": "steps"
+     }
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "link": 60,
+     "widget": {
+      "name": "cfg"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      61
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    360001,
+    "fixed",
+    20,
+    1.0,
+    "dpmpp_2m",
+    "karras",
+    1.0
+   ],
+   "title": "A · KSampler SDXL (dpmpp_2m / karras)",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 57,
+   "type": "VAEDecode",
+   "pos": [
+    3500,
+    1176
+   ],
+   "size": [
+    400,
+    46
+   ],
+   "flags": {},
+   "order": 56,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "samples",
+     "name": "samples",
+     "type": "LATENT",
+     "link": 61
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 62
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      63
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": [],
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 58,
+   "type": "SaveImage",
+   "pos": [
+    3500,
+    1246
+   ],
+   "size": [
+    400,
+    300
+   ],
+   "flags": {},
+   "order": 57,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 63
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "t2hdri_INT_Compare3_SDXL360_Qwen360_Klein360_v01/A_SDXL360"
+   ],
+   "title": "💾 A · SDXL 360 — sortie",
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 59,
+   "type": "UNETLoader",
+   "pos": [
+    4000,
+    60
+   ],
+   "size": [
+    400,
+    82
+   ],
+   "flags": {},
+   "order": 58,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      64
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "qwen_image_2512_fp8_e4m3fn.safetensors",
+    "default"
+   ],
+   "title": "B · Qwen-Image-2512 (diffusion)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 60,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    4000,
+    166
+   ],
+   "size": [
+    400,
+    82
+   ],
+   "flags": {},
+   "order": 59,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 64
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      65
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors",
+    1.0
+   ],
+   "title": "B · LoRA Lightning 2512 — 4 steps",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 61,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    4000,
+    272
+   ],
+   "size": [
+    400,
+    82
+   ],
+   "flags": {},
+   "order": 60,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 65
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      66
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "qwen-360-diffusion-2512-int8-bf16-v2.safetensors",
+    1.0
+   ],
+   "title": "B · LoRA qwen-360-diffusion 2512 v2",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 62,
+   "type": "ModelSamplingAuraFlow",
+   "pos": [
+    4000,
+    378
+   ],
+   "size": [
+    400,
+    58
+   ],
+   "flags": {},
+   "order": 61,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 66
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      72
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ModelSamplingAuraFlow"
+   },
+   "widgets_values": [
+    3.1
+   ],
+   "title": "B · AuraFlow 3.1",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 63,
+   "type": "CLIPLoader",
+   "pos": [
+    4000,
+    460
+   ],
+   "size": [
+    400,
+    106
+   ],
+   "flags": {},
+   "order": 62,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "CLIP",
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      67,
+      68
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader"
+   },
+   "widgets_values": [
+    "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+    "qwen_image",
+    "default"
+   ],
+   "title": "B · Text encoder Qwen2.5-VL 7B",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 64,
+   "type": "VAELoader",
+   "pos": [
+    4000,
+    590
+   ],
+   "size": [
+    400,
+    58
+   ],
+   "flags": {},
+   "order": 63,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "VAE",
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      80
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "qwen_image_vae.safetensors"
+   ],
+   "title": "B · VAE Qwen Image",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 65,
+   "type": "CLIPTextEncode",
+   "pos": [
+    4000,
+    672
+   ],
+   "size": [
+    400,
+    130
+   ],
+   "flags": {},
+   "order": 64,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 67
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "link": 69,
+     "widget": {
+      "name": "text"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      73
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "title": "B · PROMPT (positif)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 66,
+   "type": "CLIPTextEncode",
+   "pos": [
+    4000,
+    826
+   ],
+   "size": [
+    400,
+    130
+   ],
+   "flags": {},
+   "order": 65,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 68
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "link": null,
+     "widget": {
+      "name": "text"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      74
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    "illustration, cartoon, drawing, painting, anime, 3d render, cgi, people, text, watermark, frame, blurry"
+   ],
+   "title": "B · Négatif (sans effet à CFG 1)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 67,
+   "type": "EmptySD3LatentImage",
+   "pos": [
+    4000,
+    980
+   ],
+   "size": [
+    400,
+    130
+   ],
+   "flags": {},
+   "order": 66,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "link": 70,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "link": 71,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      75
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "EmptySD3LatentImage"
+   },
+   "widgets_values": [
+    2048,
+    1024,
+    1
+   ],
+   "title": "B · Latent vide 2048 × 1024",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 68,
+   "type": "KSampler",
+   "pos": [
+    4000,
+    1134
+   ],
+   "size": [
+    400,
+    262
+   ],
+   "flags": {},
+   "order": 67,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 72
+    },
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 73
+    },
+    {
+     "localized_name": "negative",
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 74
+    },
+    {
+     "localized_name": "latent_image",
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 75
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "link": 76,
+     "widget": {
+      "name": "seed"
+     }
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "link": 77,
+     "widget": {
+      "name": "steps"
+     }
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "link": 78,
+     "widget": {
+      "name": "cfg"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      79
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    360001,
+    "fixed",
+    20,
+    1.0,
+    "euler",
+    "simple",
+    1.0
+   ],
+   "title": "B · KSampler Qwen (euler / simple)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 69,
+   "type": "VAEDecode",
+   "pos": [
+    4000,
+    1420
+   ],
+   "size": [
+    400,
+    46
+   ],
+   "flags": {},
+   "order": 68,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "samples",
+     "name": "samples",
+     "type": "LATENT",
+     "link": 79
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 80
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      81
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": [],
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 70,
+   "type": "SaveImage",
+   "pos": [
+    4000,
+    1490
+   ],
+   "size": [
+    400,
+    300
+   ],
+   "flags": {},
+   "order": 69,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 81
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "t2hdri_INT_Compare3_SDXL360_Qwen360_Klein360_v01/B_Qwen360"
+   ],
+   "title": "💾 B · Qwen 360 — sortie",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 71,
+   "type": "UNETLoader",
+   "pos": [
+    4500,
+    60
+   ],
+   "size": [
+    400,
+    82
+   ],
+   "flags": {},
+   "order": 70,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      82
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "flux-2-klein-base-9b-fp8.safetensors",
+    "default"
+   ],
+   "title": "C · Flux.2 Klein 9B base (fp8)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 72,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    4500,
+    166
+   ],
+   "size": [
+    400,
+    82
+   ],
+   "flags": {},
+   "order": 71,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 82
+    },
+    {
+     "localized_name": "strength_model",
+     "name": "strength_model",
+     "type": "FLOAT",
+     "link": 83,
+     "widget": {
+      "name": "strength_model"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      93
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "flux-2-klein-9b-360-panorama-lora.safetensors",
+    1.0
+   ],
+   "title": "C · LoRA 360 panorama (crafiq)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 73,
+   "type": "CLIPLoader",
+   "pos": [
+    4500,
+    272
+   ],
+   "size": [
+    400,
+    106
+   ],
+   "flags": {},
+   "order": 72,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "CLIP",
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      84,
+      85
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader"
+   },
+   "widgets_values": [
+    "qwen_3_8b_fp8mixed.safetensors",
+    "flux2",
+    "default"
+   ],
+   "title": "C · Text encoder Qwen3 8B",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 74,
+   "type": "VAELoader",
+   "pos": [
+    4500,
+    402
+   ],
+   "size": [
+    400,
+    58
+   ],
+   "flags": {},
+   "order": 73,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "VAE",
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      103
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "full_encoder_small_decoder.safetensors"
+   ],
+   "title": "C · VAE Flux.2 (small decoder)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 75,
+   "type": "CLIPTextEncode",
+   "pos": [
+    4500,
+    484
+   ],
+   "size": [
+    400,
+    130
+   ],
+   "flags": {},
+   "order": 74,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 84
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "link": 86,
+     "widget": {
+      "name": "text"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      94
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "title": "C · PROMPT (positif)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 76,
+   "type": "CLIPTextEncode",
+   "pos": [
+    4500,
+    638
+   ],
+   "size": [
+    400,
+    100
+   ],
+   "flags": {},
+   "order": 75,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 85
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "link": null,
+     "widget": {
+      "name": "text"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      95
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "title": "C · Négatif (vide : Flux.2 n'en utilise pas)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 77,
+   "type": "EmptyFlux2LatentImage",
+   "pos": [
+    4500,
+    762
+   ],
+   "size": [
+    400,
+    130
+   ],
+   "flags": {},
+   "order": 76,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "link": 87,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "link": 88,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      101
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "EmptyFlux2LatentImage"
+   },
+   "widgets_values": [
+    2048,
+    1024,
+    1
+   ],
+   "title": "C · Latent vide 2048 × 1024",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 78,
+   "type": "Flux2Scheduler",
+   "pos": [
+    4500,
+    916
+   ],
+   "size": [
+    400,
+    130
+   ],
+   "flags": {},
+   "order": 77,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "link": 89,
+     "widget": {
+      "name": "steps"
+     }
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "link": 90,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "link": 91,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "SIGMAS",
+     "name": "SIGMAS",
+     "type": "SIGMAS",
+     "links": [
+      100
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Flux2Scheduler"
+   },
+   "widgets_values": [
+    20,
+    2048,
+    1024
+   ],
+   "title": "C · Scheduler Flux.2",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 79,
+   "type": "KSamplerSelect",
+   "pos": [
+    4500,
+    1070
+   ],
+   "size": [
+    400,
+    58
+   ],
+   "flags": {},
+   "order": 78,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "localized_name": "SAMPLER",
+     "name": "SAMPLER",
+     "type": "SAMPLER",
+     "links": [
+      99
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSamplerSelect"
+   },
+   "widgets_values": [
+    "euler"
+   ],
+   "title": "C · Sampler (euler)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 80,
+   "type": "RandomNoise",
+   "pos": [
+    4500,
+    1152
+   ],
+   "size": [
+    400,
+    82
+   ],
+   "flags": {},
+   "order": 79,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "noise_seed",
+     "name": "noise_seed",
+     "type": "INT",
+     "link": 92,
+     "widget": {
+      "name": "noise_seed"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "NOISE",
+     "name": "NOISE",
+     "type": "NOISE",
+     "links": [
+      97
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RandomNoise"
+   },
+   "widgets_values": [
+    360001,
+    "fixed"
+   ],
+   "title": "C · Bruit (seed fixe)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 81,
+   "type": "CFGGuider",
+   "pos": [
+    4500,
+    1258
+   ],
+   "size": [
+    400,
+    98
+   ],
+   "flags": {},
+   "order": 80,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 93
+    },
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 94
+    },
+    {
+     "localized_name": "negative",
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 95
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "link": 96,
+     "widget": {
+      "name": "cfg"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "GUIDER",
+     "name": "GUIDER",
+     "type": "GUIDER",
+     "links": [
+      98
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CFGGuider"
+   },
+   "widgets_values": [
+    5.0
+   ],
+   "title": "C · CFG Guider",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 82,
+   "type": "SamplerCustomAdvanced",
+   "pos": [
+    4500,
+    1380
+   ],
+   "size": [
+    400,
+    106
+   ],
+   "flags": {},
+   "order": 81,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "noise",
+     "name": "noise",
+     "type": "NOISE",
+     "link": 97
+    },
+    {
+     "localized_name": "guider",
+     "name": "guider",
+     "type": "GUIDER",
+     "link": 98
+    },
+    {
+     "localized_name": "sampler",
+     "name": "sampler",
+     "type": "SAMPLER",
+     "link": 99
+    },
+    {
+     "localized_name": "sigmas",
+     "name": "sigmas",
+     "type": "SIGMAS",
+     "link": 100
+    },
+    {
+     "localized_name": "latent_image",
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 101
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "output",
+     "name": "output",
+     "type": "LATENT",
+     "links": [
+      102
+     ]
+    },
+    {
+     "localized_name": "denoised_output",
+     "name": "denoised_output",
+     "type": "LATENT",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SamplerCustomAdvanced"
+   },
+   "widgets_values": [],
+   "title": "C · Échantillonnage 360",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 83,
+   "type": "VAEDecode",
+   "pos": [
+    4500,
+    1510
+   ],
+   "size": [
+    400,
+    46
+   ],
+   "flags": {},
+   "order": 82,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "samples",
+     "name": "samples",
+     "type": "LATENT",
+     "link": 102
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 103
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      104
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": [],
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 84,
+   "type": "SaveImage",
+   "pos": [
+    4500,
+    1580
+   ],
+   "size": [
+    400,
+    300
+   ],
+   "flags": {},
+   "order": 83,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 104
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "t2hdri_INT_Compare3_SDXL360_Qwen360_Klein360_v01/C_Klein360"
+   ],
+   "title": "💾 C · Klein 360 — sortie",
+   "color": "#223",
+   "bgcolor": "#335"
+  }
+ ],
+ "links": [
+  [
+   1,
+   3,
+   0,
+   20,
+   0,
+   "INT"
+  ],
+  [
+   2,
+   4,
+   0,
+   20,
+   1,
+   "INT"
+  ],
+  [
+   3,
+   3,
+   0,
+   21,
+   0,
+   "INT"
+  ],
+  [
+   4,
+   4,
+   0,
+   21,
+   1,
+   "INT"
+  ],
+  [
+   5,
+   19,
+   0,
+   22,
+   0,
+   "STRING"
+  ],
+  [
+   6,
+   20,
+   1,
+   22,
+   1,
+   "INT"
+  ],
+  [
+   7,
+   21,
+   1,
+   22,
+   2,
+   "INT"
+  ],
+  [
+   8,
+   22,
+   0,
+   23,
+   0,
+   "STRING"
+  ],
+  [
+   9,
+   5,
+   0,
+   25,
+   0,
+   "INT"
+  ],
+  [
+   10,
+   5,
+   0,
+   26,
+   0,
+   "INT"
+  ],
+  [
+   11,
+   24,
+   0,
+   27,
+   0,
+   "STRING"
+  ],
+  [
+   12,
+   25,
+   1,
+   27,
+   1,
+   "INT"
+  ],
+  [
+   13,
+   26,
+   1,
+   27,
+   2,
+   "INT"
+  ],
+  [
+   14,
+   27,
+   0,
+   28,
+   0,
+   "STRING"
+  ],
+  [
+   15,
+   5,
+   0,
+   30,
+   0,
+   "INT"
+  ],
+  [
+   16,
+   6,
+   0,
+   30,
+   1,
+   "INT"
+  ],
+  [
+   17,
+   5,
+   0,
+   31,
+   0,
+   "INT"
+  ],
+  [
+   18,
+   6,
+   0,
+   31,
+   1,
+   "INT"
+  ],
+  [
+   19,
+   29,
+   0,
+   32,
+   0,
+   "STRING"
+  ],
+  [
+   20,
+   30,
+   1,
+   32,
+   1,
+   "INT"
+  ],
+  [
+   21,
+   31,
+   1,
+   32,
+   2,
+   "INT"
+  ],
+  [
+   22,
+   32,
+   0,
+   33,
+   0,
+   "STRING"
+  ],
+  [
+   23,
+   7,
+   0,
+   35,
+   0,
+   "INT"
+  ],
+  [
+   24,
+   7,
+   0,
+   36,
+   0,
+   "INT"
+  ],
+  [
+   25,
+   34,
+   0,
+   37,
+   0,
+   "STRING"
+  ],
+  [
+   26,
+   35,
+   1,
+   37,
+   1,
+   "INT"
+  ],
+  [
+   27,
+   36,
+   1,
+   37,
+   2,
+   "INT"
+  ],
+  [
+   28,
+   37,
+   0,
+   38,
+   0,
+   "STRING"
+  ],
+  [
+   29,
+   2,
+   0,
+   39,
+   0,
+   "STRING"
+  ],
+  [
+   30,
+   23,
+   0,
+   39,
+   1,
+   "STRING"
+  ],
+  [
+   31,
+   39,
+   0,
+   40,
+   0,
+   "STRING"
+  ],
+  [
+   32,
+   28,
+   0,
+   40,
+   1,
+   "STRING"
+  ],
+  [
+   33,
+   40,
+   0,
+   41,
+   0,
+   "STRING"
+  ],
+  [
+   34,
+   33,
+   0,
+   41,
+   1,
+   "STRING"
+  ],
+  [
+   35,
+   41,
+   0,
+   42,
+   0,
+   "STRING"
+  ],
+  [
+   36,
+   38,
+   0,
+   42,
+   1,
+   "STRING"
+  ],
+  [
+   37,
+   42,
+   0,
+   43,
+   0,
+   "STRING"
+  ],
+  [
+   38,
+   43,
+   0,
+   44,
+   0,
+   "STRING"
+  ],
+  [
+   39,
+   43,
+   0,
+   45,
+   1,
+   "STRING"
+  ],
+  [
+   40,
+   43,
+   0,
+   46,
+   1,
+   "STRING"
+  ],
+  [
+   41,
+   43,
+   0,
+   47,
+   1,
+   "STRING"
+  ],
+  [
+   42,
+   45,
+   0,
+   48,
+   0,
+   "STRING"
+  ],
+  [
+   43,
+   46,
+   0,
+   49,
+   0,
+   "STRING"
+  ],
+  [
+   44,
+   47,
+   0,
+   50,
+   0,
+   "STRING"
+  ],
+  [
+   45,
+   51,
+   0,
+   52,
+   0,
+   "MODEL"
+  ],
+  [
+   46,
+   51,
+   1,
+   52,
+   1,
+   "CLIP"
+  ],
+  [
+   47,
+   52,
+   1,
+   53,
+   0,
+   "CLIP"
+  ],
+  [
+   48,
+   52,
+   1,
+   54,
+   0,
+   "CLIP"
+  ],
+  [
+   49,
+   13,
+   0,
+   52,
+   2,
+   "FLOAT"
+  ],
+  [
+   50,
+   13,
+   0,
+   52,
+   3,
+   "FLOAT"
+  ],
+  [
+   51,
+   45,
+   0,
+   53,
+   1,
+   "STRING"
+  ],
+  [
+   52,
+   9,
+   0,
+   55,
+   0,
+   "INT"
+  ],
+  [
+   53,
+   10,
+   0,
+   55,
+   1,
+   "INT"
+  ],
+  [
+   54,
+   52,
+   0,
+   56,
+   0,
+   "MODEL"
+  ],
+  [
+   55,
+   53,
+   0,
+   56,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   56,
+   54,
+   0,
+   56,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   57,
+   55,
+   0,
+   56,
+   3,
+   "LATENT"
+  ],
+  [
+   58,
+   8,
+   0,
+   56,
+   4,
+   "INT"
+  ],
+  [
+   59,
+   11,
+   0,
+   56,
+   5,
+   "INT"
+  ],
+  [
+   60,
+   12,
+   0,
+   56,
+   6,
+   "FLOAT"
+  ],
+  [
+   61,
+   56,
+   0,
+   57,
+   0,
+   "LATENT"
+  ],
+  [
+   62,
+   51,
+   2,
+   57,
+   1,
+   "VAE"
+  ],
+  [
+   63,
+   57,
+   0,
+   58,
+   0,
+   "IMAGE"
+  ],
+  [
+   64,
+   59,
+   0,
+   60,
+   0,
+   "MODEL"
+  ],
+  [
+   65,
+   60,
+   0,
+   61,
+   0,
+   "MODEL"
+  ],
+  [
+   66,
+   61,
+   0,
+   62,
+   0,
+   "MODEL"
+  ],
+  [
+   67,
+   63,
+   0,
+   65,
+   0,
+   "CLIP"
+  ],
+  [
+   68,
+   63,
+   0,
+   66,
+   0,
+   "CLIP"
+  ],
+  [
+   69,
+   46,
+   0,
+   65,
+   1,
+   "STRING"
+  ],
+  [
+   70,
+   9,
+   0,
+   67,
+   0,
+   "INT"
+  ],
+  [
+   71,
+   10,
+   0,
+   67,
+   1,
+   "INT"
+  ],
+  [
+   72,
+   62,
+   0,
+   68,
+   0,
+   "MODEL"
+  ],
+  [
+   73,
+   65,
+   0,
+   68,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   74,
+   66,
+   0,
+   68,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   75,
+   67,
+   0,
+   68,
+   3,
+   "LATENT"
+  ],
+  [
+   76,
+   8,
+   0,
+   68,
+   4,
+   "INT"
+  ],
+  [
+   77,
+   14,
+   0,
+   68,
+   5,
+   "INT"
+  ],
+  [
+   78,
+   15,
+   0,
+   68,
+   6,
+   "FLOAT"
+  ],
+  [
+   79,
+   68,
+   0,
+   69,
+   0,
+   "LATENT"
+  ],
+  [
+   80,
+   64,
+   0,
+   69,
+   1,
+   "VAE"
+  ],
+  [
+   81,
+   69,
+   0,
+   70,
+   0,
+   "IMAGE"
+  ],
+  [
+   82,
+   71,
+   0,
+   72,
+   0,
+   "MODEL"
+  ],
+  [
+   83,
+   18,
+   0,
+   72,
+   1,
+   "FLOAT"
+  ],
+  [
+   84,
+   73,
+   0,
+   75,
+   0,
+   "CLIP"
+  ],
+  [
+   85,
+   73,
+   0,
+   76,
+   0,
+   "CLIP"
+  ],
+  [
+   86,
+   47,
+   0,
+   75,
+   1,
+   "STRING"
+  ],
+  [
+   87,
+   9,
+   0,
+   77,
+   0,
+   "INT"
+  ],
+  [
+   88,
+   10,
+   0,
+   77,
+   1,
+   "INT"
+  ],
+  [
+   89,
+   16,
+   0,
+   78,
+   0,
+   "INT"
+  ],
+  [
+   90,
+   9,
+   0,
+   78,
+   1,
+   "INT"
+  ],
+  [
+   91,
+   10,
+   0,
+   78,
+   2,
+   "INT"
+  ],
+  [
+   92,
+   8,
+   0,
+   80,
+   0,
+   "INT"
+  ],
+  [
+   93,
+   72,
+   0,
+   81,
+   0,
+   "MODEL"
+  ],
+  [
+   94,
+   75,
+   0,
+   81,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   95,
+   76,
+   0,
+   81,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   96,
+   17,
+   0,
+   81,
+   3,
+   "FLOAT"
+  ],
+  [
+   97,
+   80,
+   0,
+   82,
+   0,
+   "NOISE"
+  ],
+  [
+   98,
+   81,
+   0,
+   82,
+   1,
+   "GUIDER"
+  ],
+  [
+   99,
+   79,
+   0,
+   82,
+   2,
+   "SAMPLER"
+  ],
+  [
+   100,
+   78,
+   0,
+   82,
+   3,
+   "SIGMAS"
+  ],
+  [
+   101,
+   77,
+   0,
+   82,
+   4,
+   "LATENT"
+  ],
+  [
+   102,
+   82,
+   0,
+   83,
+   0,
+   "LATENT"
+  ],
+  [
+   103,
+   74,
+   0,
+   83,
+   1,
+   "VAE"
+  ],
+  [
+   104,
+   83,
+   0,
+   84,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "🎛️ CONTRÔLES",
+   "bounding": [
+    600,
+    0,
+    360,
+    1916
+   ],
+   "color": "#335",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "PRESETS VERROUILLÉS — lumière (ambiance × soleil) / mobilier / style / hauteur",
+   "bounding": [
+    1020,
+    0,
+    1120,
+    1660
+   ],
+   "color": "#355",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "PROMPT — corps commun + trigger propre à chaque modèle",
+   "bounding": [
+    2220,
+    0,
+    1180,
+    1310
+   ],
+   "color": "#553",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 4,
+   "title": "BLOC A — SDXL 360 Diffusion (+ LoRA View360 optionnelle)",
+   "bounding": [
+    3480,
+    0,
+    440,
+    1566
+   ],
+   "color": "#533",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 5,
+   "title": "BLOC B — Qwen-Image-2512 + qwen-360-diffusion v2",
+   "bounding": [
+    3980,
+    0,
+    440,
+    1810
+   ],
+   "color": "#353",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 6,
+   "title": "BLOC C — Flux.2 Klein 9B base + LoRA 360 (crafiq)",
+   "bounding": [
+    4480,
+    0,
+    440,
+    1900
+   ],
+   "color": "#335",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.3,
+   "offset": [
+    0,
+    80
+   ]
+  },
+  "workflow_name": "t2hdri_INT_Compare3_SDXL360_Qwen360_Klein360_v01"
+ },
+ "version": 0.4
+}
